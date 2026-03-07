@@ -1,181 +1,752 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Projects | Oshanda Geethanjana</title>
-        <link rel="icon" type="image/png" href="assets/whitecoder_logo.png">
-    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Projects — Oshanda Geethanjana</title>
+    <meta name="description" content="Projects by Oshanda Geethanjana — Digital agency, EdTech, and web development work.">
+    <link rel="icon" type="image/png" href="assets/whitecoder_logo.png">
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
-    
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
-    <script src="https://cdn.tailwindcss.com"></script>
-    
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                        display: ['Space Grotesk', 'sans-serif'],
-                    },
-                    colors: {
-                        dark: '#050505',
-                        surface: '#111111',
-                        neon: '#00ffcc',
-                    }
-                }
-            }
-        }
-    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
 
     <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+            --bg: #080808;
+            --surface: #0f0f0f;
+            --surface-2: #161616;
+            --border: rgba(255,255,255,0.07);
+            --border-hover: rgba(255,255,255,0.15);
+            --text-primary: #f0f0f0;
+            --text-secondary: #888;
+            --text-tertiary: #555;
+            --accent: #e8ff5a;
+            --accent-dim: rgba(232,255,90,0.1);
+            --radius: 20px;
+            --radius-lg: 28px;
+            --nav-height: 68px;
+        }
+
+        html { scroll-behavior: smooth; }
+
         body {
-            background-color: #050505;
-            background-image: linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-            background-size: 50px 50px;
-            color: #ffffff;
+            font-family: 'DM Sans', sans-serif;
+            background-color: var(--bg);
+            color: var(--text-primary);
             overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            line-height: 1.6;
         }
 
-        /* මෙතන තිබ්බ visibility: hidden එක මම අයින් කරා! දැන් මුකුත් හැංගෙන්නේ නැහැ */
-        .reveal { opacity: 0; } 
+        ::selection { background: var(--accent); color: #000; }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: var(--bg); }
+        ::-webkit-scrollbar-thumb { background: #2a2a2a; border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: #444; }
 
-        /* Scrollbar Styling */
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: #050505; }
-        ::-webkit-scrollbar-thumb { background: #333; border-radius: 4px; }
-        ::-webkit-scrollbar-thumb:hover { background: #00ffcc; }
-        
-        .glass-card {
-            background: rgba(17, 17, 17, 0.7);
-            backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        .glass-card:hover {
-            transform: translateY(-5px);
+        /* ── NAV ── */
+        nav {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 100;
+            height: var(--nav-height);
+            display: flex;
+            align-items: center;
+            padding: 0 clamp(20px, 5vw, 60px);
+            background: rgba(8,8,8,0.82);
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            border-bottom: 1px solid var(--border);
         }
 
-        .text-gradient {
-            background: linear-gradient(to right, #ffffff, #888888);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+        .nav-inner {
+            width: 100%;
+            max-width: 1280px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        .nav-logo {
+            font-family: 'Syne', sans-serif;
+            font-weight: 700;
+            font-size: 17px;
+            letter-spacing: -0.3px;
+            color: var(--text-primary);
+            text-decoration: none;
+        }
+        .nav-logo span { color: var(--accent); }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 36px;
+            list-style: none;
+        }
+        .nav-links a {
+            font-size: 13.5px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        .nav-links a:hover { color: var(--text-primary); }
+        .nav-links a.active { color: var(--accent); }
+
+        .nav-cta {
+            font-size: 13px;
+            font-weight: 500;
+            padding: 9px 22px;
+            border-radius: 100px;
+            background: var(--surface-2);
+            border: 1px solid var(--border-hover);
+            color: var(--text-primary);
+            text-decoration: none;
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+        .nav-cta:hover { background: var(--accent); color: #000; border-color: var(--accent); }
+
+        .hamburger {
+            display: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 8px;
+            color: var(--text-secondary);
+            font-size: 20px;
+            transition: color 0.2s;
+        }
+        .hamburger:hover { color: var(--text-primary); }
+
+        /* ── MOBILE MENU ── */
+        .mobile-nav {
+            display: none;
+            position: fixed;
+            inset: 0;
+            z-index: 200;
+            background: rgba(6,6,6,0.98);
+            backdrop-filter: blur(30px);
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        .mobile-nav.open { opacity: 1; }
+        .mobile-nav a {
+            font-family: 'Syne', sans-serif;
+            font-size: clamp(28px, 8vw, 42px);
+            font-weight: 700;
+            color: var(--text-secondary);
+            text-decoration: none;
+            padding: 14px 0;
+            letter-spacing: -1px;
+            transition: color 0.2s, transform 0.2s;
+            display: block;
+        }
+        .mobile-nav a:hover { color: var(--accent); transform: translateX(6px); }
+        .mobile-nav a.active { color: var(--accent); }
+        .mobile-close {
+            position: absolute;
+            top: 22px; right: 24px;
+            background: none;
+            border: 1px solid var(--border);
+            border-radius: 50%;
+            width: 42px; height: 42px;
+            color: var(--text-secondary);
+            font-size: 16px;
+            cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            transition: all 0.2s;
+        }
+        .mobile-close:hover { color: var(--text-primary); border-color: var(--border-hover); }
+
+        /* ── PAGE HEADER ── */
+        .page-header {
+            padding-top: calc(var(--nav-height) + clamp(60px, 10vw, 110px));
+            padding-bottom: clamp(60px, 8vw, 100px);
+            padding-left: clamp(20px, 5vw, 60px);
+            padding-right: clamp(20px, 5vw, 60px);
+            border-bottom: 1px solid var(--border);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header-noise {
+            position: absolute;
+            inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+            pointer-events: none;
+            opacity: 0.4;
+        }
+
+        .header-inner {
+            max-width: 1280px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .section-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 11px;
+            font-weight: 500;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--text-tertiary);
+            margin-bottom: 20px;
+        }
+        .section-label::before {
+            content: '';
+            display: block;
+            width: 20px; height: 1px;
+            background: var(--text-tertiary);
+        }
+
+        .header-title {
+            font-family: 'Syne', sans-serif;
+            font-size: clamp(52px, 9vw, 110px);
+            font-weight: 800;
+            letter-spacing: -4px;
+            line-height: 1.0;
+            color: var(--text-primary);
+            margin-bottom: 28px;
+        }
+
+        .header-title .outline {
+            color: transparent;
+            -webkit-text-stroke: 1.5px rgba(240,240,240,0.2);
+        }
+
+        .header-meta {
+            display: flex;
+            align-items: center;
+            gap: 32px;
+            flex-wrap: wrap;
+        }
+
+        .header-desc {
+            font-size: clamp(15px, 2vw, 17px);
+            color: var(--text-secondary);
+            max-width: 480px;
+            line-height: 1.75;
+            font-weight: 300;
+        }
+
+        .header-count {
+            font-family: 'Syne', sans-serif;
+            font-size: 13px;
+            color: var(--text-tertiary);
+            padding: 8px 18px;
+            border: 1px solid var(--border);
+            border-radius: 100px;
+            white-space: nowrap;
+        }
+        .header-count span { color: var(--accent); font-weight: 600; }
+
+        /* ── PROJECTS GRID ── */
+        .projects-section {
+            padding: clamp(60px, 8vw, 100px) clamp(20px, 5vw, 60px);
+        }
+
+        .projects-inner {
+            max-width: 1280px;
+            margin: 0 auto;
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        /* ── PROJECT CARD ── */
+        .project-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: clamp(24px, 3vw, 36px);
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+            transition: border-color 0.25s, transform 0.3s cubic-bezier(0.4,0,0.2,1);
+            position: relative;
+            overflow: hidden;
+            min-height: 380px;
+        }
+
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: 0; right: 0;
+            width: 160px; height: 160px;
+            border-radius: 50%;
+            opacity: 0;
+            transition: opacity 0.4s;
+            filter: blur(60px);
+            pointer-events: none;
+        }
+
+        .project-card:hover { transform: translateY(-5px); }
+        .project-card:hover::before { opacity: 1; }
+
+        /* accent color variants */
+        .card-accent-green { --card-accent: #e8ff5a; }
+        .card-accent-green::before { background: #e8ff5a; }
+        .card-accent-green:hover { border-color: rgba(232,255,90,0.3); }
+
+        .card-accent-orange { --card-accent: #fb923c; }
+        .card-accent-orange::before { background: #fb923c; }
+        .card-accent-orange:hover { border-color: rgba(251,146,60,0.3); }
+
+        .card-accent-purple { --card-accent: #a78bfa; }
+        .card-accent-purple::before { background: #a78bfa; }
+        .card-accent-purple:hover { border-color: rgba(167,139,250,0.3); }
+
+        .card-accent-sky { --card-accent: #38bdf8; }
+        .card-accent-sky::before { background: #38bdf8; }
+        .card-accent-sky:hover { border-color: rgba(56,189,248,0.3); }
+
+        .card-accent-rose { --card-accent: #fb7185; }
+        .card-accent-rose::before { background: #fb7185; }
+        .card-accent-rose:hover { border-color: rgba(251,113,133,0.3); }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 20px;
+        }
+
+        .card-badge {
+            font-size: 11px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            padding: 5px 12px;
+            border-radius: 100px;
+            color: var(--card-accent);
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.08);
+        }
+
+        .card-icon {
+            width: 36px; height: 36px;
+            border-radius: 10px;
+            background: var(--surface-2);
+            border: 1px solid var(--border);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 14px;
+            color: var(--text-tertiary);
+            transition: color 0.2s, border-color 0.2s;
+            flex-shrink: 0;
+        }
+        .project-card:hover .card-icon {
+            color: var(--card-accent);
+            border-color: var(--card-accent);
+        }
+
+        .card-title {
+            font-family: 'Syne', sans-serif;
+            font-size: clamp(22px, 3vw, 28px);
+            font-weight: 700;
+            letter-spacing: -0.8px;
+            color: var(--text-primary);
+            margin-bottom: 12px;
+            transition: color 0.2s;
+        }
+        .project-card:hover .card-title { color: var(--card-accent); }
+
+        .card-desc {
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.75;
+            flex-grow: 1;
+            margin-bottom: 24px;
+        }
+
+        .card-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-bottom: 24px;
+        }
+
+        .card-tag {
+            font-size: 11px;
+            color: var(--text-tertiary);
+            background: var(--surface-2);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 4px 10px;
+            font-family: 'DM Sans', monospace;
+            letter-spacing: 0.2px;
+        }
+
+        .card-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .card-btn {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 7px;
+            padding: 11px 16px;
+            border-radius: 12px;
+            font-size: 13px;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.2s;
+            cursor: pointer;
+            border: none;
+            font-family: 'DM Sans', sans-serif;
+        }
+
+        .card-btn-primary {
+            background: var(--accent-dim);
+            color: var(--card-accent);
+            border: 1px solid rgba(255,255,255,0.06);
+        }
+        .card-btn-primary:hover {
+            background: var(--card-accent);
+            color: #000;
+        }
+
+        .card-btn-secondary {
+            background: var(--surface-2);
+            color: var(--text-tertiary);
+            border: 1px solid var(--border);
+        }
+        .card-btn-secondary:hover {
+            color: var(--text-secondary);
+            border-color: var(--border-hover);
+        }
+
+        .card-btn-disabled {
+            background: var(--surface-2);
+            color: var(--text-tertiary);
+            border: 1px solid var(--border);
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
+
+        .status-dot {
+            display: inline-block;
+            width: 6px; height: 6px;
+            border-radius: 50%;
+            background: #4ade80;
+            animation: pulse-dot 2s ease-in-out infinite;
+        }
+        .status-dot.building { background: #fb923c; }
+
+        @keyframes pulse-dot {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.4; }
+        }
+
+        /* ── FEATURED card (spans 2 cols) ── */
+        .card-featured {
+            grid-column: span 2;
+        }
+        .card-featured .card-title { font-size: clamp(28px, 4vw, 38px); }
+        .card-featured .card-desc { max-width: 560px; }
+
+        /* ── GITHUB CTA ── */
+        .github-cta {
+            margin-top: clamp(60px, 8vw, 80px);
+            padding: clamp(40px, 5vw, 60px);
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 32px;
+            flex-wrap: wrap;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .github-cta::before {
+            content: '';
+            position: absolute;
+            right: -40px; top: -40px;
+            width: 200px; height: 200px;
+            background: radial-gradient(circle, rgba(232,255,90,0.06) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .cta-left h3 {
+            font-family: 'Syne', sans-serif;
+            font-size: clamp(22px, 3vw, 30px);
+            font-weight: 700;
+            letter-spacing: -0.8px;
+            margin-bottom: 10px;
+        }
+
+        .cta-left p {
+            font-size: 15px;
+            color: var(--text-secondary);
+            max-width: 440px;
+            line-height: 1.7;
+        }
+
+        .btn-github {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 14px 28px;
+            background: var(--text-primary);
+            color: #000;
+            border-radius: 100px;
+            font-size: 14px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.2s;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+        .btn-github:hover { background: var(--accent); transform: translateY(-1px); }
+
+        /* ── FOOTER ── */
+        footer {
+            padding: 32px clamp(20px, 5vw, 60px);
+            border-top: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .footer-copy { font-size: 13px; color: var(--text-tertiary); }
+        .footer-links { display: flex; gap: 24px; }
+        .footer-links a {
+            font-size: 13px;
+            color: var(--text-tertiary);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        .footer-links a:hover { color: var(--text-secondary); }
+
+        /* ── ANIMATIONS ── */
+        .fade-up { opacity: 0; transform: translateY(24px); }
+
+        /* ── RESPONSIVE ── */
+        @media (max-width: 1024px) {
+            .projects-grid { grid-template-columns: 1fr 1fr; }
+            .card-featured { grid-column: span 2; }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links, .nav-cta { display: none; }
+            .hamburger { display: flex; align-items: center; justify-content: center; }
+            .projects-grid { grid-template-columns: 1fr; }
+            .card-featured { grid-column: span 1; }
+            .header-title { letter-spacing: -2.5px; }
+            footer { flex-direction: column; align-items: center; text-align: center; }
+            .github-cta { flex-direction: column; align-items: flex-start; }
+            .btn-github { width: 100%; justify-content: center; }
         }
     </style>
 </head>
-<body class="antialiased selection:bg-neon selection:text-black relative">
+<body>
 
-    <nav class="fixed w-full z-50 top-0 px-6 py-4 glass-card border-x-0 border-t-0">
-        <div class="max-w-7xl mx-auto flex justify-between items-center">
-            <a href="index.html" class="font-display font-bold text-xl tracking-tighter hover:text-neon transition-colors">Oshanda Geethanjana<span class="text-neon">.</span></a>
-            
-            <div class="hidden lg:flex gap-8 text-sm font-medium text-gray-400">
-                <a href="index.html#home" class="hover:text-neon transition-colors">Home</a>
-                <a href="index.html#about" class="hover:text-neon transition-colors">About</a>
-                <a href="index.html#skills" class="hover:text-neon transition-colors">Skills</a>
-                <a href="index.html#experience" class="hover:text-neon transition-colors">Experience</a>
-                <a href="index.html#achievements" class="hover:text-neon transition-colors">Achievements</a>
-                <a href="projects.html" class="text-neon transition-colors">Projects</a>
+<!-- ── NAVIGATION ── -->
+<nav>
+    <div class="nav-inner">
+        <a href="index.html" class="nav-logo">Oshanda<span>.</span></a>
+        <ul class="nav-links">
+            <li><a href="index.html#home">Home</a></li>
+            <li><a href="index.html#about">About</a></li>
+            <li><a href="index.html#skills">Skills</a></li>
+            <li><a href="index.html#experience">Experience</a></li>
+            <li><a href="index.html#achievements">Achievements</a></li>
+            <li><a href="projects.html" class="active">Projects</a></li>
+        </ul>
+        <a href="index.html#contact" class="nav-cta">Let's Talk</a>
+        <button class="hamburger" id="hamburger" aria-label="Menu">
+            <i class="fa-solid fa-bars"></i>
+        </button>
+    </div>
+</nav>
+
+<!-- ── MOBILE MENU ── -->
+<div class="mobile-nav" id="mobileNav">
+    <button class="mobile-close" id="mobileClose"><i class="fa-solid fa-xmark"></i></button>
+    <a href="index.html#home" class="mobile-link">Home</a>
+    <a href="index.html#about" class="mobile-link">About</a>
+    <a href="index.html#skills" class="mobile-link">Skills</a>
+    <a href="index.html#experience" class="mobile-link">Experience</a>
+    <a href="index.html#achievements" class="mobile-link">Awards</a>
+    <a href="projects.html" class="mobile-link active">Projects</a>
+    <a href="index.html#contact" class="mobile-link" style="color: var(--accent); margin-top: 12px;">Let's Talk</a>
+</div>
+
+<!-- ── PAGE HEADER ── -->
+<header class="page-header">
+    <div class="header-noise"></div>
+    <div class="header-inner">
+        <div class="section-label fade-up">Portfolio</div>
+        <h1 class="header-title fade-up">
+            Selected<br><span class="outline">Work.</span>
+        </h1>
+        <div class="header-meta">
+            <p class="header-desc fade-up">Systems, platforms, and digital products I've engineered — from founding startups to building communities.</p>
+            <span class="header-count fade-up"><span>3</span> Projects</span>
+        </div>
+    </div>
+</header>
+
+<!-- ── PROJECTS ── -->
+<main class="projects-section">
+    <div class="projects-inner">
+        <div class="projects-grid">
+
+            <!-- WhiteCoder — featured -->
+            <div class="project-card card-accent-green card-featured fade-up">
+                <div class="card-header">
+                    <span class="card-badge">Digital Agency</span>
+                    <div class="card-icon"><i class="fa-solid fa-globe"></i></div>
+                </div>
+                <div class="card-title">WhiteCoder</div>
+                <p class="card-desc">A full-service digital infrastructure agency delivering bespoke web development, UI/UX design, and custom software solutions for modern businesses. Founded and operated independently — from concept through deployment.</p>
+                <div class="card-tags">
+                    <span class="card-tag">Web Dev</span>
+                    <span class="card-tag">UI/UX</span>
+                    <span class="card-tag">Client Work</span>
+                    <span class="card-tag">Founder</span>
+                </div>
+                <div class="card-actions">
+                    <a href="https://www.whitecoder.online" target="_blank" class="card-btn card-btn-primary">
+                        <span class="status-dot"></span> Live Site
+                    </a>
+                    <span class="card-btn card-btn-disabled">
+                        <i class="fa-solid fa-lock" style="font-size:11px"></i> Private Repo
+                    </span>
+                </div>
             </div>
-            
-            <a href="index.html#contact" class="px-5 py-2 rounded-full border border-gray-700 hover:border-neon hover:text-neon transition-all text-sm font-medium hidden md:block">Let's Talk</a>
-            <a href="index.html" class="lg:hidden text-gray-400 hover:text-white focus:outline-none"><i class="fa-solid fa-arrow-left text-xl"></i> Back</a>
-        </div>
-    </nav>
 
-    <header class="pt-36 pb-16 px-6 relative text-center">
-        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] bg-neon opacity-10 blur-[100px] rounded-full pointer-events-none z-0"></div>
-        <div class="relative z-10">
-            <h1 class="font-display text-5xl md:text-7xl font-bold tracking-tighter mb-4 reveal">Digital <span class="text-gradient">Arsenal</span></h1>
-            <p class="text-gray-400 text-lg max-w-2xl mx-auto reveal">A collection of systems, websites, and digital solutions I've engineered and founded.</p>
-        </div>
-    </header>
-
-    <section class="py-12 px-6 mb-24 relative z-10">
-        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            
-            <a href="https://www.whitecoder.online" target="_blank" class="reveal glass-card rounded-3xl p-8 group flex flex-col justify-between min-h-[400px] relative overflow-hidden border border-gray-800 hover:border-neon hover:shadow-[0_10px_30px_-10px_rgba(0,255,204,0.15)]">
-                <div class="absolute top-0 right-0 w-64 h-64 bg-neon opacity-5 blur-[80px] rounded-full group-hover:opacity-10 transition-opacity"></div>
-                <div>
-                    <div class="flex justify-between items-start mb-6">
-                        <span class="text-xs font-mono text-neon px-3 py-1 rounded-full border border-neon/30 bg-neon/5 inline-block">Digital Agency</span>
-                        <i class="fa-solid fa-arrow-up-right-from-square text-gray-500 group-hover:text-neon transition-colors"></i>
-                    </div>
-                    <h3 class="font-display text-3xl font-bold mb-3 group-hover:text-neon transition-colors text-white">WhiteCoder</h3>
-                    <p class="text-gray-400 text-sm leading-relaxed">A complete digital infrastructure agency. I provide professional web development, UI/UX design, and custom software solutions for modern businesses.</p>
+            <!-- HND Study Hub -->
+            <div class="project-card card-accent-purple fade-up">
+                <div class="card-header">
+                    <span class="card-badge">EdTech</span>
+                    <div class="card-icon"><i class="fa-solid fa-graduation-cap"></i></div>
                 </div>
-                <div class="flex flex-wrap gap-2 mt-8 z-10">
-                    <span class="text-xs text-gray-400 font-mono bg-dark border border-gray-800 px-3 py-1 rounded-md">Web Dev</span>
-                    <span class="text-xs text-gray-400 font-mono bg-dark border border-gray-800 px-3 py-1 rounded-md">UI/UX</span>
-                    <span class="text-xs text-gray-400 font-mono bg-dark border border-gray-800 px-3 py-1 rounded-md">Freelance</span>
+                <div class="card-title">HND Study Hub</div>
+                <p class="card-desc">A free educational portal built for higher education students across Sri Lanka. Now serving over 6,000 active students with curated study materials and resources.</p>
+                <div class="card-tags">
+                    <span class="card-tag">Education</span>
+                    <span class="card-tag">Community</span>
+                    <span class="card-tag">Founder</span>
                 </div>
-            </a>
-
-            <div class="reveal glass-card rounded-3xl p-8 group flex flex-col justify-between min-h-[400px] relative overflow-hidden border border-gray-800 hover:border-orange-500 hover:shadow-[0_10px_30px_-10px_rgba(249,115,22,0.15)] cursor-default">
-                <div class="absolute top-0 right-0 w-64 h-64 bg-orange-500 opacity-5 blur-[80px] rounded-full group-hover:opacity-10 transition-opacity"></div>
-                <div>
-                    <div class="flex justify-between items-start mb-6">
-                        <span class="text-xs font-mono text-orange-400 px-3 py-1 rounded-full border border-orange-400/30 bg-orange-400/5 inline-block">Tech Hub</span>
-                        <i class="fa-solid fa-code text-gray-500 group-hover:text-orange-400 transition-colors"></i>
-                    </div>
-                    <h3 class="font-display text-3xl font-bold mb-3 group-hover:text-orange-400 transition-colors text-white">BroCode Creations</h3>
-                    <p class="text-gray-400 text-sm leading-relaxed">A modern digital solutions and tech hub. Focused on delivering high-quality, scalable technological innovations and creative development services.</p>
-                </div>
-                <div class="flex flex-wrap gap-2 mt-8 z-10">
-                    <span class="text-xs text-gray-400 font-mono bg-dark border border-gray-800 px-3 py-1 rounded-md">Tech Hub</span>
-                    <span class="text-xs text-gray-400 font-mono bg-dark border border-gray-800 px-3 py-1 rounded-md">Startup</span>
+                <div class="card-actions">
+                    <a href="https://www.hndstudy.online" target="_blank" class="card-btn card-btn-primary">
+                        <span class="status-dot"></span> Live Site
+                    </a>
+                    <span class="card-btn card-btn-disabled">
+                        <i class="fa-solid fa-lock" style="font-size:11px"></i> Private Repo
+                    </span>
                 </div>
             </div>
 
-            <a href="https://www.hndstudy.online" target="_blank" class="reveal glass-card rounded-3xl p-8 group flex flex-col justify-between min-h-[400px] relative overflow-hidden border border-gray-800 hover:border-purple-500 hover:shadow-[0_10px_30px_-10px_rgba(168,85,247,0.15)]">
-                <div class="absolute top-0 right-0 w-64 h-64 bg-purple-500 opacity-5 blur-[80px] rounded-full group-hover:opacity-10 transition-opacity"></div>
-                <div>
-                    <div class="flex justify-between items-start mb-6">
-                        <span class="text-xs font-mono text-purple-400 px-3 py-1 rounded-full border border-purple-400/30 bg-purple-400/5 inline-block">EdTech Platform</span>
-                        <i class="fa-solid fa-arrow-up-right-from-square text-gray-500 group-hover:text-purple-400 transition-colors"></i>
-                    </div>
-                    <h3 class="font-display text-3xl font-bold mb-3 group-hover:text-purple-400 transition-colors text-white">HND Study Hub</h3>
-                    <p class="text-gray-400 text-sm leading-relaxed">A dedicated free educational portal tailored for higher education students in Sri Lanka. Currently serving over 6,000 active students with study materials.</p>
+            <!-- BroCode Creations -->
+            <div class="project-card card-accent-orange fade-up">
+                <div class="card-header">
+                    <span class="card-badge">Startup</span>
+                    <div class="card-icon"><i class="fa-solid fa-rocket"></i></div>
                 </div>
-                <div class="flex flex-wrap gap-2 mt-8 z-10">
-                    <span class="text-xs text-gray-400 font-mono bg-dark border border-gray-800 px-3 py-1 rounded-md">Education</span>
-                    <span class="text-xs text-gray-400 font-mono bg-dark border border-gray-800 px-3 py-1 rounded-md">Community</span>
+                <div class="card-title">BroCode Creations</div>
+                <p class="card-desc">A modern digital solutions and tech hub focused on delivering scalable technological innovations and high-quality creative development services. Currently in active development.</p>
+                <div class="card-tags">
+                    <span class="card-tag">Startup</span>
+                    <span class="card-tag">Tech Hub</span>
+                    <span class="card-tag">In Dev</span>
                 </div>
-            </a>
+                <div class="card-actions">
+                    <span class="card-btn card-btn-primary" style="cursor:default">
+                        <span class="status-dot building"></span> In Development
+                    </span>
+                    <span class="card-btn card-btn-disabled">
+                        <i class="fa-solid fa-lock" style="font-size:11px"></i> Private Repo
+                    </span>
+                </div>
+            </div>
 
         </div>
-        
-        <div class="mt-20 text-center reveal">
-            <p class="text-gray-400 mb-6">Want to see more of my code or collaborate on a project?</p>
-            <a href="https://github.com/oshandageethanjana" target="_blank" class="inline-flex items-center gap-2 bg-white text-black px-8 py-3 rounded-full font-bold hover:bg-neon transition-colors">
-                <i class="fa-brands fa-github text-xl"></i> Visit my GitHub
+
+        <!-- GitHub CTA -->
+        <div class="github-cta fade-up">
+            <div class="cta-left">
+                <h3>Want to see more?</h3>
+                <p>Explore my open-source experiments, smaller projects, and code on GitHub. Always building something new.</p>
+            </div>
+            <a href="https://github.com/oshandageethanjana" target="_blank" class="btn-github">
+                <i class="fa-brands fa-github" style="font-size:18px"></i> Visit GitHub
             </a>
         </div>
-    </section>
+    </div>
+</main>
 
-    <footer class="border-t border-white/5 py-8 px-6 text-center">
-        <p class="text-gray-500 text-sm font-medium">© 2026 Oshanda Geethanjana. Engineered with passion.</p>
-    </footer>
+<!-- ── FOOTER ── -->
+<footer>
+    <span class="footer-copy">© 2026 Oshanda Geethanjana. Engineered with passion.</span>
+    <div class="footer-links">
+        <a href="https://www.whitecoder.online" target="_blank">WhiteCoder</a>
+        <a href="https://www.hndstudy.online" target="_blank">HND Study Hub</a>
+        <a href="index.html">Home</a>
+    </div>
+</footer>
 
-    <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            // හරියටම වැඩ කරන Animation එක
-            gsap.to(".reveal", {
-                y: 0,
-                opacity: 1,
-                duration: 1,
-                stagger: 0.15,
-                ease: "power3.out",
-                delay: 0.2
-            });
-        });
-    </script>
+<script>
+// ── Mobile Menu ──
+const hamburger = document.getElementById('hamburger');
+const mobileNav = document.getElementById('mobileNav');
+const mobileClose = document.getElementById('mobileClose');
+const mobileLinks = document.querySelectorAll('.mobile-link');
+
+function openMenu() {
+    mobileNav.style.display = 'flex';
+    requestAnimationFrame(() => mobileNav.classList.add('open'));
+    document.body.style.overflow = 'hidden';
+}
+function closeMenu() {
+    mobileNav.classList.remove('open');
+    setTimeout(() => { mobileNav.style.display = 'none'; }, 300);
+    document.body.style.overflow = '';
+}
+hamburger.addEventListener('click', openMenu);
+mobileClose.addEventListener('click', closeMenu);
+mobileLinks.forEach(l => l.addEventListener('click', closeMenu));
+
+// ── GSAP Animations ──
+gsap.registerPlugin(ScrollTrigger);
+
+gsap.timeline({ delay: 0.1 })
+    .to('nav', { opacity: 1, duration: 0.6, ease: 'power2.out' })
+    .to('.page-header .fade-up', {
+        opacity: 1, y: 0, duration: 0.9, stagger: 0.1, ease: 'power3.out'
+    }, '-=0.3');
+
+document.querySelectorAll('main .fade-up, .github-cta.fade-up').forEach(el => {
+    gsap.to(el, {
+        opacity: 1, y: 0, duration: 0.85, ease: 'power3.out',
+        scrollTrigger: { trigger: el, start: 'top 90%', once: true }
+    });
+});
+</script>
 </body>
 </html>

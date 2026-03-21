@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact | Oshanda Geethanjana</title>
+  <meta name="description" content="Contact Oshanda Geethanjana — available for web development, AI projects, and collaborations.">
+  <meta property="og:title" content="Contact | Oshanda Geethanjana">
+  <meta property="og:type" content="website">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#050505">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    :root {
+      --bg:#050505; --surface:rgba(20,20,20,0.4); --glass:rgba(255,255,255,0.03);
+      --neon-cyan:#00f0ff; --neon-green:#00ff66;
+      --text-main:#ffffff; --text-muted:#8892b0;
+      --font-sans:'Space Grotesk',sans-serif; --font-mono:'JetBrains Mono',monospace;
+      --ease:cubic-bezier(0.85,0,0.15,1);
+    }
+    body.light-mode{--bg:#f0f2f5;--surface:rgba(255,255,255,0.8);--glass:rgba(0,0,0,0.05);--text-main:#0a0a0a;--text-muted:#555e7b;}
+    *{margin:0;padding:0;box-sizing:border-box;cursor:none !important;}
+    ::selection{background:var(--neon-cyan);color:#000;}
+    body{background-color:var(--bg);color:var(--text-main);font-family:var(--font-sans);overflow-x:hidden;min-height:100vh;transition:background 0.5s,color 0.5s;}
+    ::-webkit-scrollbar{width:4px;} ::-webkit-scrollbar-track{background:var(--bg);} ::-webkit-scrollbar-thumb{background:var(--neon-cyan);border-radius:2px;}
+    #bg-canvas{position:fixed;top:0;left:0;width:100%;height:100%;z-index:-2;opacity:0.6;transition:opacity 0.5s;}
+    #spotlight{position:fixed;width:400px;height:400px;background:radial-gradient(circle,rgba(0,240,255,0.04) 0%,transparent 70%);border-radius:50%;pointer-events:none;z-index:0;transform:translate(-50%,-50%);}
+
+    /* Preloader */
+    #premium-loader{position:fixed;inset:0;background:#030303;z-index:10000;display:flex;align-items:center;justify-content:center;}
+    .loader-screen{width:min(700px,90vw);background:#0d0d0d;border:1px solid rgba(255,255,255,0.08);border-radius:16px;overflow:hidden;box-shadow:0 40px 80px rgba(0,0,0,0.9);}
+    .loader-titlebar{background:#1a1a1a;padding:14px 20px;display:flex;align-items:center;gap:8px;border-bottom:1px solid rgba(255,255,255,0.05);}
+    .loader-dot{width:12px;height:12px;border-radius:50%;}
+    .loader-dot:nth-child(1){background:#ff5f56;}.loader-dot:nth-child(2){background:#ffbd2e;}.loader-dot:nth-child(3){background:#27c93f;}
+    .loader-filename{margin-left:auto;margin-right:auto;font-family:var(--font-mono);font-size:12px;color:rgba(255,255,255,0.3);}
+    .loader-code-body{padding:28px 32px;font-family:var(--font-mono);font-size:clamp(11px,1.6vw,14px);line-height:1.9;min-height:240px;}
+    .loader-code-body .ln{display:flex;gap:20px;opacity:0;}
+    .loader-code-body .ln-num{color:rgba(255,255,255,0.18);user-select:none;min-width:22px;text-align:right;}
+    .loader-code-body .ln-text{color:#cdd6f4;}
+    .lc-kw{color:#cba6f7;}.lc-fn{color:#89b4fa;}.lc-str{color:#a6e3a1;}.lc-num{color:#fab387;}.lc-cm{color:#6c7086;font-style:italic;}.lc-op{color:#89dceb;}.lc-var{color:#f38ba8;}
+    .loader-cursor-blink{display:inline-block;width:9px;height:15px;background:var(--neon-cyan);vertical-align:middle;animation:cur-blink 0.8s step-end infinite;margin-left:2px;}
+    @keyframes cur-blink{0%,100%{opacity:1}50%{opacity:0}}
+    .loader-progress-row{padding:0 32px 22px;display:flex;align-items:center;gap:14px;}
+    .loader-progress-track{flex:1;height:2px;background:rgba(255,255,255,0.06);border-radius:1px;overflow:hidden;}
+    .loader-progress-fill{height:100%;width:0%;background:linear-gradient(90deg,var(--neon-cyan),var(--neon-green));transition:width 0.15s linear;}
+    .loader-pct{font-family:var(--font-mono);font-size:11px;color:var(--neon-green);min-width:34px;text-align:right;}
+
+    /* Navigation */
+    nav{position:fixed;top:30px;left:50%;transform:translateX(-50%);width:90%;max-width:650px;height:60px;z-index:1000;display:flex;justify-content:space-between;align-items:center;padding:0 30px;background:var(--glass);backdrop-filter:blur(30px);-webkit-backdrop-filter:blur(30px);border:1px solid rgba(255,255,255,0.06);border-radius:30px;box-shadow:0 20px 40px rgba(0,0,0,0.5);transition:background 0.5s;}
+    .logo{font-family:var(--font-mono);font-weight:700;font-size:16px;text-decoration:none;color:var(--text-main);}
+    .logo span{color:var(--neon-cyan);}
+    .nav-links{display:flex;gap:5px;align-items:center;}
+    .nav-links a{color:var(--text-muted);text-decoration:none;padding:8px 15px;font-size:13px;transition:0.4s var(--ease);font-family:var(--font-mono);border-radius:15px;}
+    .nav-links a:hover,.nav-links a.active{color:var(--text-main);background:rgba(255,255,255,0.08);}
+    #theme-toggle{width:36px;height:36px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:none !important;transition:0.3s;color:var(--text-muted);}
+    #theme-toggle:hover{background:rgba(255,255,255,0.15);color:var(--text-main);}
+
+    /* Live Status */
+    .live-status{position:fixed;bottom:30px;left:30px;font-family:var(--font-mono);font-size:12px;color:var(--text-muted);background:var(--surface);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,0.05);border-radius:20px;padding:10px 16px;display:flex;align-items:center;gap:10px;z-index:100;}
+    .status-dot{width:8px;height:8px;background:var(--neon-green);border-radius:50%;animation:pulse-dot 2s infinite;}
+    @keyframes pulse-dot{0%,100%{opacity:1;box-shadow:0 0 0 0 rgba(0,255,102,0.4);}50%{opacity:0.7;box-shadow:0 0 0 6px rgba(0,255,102,0);}}
+
+    /* Page */
+    main{padding:150px 8vw 100px;max-width:1200px;margin:0 auto;min-height:100vh;}
+    .prompt{color:var(--neon-green);font-family:var(--font-mono);font-size:14px;display:block;margin-bottom:20px;}
+    .section-title{font-size:clamp(40px,6vw,80px);font-weight:700;line-height:1.1;margin-bottom:15px;}
+    .contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:50px;margin-top:50px;}
+
+    /* Terminal */
+    .terminal-box{background:#0a0a0a;border-radius:20px;border:1px solid rgba(255,255,255,0.08);box-shadow:0 30px 60px rgba(0,0,0,0.8);overflow:hidden;}
+    .term-header{background:#111;padding:15px 20px;display:flex;gap:8px;align-items:center;border-bottom:1px solid rgba(255,255,255,0.05);}
+    .term-dot{width:12px;height:12px;border-radius:50%;}
+    .term-dot:nth-child(1){background:#ff5f56;}.term-dot:nth-child(2){background:#ffbd2e;}.term-dot:nth-child(3){background:#27c93f;}
+    .term-title{font-family:var(--font-mono);font-size:12px;color:var(--text-muted);margin-left:auto;margin-right:auto;}
+    .term-body{padding:30px;font-family:var(--font-mono);font-size:14px;color:var(--text-muted);line-height:2;}
+    .term-link{color:var(--neon-cyan);text-decoration:none;border-bottom:1px dashed rgba(0,240,255,0.3);transition:0.3s;padding-bottom:2px;}
+    .term-link:hover{background:rgba(0,240,255,0.1);border-bottom-color:var(--neon-cyan);}
+    .blink{animation:blinker 1s linear infinite;}
+    @keyframes blinker{50%{opacity:0;}}
+
+    /* Form */
+    .contact-form-box{background:var(--surface);border:1px solid rgba(255,255,255,0.06);border-radius:20px;padding:35px;}
+    .form-title{font-size:22px;font-weight:700;margin-bottom:8px;}
+    .form-subtitle{color:var(--text-muted);font-family:var(--font-mono);font-size:12px;margin-bottom:30px;}
+    .form-group{margin-bottom:20px;}
+    .form-group label{display:block;font-family:var(--font-mono);font-size:11px;color:var(--neon-green);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;}
+    .form-group input,.form-group textarea,.form-group select{width:100%;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:14px 18px;color:var(--text-main);font-family:var(--font-sans);font-size:15px;transition:0.3s;outline:none;cursor:text !important;}
+    .form-group input:focus,.form-group textarea:focus{border-color:var(--neon-cyan);background:rgba(0,240,255,0.03);box-shadow:0 0 0 3px rgba(0,240,255,0.05);}
+    .form-group textarea{resize:vertical;min-height:120px;}
+    .form-group select{cursor:none !important;}
+    .form-group select option{background:#111;}
+    .btn-submit{width:100%;padding:16px;background:linear-gradient(135deg,var(--neon-cyan),var(--neon-green));color:#000;font-family:var(--font-mono);font-size:14px;font-weight:700;border:none;border-radius:30px;cursor:none !important;transition:0.4s;text-transform:uppercase;letter-spacing:1px;display:flex;align-items:center;justify-content:center;gap:10px;}
+    .btn-submit:hover{transform:translateY(-3px);box-shadow:0 15px 30px rgba(0,240,255,0.2);}
+    .btn-submit:disabled{opacity:0.6;transform:none;}
+
+    /* Chatbot */
+    .chatbot-box{grid-column:1/-1;background:#0a0a0a;border:1px solid rgba(255,255,255,0.08);border-radius:20px;overflow:hidden;margin-top:20px;}
+    .chat-header{background:#111;padding:20px 25px;display:flex;align-items:center;gap:15px;border-bottom:1px solid rgba(255,255,255,0.05);}
+    .chat-avatar{width:40px;height:40px;background:linear-gradient(135deg,var(--neon-cyan),var(--neon-green));border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;color:#000;}
+    .chat-info h4{color:var(--text-main);font-size:15px;}
+    .chat-info span{font-family:var(--font-mono);font-size:11px;color:var(--neon-green);}
+    .chat-messages{padding:25px;height:300px;overflow-y:auto;display:flex;flex-direction:column;gap:15px;}
+    .chat-messages::-webkit-scrollbar{width:3px;}.chat-messages::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.1);}
+    .chat-msg{max-width:80%;padding:12px 18px;border-radius:18px;font-size:14px;line-height:1.5;}
+    .chat-msg.bot{background:rgba(255,255,255,0.05);color:var(--text-muted);border-radius:18px 18px 18px 4px;align-self:flex-start;}
+    .chat-msg.user{background:var(--neon-cyan);color:#000;font-weight:600;border-radius:18px 18px 4px 18px;align-self:flex-end;}
+    .chat-typing{display:flex;gap:4px;align-items:center;padding:12px 18px;}
+    .chat-typing span{width:6px;height:6px;background:var(--text-muted);border-radius:50%;animation:typing 1.2s infinite;}
+    .chat-typing span:nth-child(2){animation-delay:0.2s;}.chat-typing span:nth-child(3){animation-delay:0.4s;}
+    @keyframes typing{0%,60%,100%{opacity:0.3;transform:translateY(0);}30%{opacity:1;transform:translateY(-4px);}}
+    .chat-input-row{display:flex;gap:10px;padding:20px 25px;border-top:1px solid rgba(255,255,255,0.05);}
+    .chat-input-row input{flex:1;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:30px;padding:12px 20px;color:var(--text-main);font-family:var(--font-sans);font-size:14px;outline:none;cursor:text !important;}
+    .chat-input-row input:focus{border-color:var(--neon-cyan);}
+    .chat-send-btn{width:44px;height:44px;background:var(--neon-cyan);color:#000;border:none;border-radius:50%;cursor:none !important;transition:0.3s;display:flex;align-items:center;justify-content:center;}
+    .chat-send-btn:hover{background:var(--neon-green);transform:scale(1.05);}
+
+    /* Control Bar */
+    #control-bar{position:fixed;right:24px;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:10px;z-index:200;}
+    .ctrl-btn{width:42px;height:42px;background:var(--surface);border:1px solid rgba(255,255,255,0.08);border-radius:12px;display:flex;align-items:center;justify-content:center;color:var(--text-muted);cursor:none !important;transition:0.3s;font-size:14px;backdrop-filter:blur(10px);position:relative;}
+    .ctrl-btn:hover{border-color:var(--neon-cyan);color:var(--neon-cyan);background:rgba(0,240,255,0.06);}
+    .ctrl-tooltip{position:absolute;right:54px;background:rgba(0,0,0,0.85);color:#fff;font-family:var(--font-mono);font-size:11px;padding:5px 10px;border-radius:6px;white-space:nowrap;pointer-events:none;opacity:0;transition:opacity 0.2s;}
+    .ctrl-btn:hover .ctrl-tooltip{opacity:1;}
+
+    /* DevMode Overlay */
+    #devmode-overlay{position:fixed;inset:0;z-index:9990;background:rgba(0,0,0,0.92);display:none;align-items:center;justify-content:center;backdrop-filter:blur(10px);}
+    .devmode-window{width:min(860px,94vw);max-height:80vh;background:#1e1e2e;border:1px solid rgba(255,255,255,0.1);border-radius:14px;overflow:hidden;box-shadow:0 40px 80px rgba(0,0,0,0.9);display:flex;flex-direction:column;}
+    .devmode-titlebar{background:#181825;padding:14px 20px;display:flex;align-items:center;gap:12px;border-bottom:1px solid rgba(255,255,255,0.06);flex-shrink:0;}
+    .devmode-tab{font-family:var(--font-mono);font-size:12px;color:rgba(255,255,255,0.5);padding:4px 14px;border-radius:4px;border-bottom:2px solid transparent;}
+    .devmode-tab.active{color:#cdd6f4;border-bottom-color:var(--neon-cyan);}
+    .devmode-close-btn{margin-left:auto;background:none;border:none;color:var(--text-muted);font-size:16px;cursor:none !important;transition:0.2s;}
+    .devmode-close-btn:hover{color:#f38ba8;}
+    .devmode-sidebar{display:flex;flex:1;overflow:hidden;}
+    .devmode-gutter{width:48px;background:#181825;border-right:1px solid rgba(255,255,255,0.05);flex-shrink:0;}
+    .devmode-code-area{flex:1;overflow-y:auto;padding:24px 28px;font-family:var(--font-mono);font-size:13px;line-height:1.8;color:#cdd6f4;}
+    .devmode-code-area::-webkit-scrollbar{width:4px;}.devmode-code-area::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.1);}
+    .devmode-statusbar{background:#181825;padding:6px 20px;font-family:var(--font-mono);font-size:11px;color:rgba(255,255,255,0.3);border-top:1px solid rgba(255,255,255,0.05);display:flex;gap:20px;align-items:center;flex-shrink:0;}
+    .devmode-statusbar .dot{width:8px;height:8px;background:var(--neon-green);border-radius:50%;}
+
+    /* Toast */
+    #toast{position:fixed;top:100px;right:30px;color:#000;font-family:var(--font-mono);font-size:13px;font-weight:700;padding:15px 25px;border-radius:10px;z-index:9999;opacity:0;transform:translateY(-20px);transition:0.4s;pointer-events:none;}
+    #toast.show{opacity:1;transform:translateY(0);}
+    #toast.success{background:var(--neon-green);}
+    #toast.info{background:var(--neon-cyan);}
+
+    /* Cursor */
+    #cursor{position:fixed;top:0;left:0;width:12px;height:12px;background:#fff;border-radius:50%;pointer-events:none;z-index:99999;mix-blend-mode:difference;transition:width 0.3s var(--ease),height 0.3s var(--ease);}
+    #cursor.active-link{width:60px;height:60px;}
+
+    /* Mobile */
+    @media(max-width:768px){
+      .contact-grid{grid-template-columns:1fr;}
+      .chatbot-box{grid-column:1;}
+      nav{top:15px;max-width:95%;padding:0 15px;}
+      .nav-links a{padding:6px 10px;font-size:11px;}
+      .live-status{bottom:15px;left:15px;font-size:10px;}
+      #control-bar{right:12px;gap:8px;}
+      .ctrl-btn{width:36px;height:36px;font-size:12px;}
+      .ctrl-tooltip{display:none;}
+    }
+  </style>
+</head>
+<body>
+
+  <canvas id="bg-canvas"></canvas>
+  <div id="spotlight"></div>
+  <div id="cursor"></div>
+  <div id="toast"></div>
+
+  <!-- Floating Control Bar -->
+  <div id="control-bar">
+    <button class="ctrl-btn" id="ambient-btn" title="Play ambient audio">
+      <i class="fa-solid fa-volume-xmark"></i>
+      <span class="ctrl-tooltip">Ambient Audio</span>
+    </button>
+    <button class="ctrl-btn" id="sfx-btn" title="Toggle UI sounds">
+      <i class="fa-solid fa-bell"></i>
+      <span class="ctrl-tooltip">UI Sounds</span>
+    </button>
+    <button class="ctrl-btn" id="devmode-btn" title="Developer Mode (D)">
+      <i class="fa-solid fa-code"></i>
+      <span class="ctrl-tooltip">Developer Mode</span>
+    </button>
+  </div>
+
+  <!-- Developer Mode Overlay -->
+  <div id="devmode-overlay">
+    <div class="devmode-window">
+      <div class="devmode-titlebar">
+        <div class="devmode-tab active">portfolio.json</div>
+        <button class="devmode-close-btn" id="devmode-close"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div class="devmode-sidebar">
+        <div class="devmode-gutter"></div>
+        <div class="devmode-code-area">
+          <pre id="devmode-code" style="margin:0;white-space:pre-wrap;word-break:break-word;"></pre>
+        </div>
+      </div>
+      <div class="devmode-statusbar">
+        <span><div class="dot"></div> oshandageethanjana.dev</span>
+        <span><i class="fa-brands fa-js" style="color:#f7df1e;"></i> JSON</span>
+        <span>UTF-8</span>
+        <span><i class="fa-solid fa-code-branch"></i> main</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Preloader -->
+  <div id="premium-loader">
+    <div class="loader-screen">
+      <div class="loader-titlebar">
+        <div class="loader-dot"></div><div class="loader-dot"></div><div class="loader-dot"></div>
+        <span class="loader-filename">portfolio/contact.php</span>
+      </div>
+      <div class="loader-code-body" id="loader-lines"></div>
+      <div class="loader-progress-row">
+        <div class="loader-progress-track"><div class="loader-progress-fill" id="loader-fill"></div></div>
+        <div class="loader-pct" id="loader-pct">0%</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Navigation -->
+  <nav>
+    <a href="index.html" class="logo magnetic">Oshanda<span>.</span></a>
+    <div class="nav-links">
+      <a href="index.html" class="magnetic page-link">/home</a>
+      <a href="about.html" class="magnetic page-link">/about</a>
+      <a href="projects.html" class="magnetic page-link">/works</a>
+      <a href="blog.html" class="magnetic page-link">/blog</a>
+      <a href="contact.html" class="active magnetic page-link">/contact</a>
+      <button id="theme-toggle" onclick="toggleTheme()"><i class="fa-solid fa-moon" id="theme-icon"></i></button>
+    </div>
+  </nav>
+
+  <div class="live-status">
+    <div class="status-dot"></div>
+    <span>Colombo, LK</span><span>•</span>
+    <span id="live-time">--:-- --</span><span>•</span>
+    <span style="color:var(--neon-green);">Available</span>
+  </div>
+
+  <main id="main-content">
+    <div style="text-align:center;">
+      <span class="prompt seq-in">> ./connect.sh</span>
+      <h1 class="section-title seq-in">Let's Build.</h1>
+      <p class="seq-in" style="color:var(--text-muted);font-size:18px;max-width:500px;margin:0 auto;">
+        Have a project in mind? I'm always open to new ideas and collaborations.
+      </p>
+    </div>
+
+    <div class="contact-grid seq-in">
+      <!-- Terminal -->
+      <div class="terminal-box">
+        <div class="term-header">
+          <div class="term-dot"></div><div class="term-dot"></div><div class="term-dot"></div>
+          <span class="term-title">contact_info.json</span>
+        </div>
+        <div class="term-body">
+          <div><span style="color:var(--neon-green);">guest@oshanda:~$</span> <span style="color:#fff;">cat contact_info.json</span></div><br>
+          {<br>
+          &nbsp;&nbsp;"name": "Oshanda Geethanjana",<br>
+          &nbsp;&nbsp;"email": "<a href="/cdn-cgi/l/email-protection#e58a968d848b8184a5928d8c9180868a818097cb8a8b898c8b80" class="term-link magnetic"><span class="__cf_email__" data-cfemail="d8b7abb0b9b6bcb998afb0b1acbdbbb7bcbdaaf6b7b6b4b1b6bd">[email&#160;protected]</span></a>",<br>
+          &nbsp;&nbsp;"whatsapp": "<a href="https://wa.me/94764778100" target="_blank" class="term-link magnetic">+94 76 477 8100</a>",<br>
+          &nbsp;&nbsp;"github": "<a href="https://github.com/oshandageethanjana" target="_blank" class="term-link magnetic">github.com/oshandageethanjana</a>",<br>
+          &nbsp;&nbsp;"linkedin": "<a href="https://lk.linkedin.com/in/oshanda-geethanjana-725574336" target="_blank" class="term-link magnetic">in/oshanda-geethanjana</a>",<br>
+          &nbsp;&nbsp;"instagram": "<a href="https://www.instagram.com/whitecoder._" target="_blank" class="term-link magnetic">@whitecoder._</a>",<br>
+          &nbsp;&nbsp;"status": "<span style="color:var(--neon-green);">Available for Tech &amp; AI Projects</span>"<br>
+          }<br><br>
+          <span style="color:var(--neon-green);">guest@oshanda:~$</span> <span class="blink">_</span>
+        </div>
+      </div>
+
+      <!-- Form — Web3Forms contact form -->
+      <!-- Web3Forms API: https://web3forms.com — නොමිලේ contact form service -->
+      <div class="contact-form-box">
+        <div class="form-title">Send a Message</div>
+        <div class="form-subtitle">> Powered by Web3Forms — instant delivery</div>
+
+        <!-- Success State — form submit success message -->
+        <!-- submit success screen (default display:none) -->
+        <div id="form-success" style="display:none;text-align:center;padding:40px 20px;">
+          <div style="font-size:52px;margin-bottom:16px;animation:successPop 0.5s var(--ease);"><i class="fa-solid fa-circle-check" style="color:var(--neon-green);"></i></div>
+          <div style="font-size:20px;font-weight:700;margin-bottom:10px;color:var(--neon-green);">Message Sent!</div>
+          <div style="font-family:var(--font-mono);font-size:13px;color:var(--text-muted);margin-bottom:25px;">
+            > Response queued. I'll reply within 24 hours.
+          </div>
+          <button class="btn-submit magnetic" onclick="resetForm()" style="width:auto;padding:12px 28px;">
+            <i class="fa-solid fa-rotate-left"></i> Send Another
+          </button>
+        </div>
+
+        <!-- Form Fields — form fields (default display:block) -->
+        <div id="form-fields">
+          <!-- Web3Forms hidden access key — Web3Forms access key hidden input -->
+          <!-- ⚠️  YOUR_WEB3FORMS_KEY කියන තැනට https://web3forms.com ගිහින් ඔයාගේ access key දාන්න -->
+          <input type="hidden" name="access_key" id="web3forms-key" value="676c0e0c-ac89-4998-8aac-ef6bc06294bb">
+          <input type="hidden" name="subject" id="form-subject-hidden" value="New Contact from Portfolio">
+          <!-- Honeypot spam protection — spam bot protection -->
+          <input type="checkbox" name="botcheck" id="botcheck" style="display:none;">
+
+          <div class="form-group">
+            <label>Your Name <span style="color:#f38ba8;">*</span></label>
+            <input type="text" id="form-name" name="name" placeholder="John Doe" required>
+          </div>
+          <div class="form-group">
+            <label>Email Address <span style="color:#f38ba8;">*</span></label>
+            <input type="email" id="form-email" name="email" placeholder="john@example.com" required>
+          </div>
+          <div class="form-group">
+            <label>Project Type</label>
+            <select id="form-type" name="project_type">
+              <option value="">Select project type...</option>
+              <option>Web Development</option><option>AI Integration</option>
+              <option>UI/UX Design</option><option>Full Stack System</option>
+              <option>Collaboration</option><option>Other</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Message <span style="color:#f38ba8;">*</span></label>
+            <textarea id="form-message" name="message" placeholder="Describe your project or idea..." required></textarea>
+          </div>
+
+          <!-- Validation error — validation error message (default display:none) -->
+          <div id="form-error" style="display:none;font-family:var(--font-mono);font-size:12px;color:#f38ba8;margin-bottom:16px;padding:10px 14px;background:rgba(243,139,168,0.08);border:1px solid rgba(243,139,168,0.2);border-radius:10px;"></div>
+
+          <button class="btn-submit magnetic" id="submit-btn" onclick="submitForm()">
+            <i class="fa-solid fa-paper-plane" id="submit-icon"></i>
+            <span id="submit-text">Send Message</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Chatbot -->
+      <div class="chatbot-box">
+        <div class="chat-header">
+          <div class="chat-avatar"><i class="fa-solid fa-robot"></i></div>
+          <div class="chat-info">
+            <h4>Oshanda's AI Assistant</h4>
+            <span>Online &bull; Powered by AI</span>
+          </div>
+        </div>
+        <div class="chat-messages" id="chat-messages">
+          <div class="chat-msg bot">Hi! I'm Oshanda's AI assistant. Ask me anything about his skills, projects, or availability.</div>
+        </div>
+        <div class="chat-input-row">
+          <input type="text" id="chat-input" placeholder="Ask me anything about Oshanda..." onkeydown="if(event.key==='Enter')sendChat()">
+          <button class="chat-send-btn magnetic" onclick="sendChat()"><i class="fa-solid fa-arrow-right"></i></button>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script>
+    /* Custom Cursor */
+    const cursor=document.getElementById('cursor');
+    let mouseX=0,mouseY=0,cursorX=0,cursorY=0;
+    document.addEventListener('mousemove',e=>{
+      mouseX=e.clientX;mouseY=e.clientY;
+      document.getElementById('spotlight').style.left=e.clientX+'px';
+      document.getElementById('spotlight').style.top=e.clientY+'px';
+    });
+    gsap.ticker.add(()=>{
+      cursorX+=(mouseX-cursorX)*0.2;cursorY+=(mouseY-cursorY)*0.2;
+      gsap.set(cursor,{x:cursorX,y:cursorY,xPercent:-50,yPercent:-50});
+    });
+    document.querySelectorAll('a,button,input,textarea,select').forEach(el=>{
+      el.addEventListener('mouseenter',()=>cursor.classList.add('active-link'));
+      el.addEventListener('mouseleave',()=>cursor.classList.remove('active-link'));
+    });
+    document.querySelectorAll('.magnetic').forEach(btn=>{
+      btn.addEventListener('mousemove',e=>{
+        const r=btn.getBoundingClientRect();
+        gsap.to(btn,{x:(e.clientX-r.left-r.width/2)*0.3,y:(e.clientY-r.top-r.height/2)*0.3,duration:0.5,ease:'power2.out'});
+      });
+      btn.addEventListener('mouseleave',()=>gsap.to(btn,{x:0,y:0,duration:0.5,ease:'elastic.out(1,0.3)'}));
+    });
+
+    /* Three.js */
+    let scene,camera,renderer,points,mX=0,mY=0;
+    function initThree(){
+      const c=document.getElementById('bg-canvas');
+      scene=new THREE.Scene();camera=new THREE.PerspectiveCamera(75,innerWidth/innerHeight,0.1,1000);camera.position.z=5;
+      renderer=new THREE.WebGLRenderer({canvas:c,alpha:true});renderer.setSize(innerWidth,innerHeight);
+      const geo=new THREE.BufferGeometry();const pos=new Float32Array(3000*3);
+      for(let i=0;i<3000*3;i++)pos[i]=(Math.random()-0.5)*12;
+      geo.setAttribute('position',new THREE.BufferAttribute(pos,3));
+      const mat=new THREE.PointsMaterial({size:0.012,color:0x8892b0,transparent:true,opacity:0.5});
+      points=new THREE.Points(geo,mat);scene.add(points);
+      document.addEventListener('mousemove',e=>{mX=(e.clientX/innerWidth-0.5)*0.5;mY=-(e.clientY/innerHeight-0.5)*0.5;});
+      window.addEventListener('resize',()=>{camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix();renderer.setSize(innerWidth,innerHeight);});
+      (function loop(){requestAnimationFrame(loop);points.rotation.y+=0.0003+mX*0.001;points.rotation.x+=0.0001+mY*0.001;renderer.render(scene,camera);})();
+    }
+
+    /* Preloader */
+    const INDEX_CODE_LINES=[
+      {n:1,h:`<span class="lc-cm">// ./connect.sh — initialising handshake</span>`},
+      {n:2,h:``},
+      {n:3,h:`<span class="lc-var">$email</span>    <span class="lc-op">=</span> <span class="lc-str">"oshanda@oshandageethanjana.dev"</span>;`},
+      {n:4,h:`<span class="lc-var">$whatsapp</span> <span class="lc-op">=</span> <span class="lc-str">"+94 76 477 8100"</span>;`},
+      {n:5,h:`<span class="lc-var">$status</span>   <span class="lc-op">=</span> <span class="lc-str">"Available for Projects"</span>;`},
+      {n:6,h:``},
+      {n:7,h:`<span class="lc-kw">function</span> <span class="lc-fn">sendMessage</span>(<span class="lc-var">$data</span>) {`},
+      {n:8,h:`&nbsp;&nbsp;<span class="lc-fn">mail</span>(<span class="lc-var">$email</span>, <span class="lc-var">$data</span>[<span class="lc-str">'subject'</span>], <span class="lc-var">$data</span>[<span class="lc-str">'body'</span>]);`},
+      {n:9,h:`&nbsp;&nbsp;<span class="lc-kw">return</span> <span class="lc-str">"Message delivered."</span>;`},
+      {n:10,h:`}`},
+      {n:11,h:`<span class="lc-cm">// Connection established. Ready.</span>`},
+    ];
+    function runPreloader(){
+      const lE=document.getElementById('loader-lines'),fE=document.getElementById('loader-fill'),pE=document.getElementById('loader-pct'),ldr=document.getElementById('premium-loader');
+      let i=0;
+      function next(){
+        if(i>=INDEX_CODE_LINES.length){setTimeout(finish,300);return;}
+        const{n,h}=INDEX_CODE_LINES[i];
+        const row=document.createElement('div');row.className='ln';
+        row.innerHTML=`<span class="ln-num">${n}</span><span class="ln-text">${h}&thinsp;<span class="loader-cursor-blink"></span></span>`;
+        lE.querySelectorAll('.loader-cursor-blink').forEach(c=>c.remove());
+        lE.appendChild(row);requestAnimationFrame(()=>{row.style.transition='opacity 0.12s';row.style.opacity='1';});
+        lE.scrollTop=lE.scrollHeight;
+        const pct=Math.round(((i+1)/INDEX_CODE_LINES.length)*100);
+        fE.style.width=pct+'%';pE.textContent=pct+'%';
+        i++;setTimeout(next,170);
+      }
+      setTimeout(next,250);
+      function finish(){
+        lE.querySelectorAll('.loader-cursor-blink').forEach(c=>c.remove());
+        gsap.to(ldr,{yPercent:-100,duration:0.9,ease:'power4.inOut',onComplete:()=>{
+          ldr.style.display='none';
+          gsap.fromTo('.seq-in',{y:50,opacity:0},{y:0,opacity:1,duration:1,stagger:0.1,ease:'power4.out'});
+        }});
+      }
+    }
+
+    /* ================================================
+       Web3Forms Contact Form Submit — Web3Forms form submit
+       Web3Forms API: https://web3forms.com
+       නිදහස් contact form service — serverless email delivery
+    ================================================ */
+    async function submitForm() {
+      var name    = document.getElementById('form-name').value.trim();
+      var email   = document.getElementById('form-email').value.trim();
+      var msg     = document.getElementById('form-message').value.trim();
+      var type    = document.getElementById('form-type').value;
+      var btn     = document.getElementById('submit-btn');
+      var bTxt    = document.getElementById('submit-text');
+      var bIcon   = document.getElementById('submit-icon');
+      var errBox  = document.getElementById('form-error');
+      var botCheck= document.getElementById('botcheck');
+
+      /* Honeypot bot check — spam bot reject */
+      if (botCheck && botCheck.checked) return;
+
+      /* Hide previous errors — previous errors clear */
+      errBox.style.display = 'none';
+
+      /* Client-side validation — client validation */
+      if (!name || !email || !msg) {
+        errBox.textContent = '> Please fill in all required fields (*).';
+        errBox.style.display = 'block';
+        gsap.fromTo(errBox, { x: -8 }, { x: 0, duration: 0.4, ease: 'elastic.out(1,0.3)' });
+        return;
+      }
+      if (!/\S+@\S+\.\S+/.test(email)) {
+        errBox.textContent = '> Please enter a valid email address.';
+        errBox.style.display = 'block';
+        return;
+      }
+
+      /* Update subject with project type — subject update */
+      document.getElementById('form-subject-hidden').value =
+        'Portfolio Contact' + (type ? ' — ' + type : '') + ' from ' + name;
+
+      /* Loading state — submit button loading state */
+      btn.disabled = true;
+      bIcon.className = 'fa-solid fa-spinner fa-spin';
+      bTxt.textContent = 'Sending...';
+      gsap.to(btn, { scale: 0.97, duration: 0.2 });
+
+      try {
+        /* Build form data — form data build */
+        var formData = new FormData();
+        formData.append('access_key', document.getElementById('web3forms-key').value);
+        formData.append('name', name);
+        formData.append('email', email);
+        formData.append('subject', document.getElementById('form-subject-hidden').value);
+        formData.append('message', '--- Message ---\n' + msg + '\n\n--- Project Type ---\n' + (type || 'Not specified'));
+        formData.append('from_name', 'Oshanda Geethanjana Portfolio');
+        /* Redirect disabled — redirect disabled (AJAX mode) */
+        formData.append('redirect', 'false');
+
+        /* POST to Web3Forms API — Web3Forms API call */
+        var res = await fetch('https://api.web3forms.com/submit', {
+          method: 'POST',
+          body: formData
+        });
+        var data = await res.json();
+
+        if (data.success) {
+          /* SUCCESS — form success state show */
+          gsap.to(btn, { scale: 1, duration: 0.3 });
+          document.getElementById('form-fields').style.display = 'none';
+          var successEl = document.getElementById('form-success');
+          successEl.style.display = 'block';
+          gsap.fromTo(successEl, { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.6, ease: 'power3.out' });
+          showToast('✓ Message delivered!', 'success');
+          if (navigator.vibrate) navigator.vibrate([50, 30, 50]);
+        } else {
+          /* API error — API error handle */
+          throw new Error(data.message || 'Submission failed');
+        }
+
+      } catch (err) {
+        /* Error state — error state restore */
+        console.error('Web3Forms error:', err);
+        btn.disabled = false;
+        bIcon.className = 'fa-solid fa-paper-plane';
+        bTxt.textContent = 'Send Message';
+        gsap.to(btn, { scale: 1, duration: 0.3 });
+        errBox.textContent = '> Failed to send: ' + (err.message || 'Network error. Try again.');
+        errBox.style.display = 'block';
+        showToast('Send failed — try again.', 'info');
+      }
+    }
+
+    /* Reset form — form reset function */
+    function resetForm() {
+      document.getElementById('form-success').style.display = 'none';
+      document.getElementById('form-fields').style.display = 'block';
+      document.getElementById('form-name').value = '';
+      document.getElementById('form-email').value = '';
+      document.getElementById('form-message').value = '';
+      document.getElementById('form-type').value = '';
+      document.getElementById('submit-btn').disabled = false;
+      document.getElementById('submit-icon').className = 'fa-solid fa-paper-plane';
+      document.getElementById('submit-text').textContent = 'Send Message';
+    }
+
+    /* Success animation keyframe — success animation */
+    (function() {
+      var s = document.createElement('style');
+      s.textContent = '@keyframes successPop{0%{transform:scale(0.5);opacity:0;}70%{transform:scale(1.15);}100%{transform:scale(1);opacity:1;}}';
+      document.head.appendChild(s);
+    })();
+
+    /* AI Chatbot */
+    const aiR={
+      default:"I'm not sure, but reach Oshanda at oshanda@whitecoder.online!",
+      skills:"Oshanda is skilled in JavaScript, PHP, MySQL, HTML5/CSS3, Tailwind CSS, Figma, AI & Prompt Engineering, and Three.js — 3+ years of building.",
+      projects:"Oshanda has built 50+ projects: WhiteCoder Copilot (AI), HND Study Hub (6K+ students), ResumeIQ, ProfileAI, Smart POS System and more.",
+      contact:"Reach Oshanda via email at oshanda@whitecoder.online, WhatsApp at +94 76 477 8100, or through the form on this page.",
+      available:"Yes! Oshanda is currently available for freelance projects, AI integrations, and web development work.",
+      experience:"Oshanda has 3+ years of experience, founded WhiteCoder (2023) and HND Study Hub (2024), currently studying HNDIT at SLIATE.",
+      ai:"Oshanda specialises in AI & Prompt Engineering. He built WhiteCoder Copilot and ResumeIQ — both advanced AI-powered tools.",
+      price:"Pricing depends on scope. Send a message through the form and Oshanda will get back to you with a quote.",
+      hello:"Hello! I'm Oshanda's AI assistant. Ask me about his skills, projects, or availability!",
+    };
+    function getBotR(input){
+      const l=input.toLowerCase();
+      if(l.includes('skill')||l.includes('tech')||l.includes('stack'))return aiR.skills;
+      if(l.includes('project')||l.includes('work')||l.includes('built'))return aiR.projects;
+      if(l.includes('contact')||l.includes('email')||l.includes('reach'))return aiR.contact;
+      if(l.includes('available')||l.includes('hire')||l.includes('freelance'))return aiR.available;
+      if(l.includes('experience')||l.includes('background')||l.includes('study'))return aiR.experience;
+      if(l.includes('ai')||l.includes('artificial')||l.includes('copilot'))return aiR.ai;
+      if(l.includes('price')||l.includes('cost')||l.includes('rate'))return aiR.price;
+      if(l.includes('hello')||l.includes('hi')||l.includes('hey'))return aiR.hello;
+      return aiR.default;
+    }
+    function addMsg(text,type){
+      const c=document.getElementById('chat-messages');
+      const m=document.createElement('div');m.className=`chat-msg ${type}`;m.textContent=text;
+      c.appendChild(m);c.scrollTop=c.scrollHeight;
+    }
+    function sendChat(){
+      const inp=document.getElementById('chat-input');const text=inp.value.trim();if(!text)return;
+      addMsg(text,'user');inp.value='';
+      const c=document.getElementById('chat-messages');
+      const t=document.createElement('div');t.className='chat-msg bot chat-typing';t.id='typing-ind';
+      t.innerHTML='<span></span><span></span><span></span>';c.appendChild(t);c.scrollTop=c.scrollHeight;
+      setTimeout(()=>{document.getElementById('typing-ind')?.remove();addMsg(getBotR(text),'bot');if(navigator.vibrate)navigator.vibrate(10);},900+Math.random()*600);
+    }
+
+    /* Theme */
+    function toggleTheme(){
+      document.body.classList.toggle('light-mode');
+      const isLight=document.body.classList.contains('light-mode');
+      document.getElementById('theme-icon').className=isLight?'fa-solid fa-sun':'fa-solid fa-moon';
+      localStorage.setItem('theme',isLight?'light':'dark');
+      if(points)points.material.color.setHex(isLight?0x334155:0x8892b0);
+      document.getElementById('bg-canvas').style.opacity=isLight?'0.2':'0.6';
+    }
+    if(localStorage.getItem('theme')==='light')toggleTheme();
+
+    /* Live Time */
+    function updateTime(){
+      const t=new Date().toLocaleTimeString('en-US',{timeZone:'Asia/Colombo',hour:'2-digit',minute:'2-digit',hour12:true});
+      const el=document.getElementById('live-time');if(el)el.textContent=t;
+    }
+    updateTime();setInterval(updateTime,1000);
+
+    /* Toast */
+    function showToast(msg,type='success'){
+      const t=document.getElementById('toast');t.textContent=msg;t.className=`show ${type}`;
+      setTimeout(()=>t.className='',3500);
+    }
+
+    /* Keyboard */
+    document.addEventListener('keydown',e=>{
+      const tag=document.activeElement.tagName;
+      if(tag==='INPUT'||tag==='TEXTAREA'||tag==='SELECT')return;
+      if(e.key.toLowerCase()==='p')window.location.href='projects.html';
+      if(e.key.toLowerCase()==='a')window.location.href='about.html';
+      if(e.key===' '){e.preventDefault();toggleTheme();}
+    });
+
+    /* Page Transition */
+        /* Page transitions — safe version without opacity trap */
+    document.querySelectorAll('.page-link').forEach(link=>{
+      link.addEventListener('click',function(e){
+        e.preventDefault();
+        var url=this.href;
+        if(url===location.href)return;
+        location.href=url;
+      });
+    });
+
+    /* Haptic & Favicon */
+    document.querySelectorAll('a,button').forEach(el=>el.addEventListener('touchstart',()=>{if(navigator.vibrate)navigator.vibrate(10);}));
+    document.addEventListener('visibilitychange',()=>{
+      document.title=document.hidden?'[ offline ] Come back!':'Contact | Oshanda Geethanjana';
+    });
+
+    /* Gyroscope */
+    if(window.DeviceOrientationEvent){
+      window.addEventListener('deviceorientation',e=>{
+        if(points){points.rotation.y=(e.gamma||0)/90*0.5;points.rotation.x=(e.beta||0)/180*0.3;}
+      });
+    }
+
+
+    /* Fix bfcache blank page */
+    window.addEventListener('pageshow', function(e) {
+      if (e.persisted) {
+        var main = document.getElementById('main-content');
+        if (main) { main.style.opacity = '1'; main.style.transform = 'none'; }
+        var loader = document.getElementById('premium-loader');
+        if (loader) loader.style.display = 'none';
+      }
+    });
+    window.onload=()=>{initThree();runPreloader();};
+    if('serviceWorker' in navigator)navigator.serviceWorker.register('sw.js').catch(()=>{});
+  </script>
+
+  <!-- Lenis + ScrollTrigger + Shared Features -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+  <script src="shared.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded',function(){
+      if(typeof initSharedFeatures==='function') initSharedFeatures({scrollAnimations:true});
+    });
+  </script>
+</body>
+</html>

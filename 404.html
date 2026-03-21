@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>404 — Not Found | Oshanda Geethanjana</title>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    :root {
+      --bg: #050505; --neon-cyan: #00f0ff; --neon-green: #00ff66;
+      --text-main: #ffffff; --text-muted: #8892b0;
+      --font-mono: 'JetBrains Mono', monospace; --font-sans: 'Space Grotesk', sans-serif;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; cursor: none !important; }
+    body { background: var(--bg); color: var(--text-main); font-family: var(--font-sans); min-height: 100vh; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+
+    /* Glitch Effect — glitch text effect */
+    .glitch-container { text-align: center; position: relative; z-index: 1; }
+    .glitch-number {
+      font-family: var(--font-mono); font-size: clamp(120px, 25vw, 300px);
+      font-weight: 700; color: var(--text-main); line-height: 1;
+      position: relative; display: inline-block;
+      text-shadow: 3px 0 0 var(--neon-cyan), -3px 0 0 #ff0066;
+      animation: glitch-main 3s infinite;
+    }
+    @keyframes glitch-main {
+      0%, 94%, 100% { text-shadow: 3px 0 0 var(--neon-cyan), -3px 0 0 #ff0066; }
+      95% { text-shadow: -5px 0 0 var(--neon-cyan), 5px 0 0 #ff0066; transform: translate(3px, -2px); }
+      96% { text-shadow: 5px 0 0 var(--neon-cyan), -5px 0 0 #ff0066; transform: translate(-3px, 2px); }
+      97% { text-shadow: 3px 0 0 var(--neon-cyan), -3px 0 0 #ff0066; transform: translate(0); }
+    }
+    .glitch-number::before, .glitch-number::after {
+      content: '404'; position: absolute; top: 0; left: 0; width: 100%;
+    }
+    .glitch-number::before {
+      color: var(--neon-cyan); clip-path: polygon(0 0, 100% 0, 100% 40%, 0 40%);
+      animation: glitch-top 3s infinite;
+    }
+    .glitch-number::after {
+      color: #ff0066; clip-path: polygon(0 60%, 100% 60%, 100% 100%, 0 100%);
+      animation: glitch-bottom 3s infinite;
+    }
+    @keyframes glitch-top {
+      0%, 94%, 100% { transform: translate(0); opacity: 0; }
+      95% { transform: translate(-4px, -2px); opacity: 0.8; }
+      96% { transform: translate(4px, -1px); opacity: 0.8; }
+      97% { opacity: 0; }
+    }
+    @keyframes glitch-bottom {
+      0%, 94%, 100% { transform: translate(0); opacity: 0; }
+      95% { transform: translate(4px, 2px); opacity: 0.8; }
+      96% { transform: translate(-4px, 1px); opacity: 0.8; }
+      97% { opacity: 0; }
+    }
+
+    .error-msg {
+      font-family: var(--font-mono); font-size: 14px; color: var(--neon-green);
+      margin: 20px 0 10px;
+    }
+    .error-desc {
+      color: var(--text-muted); font-size: 16px; margin-bottom: 40px;
+      max-width: 400px; margin-left: auto; margin-right: auto;
+    }
+    .home-btn {
+      display: inline-flex; align-items: center; gap: 10px;
+      padding: 16px 32px; background: #fff; color: #000;
+      font-family: var(--font-mono); font-size: 14px; font-weight: 700;
+      text-transform: uppercase; border-radius: 30px;
+      text-decoration: none; transition: 0.4s;
+    }
+    .home-btn:hover { background: var(--neon-cyan); transform: translateY(-3px); box-shadow: 0 15px 30px rgba(0,240,255,0.3); }
+
+    /* Scanlines */
+    body::before {
+      content: '';
+      position: fixed; inset: 0; z-index: 0;
+      background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.1) 2px, rgba(0,0,0,0.1) 4px);
+      pointer-events: none;
+    }
+
+    /* Custom cursor */
+    #cursor { position: fixed; top: 0; left: 0; width: 12px; height: 12px; background: #fff; border-radius: 50%; pointer-events: none; z-index: 99999; mix-blend-mode: difference; }
+    #cursor.active-link { width: 60px; height: 60px; transition: width 0.3s, height 0.3s; }
+  </style>
+</head>
+<body>
+  <div id="cursor"></div>
+  <div class="glitch-container">
+    <div class="glitch-number">404</div>
+    <div class="error-msg">> ERROR: page_not_found.exe</div>
+    <p class="error-desc">The page you're looking for doesn't exist or has been moved to another universe.</p>
+    <a href="index.html" class="home-btn">
+      <i class="fa-solid fa-house"></i> Return Home
+    </a>
+  </div>
+
+  <script>
+    const cursor = document.getElementById('cursor');
+    let cx = 0, cy = 0, mx = 0, my = 0;
+    document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+    function loop() { cx += (mx - cx) * 0.2; cy += (my - cy) * 0.2; cursor.style.transform = `translate(${cx-6}px, ${cy-6}px)`; requestAnimationFrame(loop); }
+    loop();
+    document.querySelectorAll('a').forEach(a => {
+      a.addEventListener('mouseenter', () => cursor.classList.add('active-link'));
+      a.addEventListener('mouseleave', () => cursor.classList.remove('active-link'));
+    });
+  </script>
+</body>
+</html>

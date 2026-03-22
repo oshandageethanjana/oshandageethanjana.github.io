@@ -282,6 +282,63 @@
           </div>
         </div>
       </div>
+      
+      <script>
+      // CineHub Pro movie-style canvas animation
+      document.querySelectorAll('.thumb-canvas[data-type="cinehub"]').forEach(canvas => {
+        const ctx = canvas.getContext('2d');
+        canvas.width = 150;
+        canvas.height = 100;
+      
+        let angle = 0;
+      
+        function drawReel() {
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+      
+          // Background
+          ctx.fillStyle = '#1f1f1f';
+          ctx.fillRect(0, 0, canvas.width, canvas.height);
+      
+          // Spinning film reels
+          ctx.save();
+          ctx.translate(canvas.width/2, canvas.height/2);
+          ctx.rotate(angle);
+          ctx.strokeStyle = '#c084fc';
+          ctx.lineWidth = 3;
+      
+          for(let i=0;i<3;i++){
+            ctx.beginPath();
+            ctx.arc(0, 0, 20 + i*6, 0, Math.PI*2);
+            ctx.stroke();
+      
+            // Small reel holes
+            for(let j=0;j<6;j++){
+              const holeAngle = j*Math.PI/3 + angle;
+              const r = 20 + i*6;
+              ctx.beginPath();
+              ctx.arc(r*Math.cos(holeAngle), r*Math.sin(holeAngle), 2, 0, Math.PI*2);
+              ctx.fillStyle = '#c084fc';
+              ctx.fill();
+            }
+          }
+          ctx.restore();
+      
+          // Play button
+          ctx.fillStyle = '#c084fc';
+          ctx.beginPath();
+          ctx.moveTo(canvas.width/2 + 15, canvas.height/2);
+          ctx.lineTo(canvas.width/2 - 5, canvas.height/2 - 10);
+          ctx.lineTo(canvas.width/2 - 5, canvas.height/2 + 10);
+          ctx.closePath();
+          ctx.fill();
+      
+          angle += 0.02;
+          requestAnimationFrame(drawReel);
+        }
+      
+        drawReel();
+      });
+      </script>
 
       
 

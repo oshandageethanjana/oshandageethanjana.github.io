@@ -761,6 +761,412 @@
       .achievements-grid { grid-template-columns: 1fr; }
       .awards-section-header { flex-direction: column; align-items: flex-start; }
     }
+
+
+
+
+
+
+
+
+    /* ==========================================
+       3D Awards Slider Section
+    ========================================== */
+    .awards-3d-section {
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .awards-section-subtitle {
+      margin-top: 14px;
+      max-width: 680px;
+      color: var(--text-muted);
+      font-size: 15px;
+      line-height: 1.8;
+    }
+    
+    .awards-slider-wrap {
+      margin-top: 34px;
+      padding: 24px;
+      border-radius: 28px;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.015));
+      border: 1px solid rgba(255,255,255,0.08);
+      backdrop-filter: blur(22px);
+      -webkit-backdrop-filter: blur(22px);
+      box-shadow:
+        0 30px 60px rgba(0,0,0,0.35),
+        inset 0 1px 0 rgba(255,255,255,0.04);
+      position: relative;
+    }
+    
+    .awards-slider-wrap::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at top right, rgba(0,240,255,0.07), transparent 35%),
+        radial-gradient(circle at bottom left, rgba(168,85,247,0.07), transparent 35%);
+      pointer-events: none;
+      border-radius: 28px;
+    }
+    
+    .awards-slider-topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 26px;
+      position: relative;
+      z-index: 2;
+    }
+    
+    .awards-slider-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      color: var(--text-muted);
+      font-family: var(--font-mono);
+      font-size: 12px;
+    }
+    
+    .slider-status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--neon-green);
+      box-shadow: 0 0 0 0 rgba(0,255,102,0.4);
+      animation: pulse-dot 2s infinite;
+    }
+    
+    .awards-slider-controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .awards-nav-btn {
+      width: 44px;
+      height: 44px;
+      border: 1px solid rgba(255,255,255,0.08);
+      background: rgba(255,255,255,0.04);
+      color: var(--text-main);
+      border-radius: 14px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: 0.35s var(--ease);
+      cursor: none !important;
+    }
+    
+    .awards-nav-btn:hover {
+      transform: translateY(-2px);
+      border-color: rgba(0,240,255,0.35);
+      color: var(--neon-cyan);
+      box-shadow: 0 12px 24px rgba(0,240,255,0.12);
+    }
+    
+    .awards-viewport {
+      position: relative;
+      height: 560px;
+      perspective: 1400px;
+      overflow: hidden;
+      border-radius: 24px;
+      z-index: 2;
+    }
+    
+    .awards-3d-track {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      transform-style: preserve-3d;
+    }
+    
+    .award-slide-card {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: min(380px, 82vw);
+      border-radius: 28px;
+      overflow: hidden;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.025));
+      border: 1px solid rgba(255,255,255,0.08);
+      box-shadow:
+        0 30px 70px rgba(0,0,0,0.45),
+        inset 0 1px 0 rgba(255,255,255,0.05);
+      transform-style: preserve-3d;
+      transition:
+        transform 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+        opacity 0.6s ease,
+        filter 0.6s ease;
+      will-change: transform, opacity;
+      user-select: none;
+      backface-visibility: hidden;
+    }
+    
+    .award-slide-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(145deg, rgba(0,240,255,0.06), transparent 30%, transparent 70%, rgba(168,85,247,0.07));
+      pointer-events: none;
+      z-index: 1;
+    }
+    
+    .award-slide-media {
+      position: relative;
+      aspect-ratio: 16 / 10;
+      overflow: hidden;
+      background: linear-gradient(135deg, rgba(0,240,255,0.06), rgba(168,85,247,0.06));
+    }
+    
+    .award-slide-media img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.7s ease, filter 0.7s ease;
+      filter: brightness(0.92) saturate(0.95);
+    }
+    
+    .award-slide-card.active .award-slide-media img {
+      transform: scale(1.03);
+      filter: brightness(1) saturate(1.02);
+    }
+    
+    .award-slide-overlay {
+      position: absolute;
+      inset: auto 16px 16px 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      z-index: 2;
+    }
+    
+    .award-type-pill,
+    .award-year-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: #fff;
+      background: rgba(5,5,5,0.7);
+      border: 1px solid rgba(255,255,255,0.12);
+      backdrop-filter: blur(10px);
+    }
+    
+    .award-slide-content {
+      padding: 24px;
+      position: relative;
+      z-index: 2;
+    }
+    
+    .award-slide-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 12px;
+      border-radius: 999px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      margin-bottom: 14px;
+    }
+    
+    .award-slide-badge.gold {
+      color: #fab387;
+      background: rgba(250,191,55,0.12);
+      border: 1px solid rgba(250,191,55,0.26);
+    }
+    
+    .award-slide-badge.blue {
+      color: #89b4fa;
+      background: rgba(137,180,250,0.12);
+      border: 1px solid rgba(137,180,250,0.25);
+    }
+    
+    .award-slide-badge.purple {
+      color: #cba6f7;
+      background: rgba(203,166,247,0.12);
+      border: 1px solid rgba(203,166,247,0.24);
+    }
+    
+    .award-slide-title {
+      font-size: 22px;
+      font-weight: 700;
+      line-height: 1.35;
+      margin-bottom: 8px;
+      color: var(--text-main);
+    }
+    
+    .award-slide-event {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      letter-spacing: 0.4px;
+      color: var(--neon-cyan);
+      margin-bottom: 14px;
+    }
+    
+    .award-slide-desc {
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.8;
+      margin-bottom: 20px;
+    }
+    
+    .award-slide-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    
+    .award-slide-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 18px;
+      text-decoration: none;
+      border-radius: 999px;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 700;
+      transition: 0.35s var(--ease);
+    }
+    
+    .award-slide-link.primary {
+      color: #000;
+      background: linear-gradient(135deg, var(--neon-cyan), #8be9ff);
+      box-shadow: 0 12px 24px rgba(0,240,255,0.18);
+    }
+    
+    .award-slide-link.primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 18px 34px rgba(0,240,255,0.25);
+    }
+    
+    .award-slide-link.ghost {
+      color: var(--text-main);
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(255,255,255,0.03);
+    }
+    
+    .award-slide-link.ghost:hover {
+      color: var(--neon-cyan);
+      border-color: rgba(0,240,255,0.3);
+      background: rgba(0,240,255,0.05);
+    }
+    
+    .awards-dots {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      margin-top: 24px;
+      position: relative;
+      z-index: 2;
+    }
+    
+    .awards-dot {
+      width: 11px;
+      height: 11px;
+      border-radius: 50%;
+      border: none;
+      background: rgba(255,255,255,0.18);
+      transition: 0.35s ease;
+      cursor: none !important;
+    }
+    
+    .awards-dot.active {
+      width: 34px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--neon-cyan), var(--neon-green));
+      box-shadow: 0 0 18px rgba(0,240,255,0.24);
+    }
+    
+    @media (max-width: 1024px) {
+      .awards-viewport {
+        height: 520px;
+      }
+    
+      .award-slide-card {
+        width: min(350px, 84vw);
+      }
+    }
+    
+    @media (max-width: 768px) {
+      .awards-slider-wrap {
+        padding: 18px;
+        border-radius: 22px;
+      }
+    
+      .awards-slider-topbar {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+    
+      .awards-slider-controls {
+        width: 100%;
+        justify-content: flex-end;
+      }
+    
+      .awards-viewport {
+        height: 510px;
+        perspective: 900px;
+      }
+    
+      .award-slide-card {
+        width: min(320px, 88vw);
+        border-radius: 24px;
+      }
+    
+      .award-slide-content {
+        padding: 20px;
+      }
+    
+      .award-slide-title {
+        font-size: 20px;
+      }
+    
+      .award-slide-desc {
+        font-size: 13px;
+        line-height: 1.7;
+      }
+    
+      .award-slide-actions {
+        gap: 10px;
+      }
+    
+      .award-slide-link {
+        padding: 11px 16px;
+        font-size: 11px;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      .awards-viewport {
+        height: 500px;
+      }
+    
+      .award-slide-card {
+        width: min(300px, 90vw);
+      }
+    
+      .award-slide-title {
+        font-size: 18px;
+      }
+    }
   </style>
 </head>
 <body>
@@ -947,128 +1353,52 @@
     </div>
   </div>
 
-  <!-- Recognition & Awards Section — about.html ගෙන් home page වලට ගෙනාවා -->
-  <!-- Awards section moved from about.html to home page bottom -->
-  <section class="awards-section" id="awards">
+ <!-- Recognition & Awards Section -->
+<section class="awards-section awards-3d-section" id="awards">
+  <div class="awards-divider"></div>
 
-    <!-- Decorative top divider — section top divider -->
-    <div class="awards-divider"></div>
-
-    <div class="awards-section-header">
-      <div>
-        <span class="prompt seq-in">> cat ~/recognition.json</span>
-        <h2 class="awards-section-title seq-in">
-          Recognition<br>&amp; <span>Awards.</span>
-        </h2>
-      </div>
-      <!-- Link to About page — about page link -->
-      <a href="about.html" class="awards-view-about seq-in magnetic page-link">
-        View Full Profile <i class="fa-solid fa-arrow-right"></i>
-      </a>
+  <div class="awards-section-header">
+    <div>
+      <span class="prompt seq-in">> cat ~/recognition.json</span>
+      <h2 class="awards-section-title seq-in">
+        Recognition<br>&amp; <span>Awards.</span>
+      </h2>
+      <p class="awards-section-subtitle seq-in">
+        A curated showcase of awards, certificates, and recognitions earned through design, leadership, and technical contribution.
+      </p>
     </div>
 
-    <!-- Achievement cards grid — achievement cards (about.html ගෙන් ගෙනාවා) -->
-    <div class="achievements-grid">
+    <a href="awards.html" class="awards-view-about seq-in magnetic page-link">
+      View Full Profile <i class="fa-solid fa-arrow-right"></i>
+    </a>
+  </div>
 
-      <!-- Award 1: Design Contest Winner — TECHNOVATION '25 -->
-      <div class="achievement-card magnetic seq-in">
-        <div class="achievement-img">
-          <img src="assets/cert2.png" alt="Technovation Design Contest Winner" loading="lazy">
-        </div>
-        <div class="achievement-body">
-          <!-- Gold badge — gold badge -->
-          <span class="achievement-badge badge-gold">
-            <i class="fa-solid fa-trophy" style="margin-right:5px;font-size:9px;"></i>1st Place Winner
-          </span>
-          <div class="achievement-title">Design Contest Winner</div>
-          <div class="achievement-event">TECHNOVATION '25</div>
-          <p class="achievement-desc">
-            Awarded first place in the Design Contest at the TECHNOVATION showcase organized by the Dept. of IT, Hardy ATI (SLIATE).
-          </p>
-        </div>
+  <div class="awards-slider-wrap seq-in">
+    <div class="awards-slider-topbar">
+      <div class="awards-slider-label">
+        <span class="slider-status-dot"></span>
+        <span>Live Showcase</span>
       </div>
 
-      <!-- Award 2: Certificate of Appreciation — TECHNOVATION '25 -->
-      <div class="achievement-card magnetic seq-in">
-        <div class="achievement-img">
-          <img src="assets/cert1.png" alt="Certificate of Appreciation" loading="lazy">
-        </div>
-        <div class="achievement-body">
-          <!-- Blue badge — blue badge -->
-          <span class="achievement-badge badge-blue">
-            <i class="fa-solid fa-star" style="margin-right:5px;font-size:9px;"></i>Appreciation Award
-          </span>
-          <div class="achievement-title">Certificate of Appreciation</div>
-          <div class="achievement-event">TECHNOVATION '25</div>
-          <p class="achievement-desc">
-            Recognized for exceptional commitment and valuable contribution in organizing Technovation '25 at Hardy ATI (SLIATE).
-          </p>
-        </div>
+      <div class="awards-slider-controls">
+        <button class="awards-nav-btn" id="awardsPrev" aria-label="Previous award">
+          <i class="fa-solid fa-arrow-left"></i>
+        </button>
+        <button class="awards-nav-btn" id="awardsNext" aria-label="Next award">
+          <i class="fa-solid fa-arrow-right"></i>
+        </button>
       </div>
-
     </div>
 
-    <!-- View All Awards Button -->
-    <div style="text-align:center; margin-top:50px;">
-        <a href="awards"
-           class="page-link"
-           style="
-            display:inline-flex;
-            align-items:center;
-            gap:10px;
-            padding:14px 28px;
-            border-radius:999px;
-            text-decoration:none;
-            font-family:Arial, sans-serif;
-            font-size:15px;
-            font-weight:600;
-            color:#ffffff;
-            background:linear-gradient(135deg, #f59e0b, #d97706);
-            box-shadow:0 8px 20px rgba(245, 158, 11, 0.35);
-            position:relative;
-            overflow:hidden;
-            transition:all 0.35s ease;
-            animation:floatBtn 2.8s ease-in-out infinite;
-           "
-           onmouseover="
-            this.style.transform='translateY(-4px) scale(1.03)';
-            this.style.boxShadow='0 14px 30px rgba(245,158,11,0.45)';
-           "
-           onmouseout="
-            this.style.transform='translateY(0) scale(1)';
-            this.style.boxShadow='0 8px 20px rgba(245, 158, 11, 0.35)';
-           ">
-          
-          <span style="
-            position:absolute;
-            top:0;
-            left:-75%;
-            width:50%;
-            height:100%;
-            background:linear-gradient(120deg, rgba(255,255,255,0.05), rgba(255,255,255,0.35), rgba(255,255,255,0.05));
-            transform:skewX(-25deg);
-            animation:shine 2.5s infinite;
-          "></span>
-      
-          <i class="fa-solid fa-award" style="font-size:16px; position:relative; z-index:1;"></i>
-          <span style="position:relative; z-index:1;">View All Awards</span>
-          <i class="fa-solid fa-arrow-right" style="font-size:14px; position:relative; z-index:1;"></i>
-        </a>
-      </div>
-      
-      <style>
-      @keyframes shine {
-        0% { left: -75%; }
-        100% { left: 130%; }
-      }
-      
-      @keyframes floatBtn {
-        0%, 100% { transform: translateY(0); }
-        50% { transform: translateY(-3px); }
-      }
-      </style>
-  </section>
+    <div class="awards-viewport" id="awardsViewport">
+      <div class="awards-3d-track" id="awardsTrack"></div>
+    </div>
 
+    <div class="awards-dots" id="awardsDots"></div>
+  </div>
+</section>
+
+  
   <!-- Three.js Scripts — Three.js scripts -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
@@ -1711,5 +2041,246 @@
     window.addEventListener('resize', function() { resize(); });
   })();
   </script>
+
+
+
+  <script>
+  const awardsData = [
+    {
+      type: "Award",
+      year: "2025",
+      badge: "1st Place Winner",
+      badgeClass: "gold",
+      icon: "fa-solid fa-trophy",
+      title: "Design Contest Winner",
+      event: "TECHNOVATION '25",
+      description: "Awarded first place in the Design Contest at the TECHNOVATION showcase organized by the Department of IT, Hardy ATI (SLIATE).",
+      image: "assets/cert2.png",
+      primaryLink: "awards.html",
+      secondaryLink: "https://hardy.ati.ac.lk/"
+    },
+    {
+      type: "Certificate",
+      year: "2025",
+      badge: "Appreciation Award",
+      badgeClass: "blue",
+      icon: "fa-solid fa-star",
+      title: "Certificate of Appreciation",
+      event: "TECHNOVATION '25",
+      description: "Recognized for exceptional commitment and valuable contribution in organizing Technovation '25 at Hardy ATI (SLIATE).",
+      image: "assets/cert1.png",
+      primaryLink: "awards.html",
+      secondaryLink: "https://hardy.ati.ac.lk/"
+    },
+    {
+      type: "Recognition",
+      year: "2025",
+      badge: "Creative Excellence",
+      badgeClass: "purple",
+      icon: "fa-solid fa-award",
+      title: "Creative Product Recognition",
+      event: "Portfolio / Innovation",
+      description: "A featured showcase item representing design quality, clean presentation, and strong visual storytelling across product-led work.",
+      image: "assets/cert2.png",
+      primaryLink: "awards.html",
+      secondaryLink: "https://oshandageethanjana.github.io/"
+    }
+  ];
+
+  const awardsTrack = document.getElementById("awardsTrack");
+  const awardsDots = document.getElementById("awardsDots");
+  const awardsPrev = document.getElementById("awardsPrev");
+  const awardsNext = document.getElementById("awardsNext");
+  const awardsViewport = document.getElementById("awardsViewport");
+
+  let awardsIndex = 0;
+  let awardsInterval;
+  let touchStartX = 0;
+  let touchEndX = 0;
+
+  function renderAwardsSlider() {
+    awardsTrack.innerHTML = "";
+    awardsDots.innerHTML = "";
+
+    awardsData.forEach((item, index) => {
+      const slide = document.createElement("article");
+      slide.className = "award-slide-card magnetic";
+      slide.innerHTML = `
+        <div class="award-slide-media">
+          <img src="${item.image}" alt="${item.title}" loading="lazy">
+          <div class="award-slide-overlay">
+            <span class="award-type-pill"><i class="fa-solid fa-layer-group"></i> ${item.type}</span>
+            <span class="award-year-pill"><i class="fa-regular fa-calendar"></i> ${item.year}</span>
+          </div>
+        </div>
+
+        <div class="award-slide-content">
+          <span class="award-slide-badge ${item.badgeClass}">
+            <i class="${item.icon}"></i> ${item.badge}
+          </span>
+
+          <h3 class="award-slide-title">${item.title}</h3>
+          <div class="award-slide-event">${item.event}</div>
+          <p class="award-slide-desc">${item.description}</p>
+
+          <div class="award-slide-actions">
+            <a href="${item.primaryLink}" class="award-slide-link primary page-link">
+              View Details <i class="fa-solid fa-arrow-right"></i>
+            </a>
+            <a href="${item.secondaryLink}" class="award-slide-link ghost" target="_blank" rel="noopener noreferrer">
+              Official Site <i class="fa-solid fa-up-right-from-square"></i>
+            </a>
+          </div>
+        </div>
+      `;
+      awardsTrack.appendChild(slide);
+
+      const dot = document.createElement("button");
+      dot.className = "awards-dot";
+      dot.setAttribute("aria-label", `Go to slide ${index + 1}`);
+      dot.addEventListener("click", () => {
+        awardsIndex = index;
+        updateAwardsSlider();
+        restartAwardsAutoPlay();
+      });
+      awardsDots.appendChild(dot);
+    });
+
+    updateAwardsSlider();
+  }
+
+  function updateAwardsSlider() {
+    const slides = [...document.querySelectorAll(".award-slide-card")];
+    const dots = [...document.querySelectorAll(".awards-dot")];
+    const isMobile = window.innerWidth <= 768;
+
+    slides.forEach((slide, i) => {
+      const total = slides.length;
+      let offset = i - awardsIndex;
+
+      if (offset > total / 2) offset -= total;
+      if (offset < -total / 2) offset += total;
+
+      let transform = "";
+      let opacity = 0;
+      let zIndex = 0;
+      let filter = "blur(2px)";
+
+      if (offset === 0) {
+        transform = isMobile
+          ? "translate(-50%, -50%) translateX(0px) scale(1) rotateY(0deg)"
+          : "translate(-50%, -50%) translateX(0px) scale(1) rotateY(0deg)";
+        opacity = 1;
+        zIndex = 5;
+        filter = "blur(0px)";
+        slide.classList.add("active");
+      } else if (offset === -1) {
+        transform = isMobile
+          ? "translate(-50%, -50%) translateX(-70%) scale(0.88) rotateY(22deg)"
+          : "translate(-50%, -50%) translateX(-82%) scale(0.87) rotateY(28deg)";
+        opacity = 0.45;
+        zIndex = 4;
+        filter = "blur(1px)";
+        slide.classList.remove("active");
+      } else if (offset === 1) {
+        transform = isMobile
+          ? "translate(-50%, -50%) translateX(70%) scale(0.88) rotateY(-22deg)"
+          : "translate(-50%, -50%) translateX(82%) scale(0.87) rotateY(-28deg)";
+        opacity = 0.45;
+        zIndex = 4;
+        filter = "blur(1px)";
+        slide.classList.remove("active");
+      } else if (offset === -2) {
+        transform = isMobile
+          ? "translate(-50%, -50%) translateX(-118%) scale(0.72) rotateY(34deg)"
+          : "translate(-50%, -50%) translateX(-140%) scale(0.72) rotateY(40deg)";
+        opacity = 0.12;
+        zIndex = 2;
+        filter = "blur(3px)";
+        slide.classList.remove("active");
+      } else if (offset === 2) {
+        transform = isMobile
+          ? "translate(-50%, -50%) translateX(118%) scale(0.72) rotateY(-34deg)"
+          : "translate(-50%, -50%) translateX(140%) scale(0.72) rotateY(-40deg)";
+        opacity = 0.12;
+        zIndex = 2;
+        filter = "blur(3px)";
+        slide.classList.remove("active");
+      } else {
+        transform = "translate(-50%, -50%) scale(0.6)";
+        opacity = 0;
+        zIndex = 1;
+        filter = "blur(4px)";
+        slide.classList.remove("active");
+      }
+
+      slide.style.transform = transform;
+      slide.style.opacity = opacity;
+      slide.style.zIndex = zIndex;
+      slide.style.filter = filter;
+      slide.style.pointerEvents = offset === 0 ? "auto" : "none";
+    });
+
+    dots.forEach((dot, i) => {
+          dot.classList.toggle("active", i === awardsIndex);
+        });
+      }
+    
+      function nextAward() {
+        awardsIndex = (awardsIndex + 1) % awardsData.length;
+        updateAwardsSlider();
+      }
+    
+      function prevAward() {
+        awardsIndex = (awardsIndex - 1 + awardsData.length) % awardsData.length;
+        updateAwardsSlider();
+      }
+    
+      function startAwardsAutoPlay() {
+        awardsInterval = setInterval(nextAward, 3500);
+      }
+    
+      function stopAwardsAutoPlay() {
+        clearInterval(awardsInterval);
+      }
+    
+      function restartAwardsAutoPlay() {
+        stopAwardsAutoPlay();
+        startAwardsAutoPlay();
+      }
+    
+      awardsNext.addEventListener("click", () => {
+        nextAward();
+        restartAwardsAutoPlay();
+      });
+    
+      awardsPrev.addEventListener("click", () => {
+        prevAward();
+        restartAwardsAutoPlay();
+      });
+    
+      awardsViewport.addEventListener("mouseenter", stopAwardsAutoPlay);
+      awardsViewport.addEventListener("mouseleave", startAwardsAutoPlay);
+    
+      awardsViewport.addEventListener("touchstart", (e) => {
+        touchStartX = e.changedTouches[0].clientX;
+        stopAwardsAutoPlay();
+      }, { passive: true });
+    
+      awardsViewport.addEventListener("touchend", (e) => {
+        touchEndX = e.changedTouches[0].clientX;
+        const diff = touchStartX - touchEndX;
+    
+        if (diff > 40) nextAward();
+        if (diff < -40) prevAward();
+    
+        restartAwardsAutoPlay();
+      }, { passive: true });
+    
+      window.addEventListener("resize", updateAwardsSlider);
+    
+      renderAwardsSlider();
+      startAwardsAutoPlay();
+    </script>
 </body>
 </html>

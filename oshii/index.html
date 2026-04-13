@@ -1,0 +1,991 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WhiteCoder | Oshanda Geethanjana — Creative Developer</title>
+
+    <!-- SEO & Open Graph -->
+    <meta name="description" content="Oshanda Geethanjana — Creative Developer & AI Engineer. Founder of WhiteCoder & HND Study Hub. Building digital experiences from Colombo, LK.">
+    <meta name="keywords" content="WhiteCoder, Oshanda Geethanjana, Creative Developer, AI Engineer, Sri Lanka, Portfolio, PHP, Three.js, WebGL">
+    <meta name="author" content="Oshanda Geethanjana">
+    <meta property="og:title" content="WhiteCoder | Oshanda Geethanjana — Creative Developer">
+    <meta property="og:description" content="I engineer digital experiences and build robust AI architectures. Founder of WhiteCoder & HND Study Hub.">
+    <meta property="og:image" content="https://oshandageethanjana.github.io/assets/Oshanda_Geethanjana.png">
+    <meta property="og:url" content="https://whitecoder.com">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="WhiteCoder | Oshanda Geethanjana">
+    <meta name="twitter:image" content="https://oshandageethanjana.github.io/assets/Oshanda_Geethanjana.png">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.4.0/model-viewer.min.js"></script>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap');
+
+        :root {
+            --bg: #f5f4f0;
+            --fg: #0a0a0a;
+            --fg2: #555;
+            --card: rgba(255,255,255,0.55);
+            --card-border: rgba(0,0,0,0.08);
+            --nav-bg: rgba(245,244,240,0.85);
+            --accent: #0a0a0a;
+            --preloader-bg: #0a0a0a;
+        }
+        [data-theme="dark"] {
+            --bg: #0a0a0a;
+            --fg: #f5f4f0;
+            --fg2: #aaa;
+            --card: rgba(20,20,20,0.75);
+            --card-border: rgba(255,255,255,0.08);
+            --nav-bg: rgba(10,10,10,0.9);
+            --accent: #f5f4f0;
+            --preloader-bg: #f5f4f0;
+        }
+
+        *, *::before, *::after { box-sizing: border-box; }
+        ::-webkit-scrollbar { display: none; }
+
+        html, body {
+            background-color: var(--bg);
+            color: var(--fg);
+            font-family: 'DM Sans', sans-serif;
+            margin: 0; padding: 0;
+            overflow-x: hidden;
+            transition: background-color 0.6s ease, color 0.6s ease;
+        }
+
+        /* ========== CUSTOM CURSOR ========== */
+        #cursor-dot {
+            position: fixed; top: 0; left: 0;
+            width: 8px; height: 8px;
+            background: var(--fg);
+            border-radius: 50%;
+            pointer-events: none; z-index: 9999;
+            transform: translate(-50%, -50%);
+            transition: transform 0.08s ease, width 0.3s ease, height 0.3s ease, background 0.3s ease;
+        }
+        #cursor-ring {
+            position: fixed; top: 0; left: 0;
+            width: 40px; height: 40px;
+            border: 1.5px solid var(--fg);
+            border-radius: 50%;
+            pointer-events: none; z-index: 9998;
+            transform: translate(-50%, -50%);
+            transition: transform 0.18s ease, width 0.35s cubic-bezier(0.25,1,0.5,1), height 0.35s cubic-bezier(0.25,1,0.5,1), background 0.3s ease, border-color 0.3s ease;
+            display: flex; align-items: center; justify-content: center;
+            font-family: 'Syne', sans-serif; font-size: 0px; font-weight: 700;
+            color: var(--bg); letter-spacing: 0.1em; text-transform: uppercase;
+            overflow: hidden;
+        }
+        #cursor-ring.expanded {
+            width: 80px; height: 80px;
+            background: var(--fg);
+            font-size: 9px;
+        }
+
+        /* ========== PRELOADER ========== */
+        #preloader {
+            position: fixed; inset: 0;
+            background: var(--preloader-bg);
+            z-index: 10000;
+            display: flex; flex-direction: column;
+            align-items: center; justify-content: center;
+            transition: opacity 0.8s ease, visibility 0.8s ease;
+        }
+        #preloader.hidden { opacity: 0; visibility: hidden; }
+        #preloader-logo {
+            font-family: 'Syne', sans-serif;
+            font-size: clamp(2rem, 6vw, 4rem);
+            font-weight: 800;
+            color: var(--bg);
+            letter-spacing: -0.04em;
+            margin-bottom: 3rem;
+        }
+        [data-theme="dark"] #preloader { background: #f5f4f0; }
+        [data-theme="dark"] #preloader-logo { color: #0a0a0a; }
+        [data-theme="dark"] #preloader-bar-bg { background: rgba(0,0,0,0.15); }
+        [data-theme="dark"] #preloader-bar { background: #0a0a0a; }
+        [data-theme="dark"] #preloader-percent { color: #0a0a0a; }
+        #preloader-bar-bg {
+            width: 220px; height: 1px;
+            background: rgba(255,255,255,0.15);
+            position: relative; overflow: visible;
+        }
+        #preloader-bar {
+            height: 100%; width: 0%;
+            background: var(--bg);
+            transition: width 0.1s linear;
+        }
+        #preloader-percent {
+            font-family: 'Syne', sans-serif;
+            font-size: 0.7rem; font-weight: 600;
+            color: var(--bg);
+            letter-spacing: 0.2em;
+            margin-top: 1.5rem;
+            opacity: 0.5;
+        }
+
+        /* ========== NAV ========== */
+        .glass-nav {
+            background: var(--nav-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--card-border);
+            transition: background 0.6s ease;
+        }
+        .nav-logo { font-family: 'Syne', sans-serif; font-weight: 800; letter-spacing: -0.04em; }
+        .nav-link {
+            font-family: 'Syne', sans-serif; font-size: 0.72rem;
+            font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
+            color: var(--fg2); transition: color 0.2s;
+        }
+        .nav-link:hover, .nav-link.active { color: var(--fg); }
+
+        /* ========== MODEL ========== */
+        #model-wrapper {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 0;
+            pointer-events: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.8s ease, opacity 0.5s ease;
+        }
+
+        #portfolio-character {
+            width: 100%;
+            height: 115%;
+            --poster-color: transparent;
+            transition: opacity 0.45s ease;
+            filter: drop-shadow(0 30px 40px rgba(0,0,0,0.14));
+        }
+
+        model-viewer {
+            width: 100%;
+            height: 110%;
+            --poster-color: transparent;
+            opacity: 0.8;
+        }
+
+        /* ========== SECTIONS ========== */
+        .section {
+            position: relative; z-index: 10;
+            width: 100vw; height: 100vh;
+            display: flex; align-items: center;
+            pointer-events: none;
+        }
+        .content-box {
+            pointer-events: auto;
+            background: var(--card);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--card-border);
+            border-radius: 2rem;
+            padding: 2.5rem 3rem;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.06);
+            transition: background 0.6s ease, border-color 0.6s ease;
+        }
+
+        /* ========== TYPOGRAPHY ========== */
+        .hero-title {
+            font-family: 'Syne', sans-serif;
+            font-size: clamp(3rem, 8vw, 7rem);
+            font-weight: 800; line-height: 0.9;
+            letter-spacing: -0.04em;
+        }
+        .section-title {
+            font-family: 'Syne', sans-serif;
+            font-size: clamp(2.2rem, 5vw, 4rem);
+            font-weight: 800; line-height: 1;
+            letter-spacing: -0.04em;
+        }
+        .text-stroke {
+            color: transparent;
+            -webkit-text-stroke: 1.5px var(--fg);
+        }
+        .label-text {
+            font-family: 'Syne', sans-serif;
+            font-size: 0.65rem; font-weight: 700;
+            letter-spacing: 0.2em; text-transform: uppercase;
+            color: var(--fg2);
+        }
+
+        .hero-name {
+            width: 100%;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .hero-name-line {
+            display: block;
+            width: max-content;
+            margin-inline: auto;
+            text-align: center;
+            line-height: 0.9;
+        }
+
+        .hero-name-fill {
+            color: var(--fg);
+        }
+
+        .hero-name-stroke {
+            color: transparent;
+            -webkit-text-stroke: 1.5px var(--fg);
+        }
+
+        @media (max-width: 768px) {
+            .hero-name-line {
+                width: 100%;
+            }
+        }
+
+        .anim-text { opacity: 0; transform: translateY(40px); }
+
+        /* ========== COUNTERS SECTION ========== */
+        #counters-section {
+            position: relative; z-index: 10;
+            width: 100vw; height: 100vh;
+            display: flex; align-items: center; justify-content: center;
+            pointer-events: none;
+        }
+        .counter-grid {
+            pointer-events: auto;
+            display: grid; grid-template-columns: repeat(2, 1fr);
+            gap: 1.5px;
+            background: var(--card-border);
+            border-radius: 2rem;
+            overflow: hidden;
+            border: 1px solid var(--card-border);
+        }
+        .counter-cell {
+            background: var(--card);
+            backdrop-filter: blur(20px);
+            padding: 3rem;
+            display: flex; flex-direction: column;
+            align-items: center; justify-content: center; text-align: center;
+            transition: background 0.3s;
+        }
+        .counter-cell:hover { background: var(--fg); }
+        .counter-cell:hover .counter-num,
+        .counter-cell:hover .counter-label { color: var(--bg); }
+        .counter-num {
+            font-family: 'Syne', sans-serif;
+            font-size: clamp(2.5rem, 5vw, 4.5rem);
+            font-weight: 800; line-height: 1;
+            letter-spacing: -0.04em;
+            color: var(--fg);
+            transition: color 0.3s;
+        }
+        .counter-label {
+            font-size: 0.75rem; font-weight: 500;
+            color: var(--fg2); margin-top: 0.5rem;
+            letter-spacing: 0.05em;
+            transition: color 0.3s;
+        }
+
+        /* ========== CONTACT SECTION ========== */
+        #contact { background: var(--fg); }
+        #contact .section-title { color: var(--bg); }
+        #contact .text-stroke { -webkit-text-stroke: 1.5px var(--bg); }
+
+        /* ========== MARQUEE (Testimonials) ========== */
+        #testimonials-section {
+            position: relative; z-index: 10;
+            width: 100vw; overflow: hidden;
+            padding: 3rem 0;
+            background: var(--fg);
+            pointer-events: none;
+        }
+        .marquee-track {
+            display: flex; width: max-content;
+            animation: marquee 35s linear infinite;
+        }
+        .marquee-track:hover { animation-play-state: paused; }
+        @keyframes marquee {
+            from { transform: translateX(0); }
+            to { transform: translateX(-50%); }
+        }
+        .marquee-item {
+            flex-shrink: 0;
+            padding: 0 3rem;
+            font-family: 'Syne', sans-serif;
+            font-size: 0.85rem; font-weight: 700;
+            letter-spacing: 0.15em; text-transform: uppercase;
+            color: var(--bg);
+            display: flex; align-items: center; gap: 2rem;
+            opacity: 0.6;
+        }
+        .marquee-item span.dot { width: 4px; height: 4px; border-radius: 50%; background: var(--bg); opacity: 0.4; flex-shrink: 0; }
+
+        /* ========== CV PANEL ========== */
+        #cv-panel {
+            position: fixed; top: 0; right: -480px;
+            width: 460px; max-width: 95vw; height: 100vh;
+            background: var(--card);
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
+            border-left: 1px solid var(--card-border);
+            z-index: 8000;
+            transition: right 0.6s cubic-bezier(0.77, 0, 0.175, 1);
+            padding: 3rem 2.5rem;
+            overflow-y: auto;
+        }
+        #cv-panel.open { right: 0; }
+        #cv-overlay {
+            position: fixed; inset: 0; z-index: 7999;
+            background: rgba(0,0,0,0.3);
+            backdrop-filter: blur(4px);
+            opacity: 0; pointer-events: none;
+            transition: opacity 0.4s;
+        }
+        #cv-overlay.visible { opacity: 1; pointer-events: auto; }
+
+        /* ========== MOBILE MENU ========== */
+        #mobile-menu {
+            transform: translateY(-100%);
+            transition: transform 0.6s cubic-bezier(0.77, 0, 0.175, 1);
+            background: var(--bg);
+        }
+        #mobile-menu.open { transform: translateY(0); }
+
+        /* ========== MAGNETIC BUTTON ========== */
+        .mag-btn {
+            display: inline-flex; align-items: center; justify-content: center;
+            position: relative; cursor: none;
+            transition: transform 0.3s cubic-bezier(0.25,1,0.5,1);
+        }
+
+        /* ========== SOUND TOGGLE ========== */
+        #sound-toggle, #theme-toggle {
+            position: fixed; z-index: 200;
+            width: 44px; height: 44px;
+            border-radius: 50%;
+            background: var(--card);
+            border: 1px solid var(--card-border);
+            backdrop-filter: blur(10px);
+            cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+        #sound-toggle { bottom: 2rem; right: 2rem; }
+        #theme-toggle { bottom: 2rem; right: 5.5rem; }
+        #sound-toggle:hover, #theme-toggle:hover {
+            background: var(--fg); color: var(--bg);
+        }
+
+        /* ========== FOOTER REVEAL ========== */
+        #sticky-footer-wrapper {
+            position: sticky; bottom: 0;
+            z-index: 5;
+        }
+        footer {
+            border-top: 1px solid var(--card-border);
+            padding: 4rem 2rem;
+            text-align: center;
+            background: var(--bg);
+            transition: background 0.6s ease;
+        }
+
+        
+    </style>
+</head>
+<body>
+
+
+    
+
+    <!-- CUSTOM CURSOR -->
+    <div id="cursor-dot"></div>
+    <div id="cursor-ring">DRAG</div>
+
+    <!-- PRELOADER -->
+    <div id="preloader">
+        <div id="preloader-logo">Oshanda.</div>
+        <div id="preloader-bar-bg">
+            <div id="preloader-bar"></div>
+        </div>
+        <div id="preloader-percent">0%</div>
+    </div>
+
+    <!-- CV OVERLAY -->
+    <div id="cv-overlay" onclick="closeCVPanel()"></div>
+
+    <!-- CV PANEL -->
+    <div id="cv-panel">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:2rem;">
+            <span style="font-family:'Syne',sans-serif;font-weight:800;font-size:1.2rem;">Curriculum Vitae</span>
+            <button onclick="closeCVPanel()" style="background:none;border:none;font-size:1.5rem;cursor:pointer;color:var(--fg);">✕</button>
+        </div>
+        <div style="margin-bottom:1.5rem;padding-bottom:1.5rem;border-bottom:1px solid var(--card-border);">
+            <div style="font-family:'Syne',sans-serif;font-size:1.5rem;font-weight:800;margin-bottom:0.25rem;">Oshanda Geethanjana</div>
+            <div style="color:var(--fg2);font-size:0.85rem;">Creative Developer, AI Engineer & HNDIT Student · Colombo, LK</div>
+        </div>
+        <div style="font-size:0.8rem;color:var(--fg2);margin-bottom:0.5rem;font-family:'Syne',sans-serif;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;">Experience</div>
+        <div style="margin-bottom:1.5rem;">
+            <div style="font-weight:600;margin-bottom:0.1rem;">Founder & Lead Developer @ WhiteCoder</div>
+            <div style="color:var(--fg2);font-size:0.8rem;margin-bottom:0.25rem;">2024 — Present</div>
+            <div style="font-size:0.85rem;color:var(--fg2);">Full-service web dev studio. Bespoke digital solutions from concept to deployment.</div>
+        </div>
+        <div style="margin-bottom:1.5rem;">
+            <div style="font-weight:600;margin-bottom:0.1rem;">Founder & Manager @ HND Study Hub</div>
+            <div style="color:var(--fg2);font-size:0.8rem;margin-bottom:0.25rem;">2025 — Present</div>
+            <div style="font-size:0.85rem;color:var(--fg2);">Free educational portal for higher education students. 6,000+ active students.</div>
+        </div>
+        <div style="margin-bottom:2rem;">
+            <div style="font-weight:600;margin-bottom:0.1rem;">Customer Service & Recovery Officer @ Abans PLC</div>
+            <div style="color:var(--fg2);font-size:0.8rem;margin-bottom:0.25rem;">2023 — 2024</div>
+        </div>
+        <div style="font-size:0.8rem;color:var(--fg2);margin-bottom:0.5rem;font-family:'Syne',sans-serif;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;">Education</div>
+        <div style="margin-bottom:2rem;">
+            <div style="font-weight:600;">HNDIT @ SLIATE</div>
+            <div style="color:var(--fg2);font-size:0.8rem;">2023/2024 Batch</div>
+        </div>
+        <div style="font-size:0.8rem;color:var(--fg2);margin-bottom:0.5rem;font-family:'Syne',sans-serif;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;">Awards</div>
+        <div style="margin-bottom:2rem;">
+            <div style="font-weight:600;">Technovation '25 — Design Contest Winner</div>
+            <div style="color:var(--fg2);font-size:0.8rem;">Dept. of IT, Hardy ATI (SLIATE)</div>
+        </div>
+        <a href="https://oshandageethanjana.github.io/assets/oshanda.pdf" download
+           style="display:block;width:100%;padding:1rem;background:var(--fg);color:var(--bg);border-radius:1rem;text-align:center;font-family:'Syne',sans-serif;font-weight:700;font-size:0.8rem;letter-spacing:0.15em;text-transform:uppercase;text-decoration:none;transition:opacity 0.2s;"
+           onmouseover="this.style.opacity='0.8'" onmouseout="this.style.opacity='1'">
+            ↓ Download PDF
+        </a>
+    </div>
+
+    <!-- NAV -->
+    <nav class="fixed top-4 left-1/2 -translate-x-1/2 z-50 pointer-events-auto">
+        <div class="glass-nav px-4 md:px-6 h-14 rounded-full flex items-center justify-between gap-4"
+            style="min-width: fit-content; border:1px solid var(--card-border); box-shadow:0 10px 30px rgba(0,0,0,0.06);">
+
+            <a href="index.html" class="nav-logo text-sm md:text-base" style="color:var(--fg); text-decoration:none;">
+                Oshanda.
+            </a>
+
+            <div class="hidden md:flex items-center gap-5">
+                <a href="#hero" class="nav-link active">Home</a>
+                <a href="#about" class="nav-link">About</a>
+                <a href="#work" class="nav-link">Work</a>
+                <a href="education.html" class="nav-link">Education</a>
+                <a href="#contact" class="nav-link">Contact</a>
+                <button onclick="openCVPanel()"
+                        class="mag-btn"
+                        style="background:var(--fg);color:var(--bg);border:none;border-radius:999px;padding:0.55rem 1rem;font-family:'Syne',sans-serif;font-size:0.68rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;cursor:pointer;">
+                    CV
+                </button>
+            </div>
+
+            <button id="menu-btn"
+                    class="md:hidden nav-logo text-xs z-50"
+                    style="background:none;border:none;color:var(--fg);cursor:pointer;">
+                MENU
+            </button>
+        </div>
+    </nav>
+
+    <!-- MOBILE MENU -->
+    <div id="mobile-menu" class="fixed inset-0 z-40 flex flex-col justify-center items-center gap-8 pointer-events-auto">
+        <a href="#hero" class="mobile-link" style="font-family:'Syne',sans-serif;font-size:2.5rem;font-weight:800;color:var(--fg);">Home</a>
+        <a href="about.html" class="mobile-link" style="font-family:'Syne',sans-serif;font-size:2.5rem;font-weight:800;color:var(--fg);">About</a>
+        <a href="work.html" class="mobile-link" style="font-family:'Syne',sans-serif;font-size:2.5rem;font-weight:800;color:var(--fg);">Work</a>
+        <a href="education.html" class="mobile-link" style="font-family:'Syne',sans-serif;font-size:2.5rem;font-weight:800;color:var(--fg);">Education</a>
+        <a href="#contact" class="mobile-link" style="font-family:'Syne',sans-serif;font-size:2.5rem;font-weight:800;color:var(--fg);">Contact</a>
+        <button onclick="openCVPanel()" style="font-family:'Syne',sans-serif;font-size:0.8rem;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;background:var(--fg);color:var(--bg);padding:0.75rem 2rem;border-radius:3rem;border:none;cursor:pointer;margin-top:1rem;">Download CV</button>
+    </div>
+
+    <!-- 3D MODEL -->
+    <div id="model-wrapper">
+        <model-viewer
+            id="portfolio-character"
+            src="models/CHARACTER.glb"
+            autoplay
+            animation-name="Idle"
+            interaction-prompt="none"
+            shadow-intensity="1"
+            environment-image="neutral"
+            exposure="0.95"
+            camera-orbit="0deg 75deg 105%"
+            style="opacity:0.9;">
+        </model-viewer>
+    </div>
+
+    <main id="main-container">
+
+        <!-- HERO -->
+        <section
+            id="hero"
+            class="section justify-center text-center"
+            data-model="models/CHARACTER.glb"
+            data-animation="Idle"
+            data-orbit="0deg 75deg 105%"
+            data-x="0vw"
+            data-scale="1">
+
+            <div class="content-box w-full max-w-6xl mx-auto mt-20 flex flex-col items-center" style="background:transparent;border:none;box-shadow:none;backdrop-filter:none;">
+                <div class="anim-text label-text mb-5">Colombo, LK · Available for Tech & AI Projects</div>
+                    <h1 class="hero-title hero-name anim-text mb-6">
+                        <span class="hero-name-line hero-name-fill">Oshanda</span>
+                        <span class="hero-name-line hero-name-stroke">Geethanjana.</span>
+                    </h1>
+                    <p class="anim-text mb-8" style="color:var(--fg2);font-size:1rem;font-weight:400;max-width:720px;margin-inline:auto;">
+                        I engineer digital experiences and build robust AI architectures. Founder of WhiteCoder and HND Study Hub.
+                    </p>
+                <div class="anim-text flex gap-4 justify-center flex-wrap">
+                    <a href="#about" class="mag-btn px-8 py-3 rounded-full text-sm font-bold tracking-widest uppercase" style="background:var(--fg);color:var(--bg);font-family:'Syne',sans-serif;text-decoration:none;">Explore</a>
+                    <button onclick="openCVPanel()" class="mag-btn px-8 py-3 rounded-full text-sm font-bold tracking-widest uppercase" style="background:transparent;color:var(--fg);border:1.5px solid var(--fg);font-family:'Syne',sans-serif;">View CV</button>
+                </div>
+                <p class="anim-text mt-10" style="color:var(--fg2);font-size:0.75rem;letter-spacing:0.15em;text-transform:uppercase;font-family:'Syne',sans-serif;">Scroll to explore</p>
+            </div>
+        </section>
+
+        <!-- ABOUT -->
+        <section
+            id="about"
+            class="section justify-start px-6 md:px-24"
+            data-model="assets/models/about.glb"
+            data-animation="Walk"
+            data-orbit="-18deg 78deg 115%"
+            data-x="18vw"
+            data-scale="0.95">
+
+            <div class="content-box max-w-xl">
+                <p class="label-text anim-text mb-4">About Me</p>
+                    <h2 class="section-title anim-text mb-6">Driven by<br>Curiosity.</h2>
+                    <p class="anim-text mb-8" style="color:var(--fg2);font-size:1rem;line-height:1.7;">
+                        I'm an Information Technology student pursuing an HNDIT at SLIATE, with a strong passion for Web Development and Artificial Intelligence. As the founder of WhiteCoder, I turn complex problems into elegant digital experiences for real-world users.
+                    </p>
+                <a href="about.html" class="anim-text mag-btn inline-flex items-center gap-2 text-sm font-bold tracking-widest uppercase" style="font-family:'Syne',sans-serif;color:var(--fg);text-decoration:none;">
+                    Read Full Story <span style="transition:transform 0.2s;" class="arrow-r">→</span>
+                </a>
+            </div>
+        </section>
+
+        <!-- WORK -->
+        <section
+            id="work"
+            class="section justify-end px-6 md:px-24"
+            data-model="assets/models/work.glb"
+            data-animation="Wave"
+            data-orbit="18deg 72deg 108%"
+            data-x="-18vw"
+            data-scale="1.02">
+
+            <div class="content-box max-w-xl text-right flex flex-col items-end">
+                <p class="label-text anim-text mb-4">Selected Work</p>
+                <h2 class="section-title anim-text mb-6">50+<br>Projects.</h2>
+                <p class="anim-text mb-8" style="color:var(--fg2);font-size:1rem;line-height:1.7;">
+                    Systems, platforms, and digital products engineered for real users — including WhiteCoder Copilot, FOLIO, WCProbe, CineHub Pro, ResumeIQ, and HND Study Hub. From AI tools to full-stack platforms, everything is built with clarity, speed, and purpose.
+                </p>
+                <a href="work.html" class="anim-text mag-btn px-8 py-3 rounded-full text-sm font-bold tracking-widest uppercase" style="background:var(--fg);color:var(--bg);font-family:'Syne',sans-serif;text-decoration:none;">View All Projects</a>
+            </div>
+        </section>
+
+        <!-- EDUCATION -->
+        <section
+            id="education"
+            class="section justify-start px-6 md:px-24"
+            data-model="models/about.glb"
+            data-animation="Idle"
+            data-orbit="-8deg 74deg 112%"
+            data-x="18vw"
+            data-scale="0.92">
+
+            <div class="content-box max-w-xl">
+                <p class="label-text anim-text mb-4">Academic Journey</p>
+                <h2 class="section-title anim-text mb-6">Continuous<br>Learning.</h2>
+                <p class="anim-text mb-8" style="color:var(--fg2);font-size:1rem;line-height:1.7;">
+                    Pursuing HNDIT at SLIATE while continuously learning through real-world building. Technovation '25 Design Contest Winner, with verified learning across GitHub, Microsoft Learn, and LinkedIn Learning.
+                </p>
+                <a href="education.html" class="anim-text mag-btn px-8 py-3 rounded-full text-sm font-bold tracking-widest uppercase inline-block" style="background:var(--fg);color:var(--bg);font-family:'Syne',sans-serif;text-decoration:none;">View Credentials</a>
+            </div>
+        </section>
+
+        <!-- COUNTERS -->
+        <section id="counters-section">
+            <div class="counter-grid anim-text">
+                <div class="counter-cell">
+                    <div class="counter-num" data-target="6000" data-suffix="K+">0</div>
+                    <div class="counter-label">Students on HND Study Hub</div>
+                </div>
+                <div class="counter-cell">
+                    <div class="counter-num" data-target="50" data-suffix="+">0</div>
+                    <div class="counter-label">Projects Built</div>
+                </div>
+                <div class="counter-cell">
+                    <div class="counter-num" data-target="3" data-suffix="+">0</div>
+                    <div class="counter-label">Years of Development</div>
+                </div>
+                <div class="counter-cell">
+                    <div class="counter-num" data-target="1" data-suffix="st">0</div>
+                    <div class="counter-label">Technovation '25 Winner</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CONTACT -->
+        <section
+            id="contact"
+            class="section justify-center text-center"
+            style="background:var(--fg);"
+            data-model="models/about.glb"
+            data-animation="Greeting"
+            data-orbit="0deg 70deg 100%"
+            data-x="0vw"
+            data-scale="1.08">
+
+            <div class="max-w-2xl px-6 pointer-events-auto">
+                <p class="label-text anim-text mb-6" style="color:rgba(255,255,255,0.4);">Available for Tech & AI Projects</p>
+                    <h2 class="section-title anim-text mb-5" style="color:var(--bg);">Let's build<br>something <span style="color:transparent;-webkit-text-stroke:1.5px var(--bg);">great.</span></h2>
+                    <p class="anim-text mb-8" style="color:rgba(255,255,255,0.62);font-size:1rem;line-height:1.7;max-width:700px;margin-inline:auto;">
+                        Have a project in mind? I'm always open to new ideas, collaborations, and purposeful digital products.
+                    </p>
+                    <a href="mailto:oshanda@whitecoder.online" class="anim-text block text-xl md:text-3xl font-light pb-2" style="color:var(--bg);text-decoration:none;border-bottom:1px solid rgba(255,255,255,0.2);display:inline-block;transition:opacity 0.2s;font-family:'Syne',sans-serif;" onmouseover="this.style.opacity='0.6'" onmouseout="this.style.opacity='1'">
+                        oshanda@whitecoder.online
+                    </a>
+                <div class="anim-text mt-10 flex gap-4 justify-center flex-wrap">
+                    <a href="https://github.com/oshandageethanjana" target="_blank"
+                    style="display:inline-flex;align-items:center;gap:10px;padding:12px 18px;border:1px solid rgba(255,255,255,0.14);border-radius:999px;color:rgba(255,255,255,0.72);text-decoration:none;transition:all 0.25s ease;font-family:'Syne',sans-serif;font-size:0.68rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;"
+                    onmouseover="this.style.color='rgba(255,255,255,1)';this.style.borderColor='rgba(255,255,255,0.32)';this.style.background='rgba(255,255,255,0.06)'"
+                    onmouseout="this.style.color='rgba(255,255,255,0.72)';this.style.borderColor='rgba(255,255,255,0.14)';this.style.background='transparent'">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                            <path d="M12 0C5.37 0 0 5.37 0 12a12 12 0 0 0 8.2 11.39c.6.1.82-.26.82-.58v-2.03c-3.34.73-4.04-1.41-4.04-1.41-.55-1.38-1.34-1.75-1.34-1.75-1.1-.75.08-.73.08-.73 1.2.08 1.84 1.24 1.84 1.24 1.08 1.84 2.82 1.31 3.5 1 .1-.79.42-1.32.76-1.63-2.67-.31-5.47-1.34-5.47-5.95 0-1.31.47-2.38 1.24-3.22-.13-.31-.54-1.56.12-3.25 0 0 1.01-.32 3.3 1.23A11.5 11.5 0 0 1 12 5.8c1.02 0 2.05.14 3 .41 2.3-1.55 3.3-1.23 3.3-1.23.66 1.69.25 2.94.12 3.25.77.84 1.24 1.91 1.24 3.22 0 4.62-2.8 5.64-5.48 5.94.43.37.82 1.1.82 2.23v3.3c0 .32.22.69.83.57A12 12 0 0 0 24 12C24 5.37 18.63 0 12 0Z"/>
+                        </svg>
+                        <span>GitHub</span>
+                    </a>
+
+                    <a href="https://lk.linkedin.com/in/oshanda-geethanjana" target="_blank"
+                    style="display:inline-flex;align-items:center;gap:10px;padding:12px 18px;border:1px solid rgba(255,255,255,0.14);border-radius:999px;color:rgba(255,255,255,0.72);text-decoration:none;transition:all 0.25s ease;font-family:'Syne',sans-serif;font-size:0.68rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;"
+                    onmouseover="this.style.color='rgba(255,255,255,1)';this.style.borderColor='rgba(255,255,255,0.32)';this.style.background='rgba(255,255,255,0.06)'"
+                    onmouseout="this.style.color='rgba(255,255,255,0.72)';this.style.borderColor='rgba(255,255,255,0.14)';this.style.background='transparent'">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                            <path d="M4.98 3.5A2.48 2.48 0 1 1 5 8.46 2.48 2.48 0 0 1 4.98 3.5ZM3 9h4v12H3zm7 0h3.83v1.64h.06c.53-1 1.84-2.05 3.79-2.05 4.05 0 4.8 2.67 4.8 6.13V21h-4v-5.57c0-1.33-.02-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.95V21h-4z"/>
+                        </svg>
+                        <span>LinkedIn</span>
+                    </a>
+
+                    <a href="https://wa.me/94764778100" target="_blank"
+                    style="display:inline-flex;align-items:center;gap:10px;padding:12px 18px;border:1px solid rgba(255,255,255,0.14);border-radius:999px;color:rgba(255,255,255,0.72);text-decoration:none;transition:all 0.25s ease;font-family:'Syne',sans-serif;font-size:0.68rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;"
+                    onmouseover="this.style.color='rgba(255,255,255,1)';this.style.borderColor='rgba(255,255,255,0.32)';this.style.background='rgba(255,255,255,0.06)'"
+                    onmouseout="this.style.color='rgba(255,255,255,0.72)';this.style.borderColor='rgba(255,255,255,0.14)';this.style.background='transparent'">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                            <path d="M20.52 3.48A11.82 11.82 0 0 0 12.06 0C5.5 0 .16 5.34.16 11.9c0 2.1.55 4.14 1.6 5.93L0 24l6.35-1.66a11.8 11.8 0 0 0 5.7 1.45h.01c6.56 0 11.9-5.34 11.9-11.9 0-3.18-1.24-6.17-3.44-8.41ZM12.06 21.77h-.01a9.82 9.82 0 0 1-5-1.37l-.36-.21-3.77.99 1.01-3.68-.24-.38a9.84 9.84 0 0 1-1.51-5.22c0-5.42 4.41-9.83 9.84-9.83a9.77 9.77 0 0 1 6.97 2.89 9.77 9.77 0 0 1 2.88 6.95c0 5.43-4.42 9.86-9.81 9.86Zm5.39-7.36c-.3-.15-1.77-.87-2.05-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.95 1.17-.17.2-.35.22-.65.07-.3-.15-1.28-.47-2.43-1.5-.9-.8-1.5-1.8-1.67-2.1-.18-.3-.02-.46.13-.61.13-.13.3-.35.45-.52.15-.18.2-.3.3-.5.1-.2.05-.37-.03-.52-.08-.15-.67-1.62-.92-2.22-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.08-.8.37s-1.04 1.02-1.04 2.48 1.06 2.88 1.2 3.08c.15.2 2.08 3.18 5.03 4.46.7.3 1.26.48 1.69.61.71.22 1.36.19 1.87.12.57-.08 1.77-.72 2.02-1.42.25-.7.25-1.3.18-1.42-.08-.12-.28-.2-.58-.35Z"/>
+                        </svg>
+                        <span>WhatsApp</span>
+                    </a>
+
+                    <a href="https://www.instagram.com/whitecoder._" target="_blank"
+                    style="display:inline-flex;align-items:center;gap:10px;padding:12px 18px;border:1px solid rgba(255,255,255,0.14);border-radius:999px;color:rgba(255,255,255,0.72);text-decoration:none;transition:all 0.25s ease;font-family:'Syne',sans-serif;font-size:0.68rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;"
+                    onmouseover="this.style.color='rgba(255,255,255,1)';this.style.borderColor='rgba(255,255,255,0.32)';this.style.background='rgba(255,255,255,0.06)'"
+                    onmouseout="this.style.color='rgba(255,255,255,0.72)';this.style.borderColor='rgba(255,255,255,0.14)';this.style.background='transparent'">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                            <path d="M7.75 2h8.5A5.75 5.75 0 0 1 22 7.75v8.5A5.75 5.75 0 0 1 16.25 22h-8.5A5.75 5.75 0 0 1 2 16.25v-8.5A5.75 5.75 0 0 1 7.75 2Zm0 1.8A3.95 3.95 0 0 0 3.8 7.75v8.5a3.95 3.95 0 0 0 3.95 3.95h8.5a3.95 3.95 0 0 0 3.95-3.95v-8.5a3.95 3.95 0 0 0-3.95-3.95Zm8.95 1.35a1.1 1.1 0 1 1 0 2.2 1.1 1.1 0 0 1 0-2.2ZM12 6.86A5.14 5.14 0 1 1 6.86 12 5.15 5.15 0 0 1 12 6.86Zm0 1.8A3.34 3.34 0 1 0 15.34 12 3.35 3.35 0 0 0 12 8.66Z"/>
+                        </svg>
+                        <span>Instagram</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- TESTIMONIALS MARQUEE -->
+    <div id="testimonials-section">
+        <div class="marquee-track">
+            <!-- Items doubled for seamless loop -->
+            <div class="marquee-item">WhiteCoder Copilot · FOLIO · WCProbe · CineHub Pro <span class="dot"></span></div>
+            <div class="marquee-item">Technovation '25 · Design Contest Winner <span class="dot"></span></div>
+            <div class="marquee-item">HND Study Hub · 6K+ Students Reached <span class="dot"></span></div>
+            <div class="marquee-item">50+ Projects Built · 3+ Years Building <span class="dot"></span></div>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <div id="sticky-footer-wrapper">
+        <footer>
+            <div style="font-family:'Syne',sans-serif;font-size:1.8rem;font-weight:800;letter-spacing:-0.03em;margin-bottom:1rem;color:var(--fg);">WHITECODER.</div>
+            <p style="color:var(--fg2);font-size:0.8rem;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.5rem;">Oshanda Geethanjana · Colombo, LK</p>
+            <p style="color:var(--fg2);font-size:0.75rem;">© 2026 WhiteCoder. All rights reserved.</p>
+        </footer>
+    </div>
+
+    <!-- SOUND TOGGLE & THEME TOGGLE -->
+    <button id="sound-toggle" title="Toggle Sound" style="color:var(--fg);">🔇</button>
+    <button id="theme-toggle" title="Toggle Theme" style="color:var(--fg);" onclick="toggleTheme()">◐</button>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.19/bundled/lenis.min.js"></script>
+
+    <script>
+    // ============================================================
+    // CONSOLE EASTER EGG
+    // ============================================================
+    console.log('%c\n██╗    ██╗██╗  ██╗██╗████████╗███████╗ ██████╗ ██████╗ ██████╗ ███████╗██████╗ \n██║    ██║██║  ██║██║╚══██╔══╝██╔════╝██╔════╝██╔═══██╗██╔══██╗██╔════╝██╔══██╗\n██║ █╗ ██║███████║██║   ██║   █████╗  ██║     ██║   ██║██║  ██║█████╗  ██████╔╝\n██║███╗██║██╔══██║██║   ██║   ██╔══╝  ██║     ██║   ██║██║  ██║██╔══╝  ██╔══██╗\n╚███╔███╔╝██║  ██║██║   ██║   ███████╗╚██████╗╚██████╔╝██████╔╝███████╗██║  ██║\n ╚══╝╚══╝ ╚═╝  ╚═╝╚═╝   ╚═╝   ╚══════╝ ╚═════╝ ╚═════╝ ╚═════╝ ╚══════╝╚═╝  ╚═╝\n', 'color: #0a0a0a; font-family: monospace;');
+    console.log('%cHey there, fellow developer! 👋', 'font-size:16px;font-weight:bold;color:#0a0a0a;');
+    console.log('%cLooking for the source code? → https://github.com/oshandageethanjana', 'font-size:13px;color:#555;');
+    console.log('%cBuilt with ❤️ by Oshanda Geethanjana | whitecoder.online', 'font-size:11px;color:#aaa;');
+
+    // ============================================================
+    // KEYBOARD EASTER EGG — type "WHITE"
+    // ============================================================
+    let typed = '';
+    document.addEventListener('keydown', (e) => {
+        typed += e.key.toUpperCase();
+        if (typed.length > 5) typed = typed.slice(-5);
+        if (typed === 'WHITE') {
+            document.body.style.transition = 'filter 0.8s ease';
+            document.body.style.filter = 'invert(1) hue-rotate(180deg)';
+            setTimeout(() => { document.body.style.filter = ''; }, 2000);
+            console.log('%c🎉 Easter Egg Unlocked! You typed WHITE!', 'font-size:14px;color:green;font-weight:bold;');
+        }
+    });
+
+    // ============================================================
+    // DARK / LIGHT MODE — auto + manual
+    // ============================================================
+    function applyTheme(theme) {
+        document.documentElement.setAttribute('data-theme', theme);
+        localStorage.setItem('wc-theme', theme);
+    }
+    function toggleTheme() {
+        const current = document.documentElement.getAttribute('data-theme');
+        applyTheme(current === 'dark' ? 'light' : 'dark');
+    }
+    // Auto-detect on load
+    const savedTheme = localStorage.getItem('wc-theme');
+    if (savedTheme) {
+        applyTheme(savedTheme);
+    } else {
+        const hour = new Date().getHours();
+        applyTheme((hour >= 19 || hour < 6) ? 'dark' : 'light');
+    }
+
+    // ============================================================
+    // PRELOADER
+    // ============================================================
+    const preloader = document.getElementById('preloader');
+    const bar = document.getElementById('preloader-bar');
+    const pct = document.getElementById('preloader-percent');
+    let progress = 0;
+    const interval = setInterval(() => {
+        progress += Math.random() * 18;
+        if (progress >= 100) { progress = 100; clearInterval(interval); }
+        bar.style.width = progress + '%';
+        pct.textContent = Math.floor(progress) + '%';
+        if (progress >= 100) {
+            setTimeout(() => { preloader.classList.add('hidden'); }, 400);
+        }
+    }, 120);
+
+    // ============================================================
+    // CUSTOM CURSOR
+    // ============================================================
+    const dot = document.getElementById('cursor-dot');
+    const ring = document.getElementById('cursor-ring');
+    let mx = 0, my = 0, rx = 0, ry = 0;
+    document.addEventListener('mousemove', (e) => { mx = e.clientX; my = e.clientY; });
+    (function animCursor() {
+        rx += (mx - rx) * 0.15;
+        ry += (my - ry) * 0.15;
+        dot.style.left = mx + 'px'; dot.style.top = my + 'px';
+        ring.style.left = rx + 'px'; ring.style.top = ry + 'px';
+        requestAnimationFrame(animCursor);
+    })();
+    // Expand on interactive elements
+    const hoverEls = document.querySelectorAll('a, button, model-viewer, .mag-btn, .counter-cell');
+    hoverEls.forEach(el => {
+        el.addEventListener('mouseenter', () => {
+            ring.classList.add('expanded');
+            ring.textContent = el.tagName === 'MODEL-VIEWER' ? 'DRAG' : 'VIEW';
+        });
+        el.addEventListener('mouseleave', () => { ring.classList.remove('expanded'); ring.textContent = 'DRAG'; });
+    });
+    document.addEventListener('mouseleave', () => { dot.style.opacity = '0'; ring.style.opacity = '0'; });
+    document.addEventListener('mouseenter', () => { dot.style.opacity = '1'; ring.style.opacity = '1'; });
+
+    // ============================================================
+    // SOUND TOGGLE
+    // ============================================================
+    let soundEnabled = false;
+    const AudioCtx = window.AudioContext || window.webkitAudioContext;
+    let audioCtx = null;
+    function playClick() {
+        if (!soundEnabled) return;
+        if (!audioCtx) audioCtx = new AudioCtx();
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.connect(gain); gain.connect(audioCtx.destination);
+        osc.type = 'sine'; osc.frequency.value = 800;
+        gain.gain.setValueAtTime(0.08, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.15);
+        osc.start(); osc.stop(audioCtx.currentTime + 0.15);
+    }
+    document.getElementById('sound-toggle').addEventListener('click', () => {
+        soundEnabled = !soundEnabled;
+        document.getElementById('sound-toggle').textContent = soundEnabled ? '🔊' : '🔇';
+        if (!audioCtx) audioCtx = new AudioCtx();
+    });
+    document.querySelectorAll('a, button').forEach(el => el.addEventListener('mouseenter', playClick));
+
+    // ============================================================
+    // MOBILE MENU
+    // ============================================================
+    const menuBtn = document.getElementById('menu-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+    let menuOpen = false;
+    menuBtn.addEventListener('click', () => {
+        menuOpen = !menuOpen;
+        mobileMenu.classList.toggle('open');
+        menuBtn.textContent = menuOpen ? 'CLOSE' : 'MENU';
+    });
+    document.querySelectorAll('.mobile-link').forEach(l => l.addEventListener('click', () => {
+        mobileMenu.classList.remove('open');
+        menuBtn.textContent = 'MENU';
+        menuOpen = false;
+    }));
+
+    // ============================================================
+    // CV PANEL
+    // ============================================================
+    function openCVPanel() {
+        document.getElementById('cv-panel').classList.add('open');
+        document.getElementById('cv-overlay').classList.add('visible');
+    }
+    function closeCVPanel() {
+        document.getElementById('cv-panel').classList.remove('open');
+        document.getElementById('cv-overlay').classList.remove('visible');
+    }
+
+    // ============================================================
+    // LENIS SMOOTH SCROLL
+    // ============================================================
+    const lenis = new Lenis({ duration: 1.2, easing: t => Math.min(1, 1.001 - Math.pow(2, -10 * t)), smooth: true });
+    lenis.on('scroll', ScrollTrigger.update);
+    gsap.ticker.add(time => lenis.raf(time * 1000));
+    gsap.ticker.lagSmoothing(0);
+
+    // ============================================================
+    // GSAP SETUP
+    // ============================================================
+    gsap.registerPlugin(ScrollTrigger);
+
+    // Snap
+    // Snap removed for free natural scrolling
+
+    // 3D model movement
+    const modelWrapper = document.getElementById('model-wrapper');
+    const character = document.getElementById('portfolio-character');
+    const storySections = document.querySelectorAll('section[data-model]');
+
+    function switchCharacter(section) {
+        const model = section.dataset.model;
+        const animation = section.dataset.animation || '';
+        const orbit = section.dataset.orbit || '0deg 75deg 105%';
+        const moveX = section.dataset.x || '0vw';
+        const scale = section.dataset.scale || '1';
+
+        gsap.to(character, {
+            opacity: 0,
+            duration: 0.22,
+            onComplete: () => {
+                if (character.getAttribute('src') !== model) {
+                    character.setAttribute('src', model);
+                }
+
+                if (animation) {
+                    character.setAttribute('animation-name', animation);
+                }
+
+                character.setAttribute('camera-orbit', orbit);
+
+                // model load උනාට පස්සේ animation restart
+                character.addEventListener('load', () => {
+                    try { character.play(); } catch (e) {}
+                }, { once: true });
+
+                gsap.to(modelWrapper, {
+                    x: moveX,
+                    scale: parseFloat(scale),
+                    duration: 0.8,
+                    ease: 'power3.out'
+                });
+
+                gsap.to(character, {
+                    opacity: 0.9,
+                    duration: 0.35
+                });
+            }
+        });
+    }
+
+    storySections.forEach(section => {
+        ScrollTrigger.create({
+            trigger: section,
+            start: 'top 55%',
+            end: 'bottom 45%',
+            onEnter: () => switchCharacter(section),
+            onEnterBack: () => switchCharacter(section)
+        });
+    });
+
+    // Text reveals
+    document.querySelectorAll('.section').forEach(section => {
+        gsap.fromTo(section.querySelectorAll('.anim-text'),
+            { opacity:0, y:40 },
+            { opacity:1, y:0, duration:1, stagger:0.15, ease:"power3.out",
+              scrollTrigger: { trigger:section, start:"top 60%", toggleActions:"play none none reverse" }
+            }
+        );
+    });
+
+    // Counters
+    document.querySelectorAll('.counter-num').forEach(el => {
+        const target = +el.getAttribute('data-target');
+        const suffix = el.getAttribute('data-suffix') || '';
+        let display = target === 6000 ? target/1000 : target;
+        let displaySuffix = target === 6000 ? 'K+' : suffix;
+        ScrollTrigger.create({
+            trigger: el, start:"top 80%",
+            onEnter: () => {
+                gsap.to({ val:0 }, {
+                    val: display, duration:2, ease:"power2.out",
+                    onUpdate: function() { el.textContent = Math.floor(this.targets()[0].val) + displaySuffix; }
+                });
+            }
+        });
+    });
+
+    // Counter grid fade
+    gsap.fromTo('#counters-section .counter-grid',
+        { opacity:0, y:60 },
+        { opacity:1, y:0, duration:1, ease:"power3.out",
+          scrollTrigger: { trigger:'#counters-section', start:"top 70%", toggleActions:"play none none reverse" }
+        }
+    );
+
+    // ============================================================
+    // MAGNETIC BUTTONS
+    // ============================================================
+    document.querySelectorAll('.mag-btn').forEach(btn => {
+        btn.addEventListener('mousemove', (e) => {
+            const r = btn.getBoundingClientRect();
+            const dx = e.clientX - (r.left + r.width/2);
+            const dy = e.clientY - (r.top + r.height/2);
+            gsap.to(btn, { x: dx * 0.35, y: dy * 0.35, duration:0.4, ease:"power2.out" });
+        });
+        btn.addEventListener('mouseleave', () => {
+            gsap.to(btn, { x:0, y:0, duration:0.5, ease:"elastic.out(1,0.5)" });
+        });
+    });
+    </script>
+</body>
+</html>

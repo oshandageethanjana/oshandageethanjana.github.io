@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Works | WhiteCoder — Oshanda Geethanjana</title>
+    <meta name="description" content="Selected works by Oshanda Geethanjana — AI tools, full-stack platforms, SaaS products, and community systems.">
+    <meta property="og:title" content="Works | WhiteCoder">
+    <meta property="og:image" content="https://oshandageethanjana.github.io/assets/Oshanda_Geethanjana.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap');
+
+        :root { --bg:#f5f4f0;--fg:#0a0a0a;--fg2:#555;--card:rgba(255,255,255,0.55);--card-border:rgba(0,0,0,0.08);--nav-bg:rgba(245,244,240,0.9); }
+        [data-theme="dark"] { --bg:#0a0a0a;--fg:#f5f4f0;--fg2:#aaa;--card:rgba(20,20,20,0.75);--card-border:rgba(255,255,255,0.08);--nav-bg:rgba(10,10,10,0.9); }
+
+        *, *::before, *::after { box-sizing:border-box; }
+        ::-webkit-scrollbar { display:none; }
+        html, body { background:var(--bg);color:var(--fg);font-family:'DM Sans',sans-serif;margin:0;padding:0;overflow-x:hidden;transition:background 0.6s,color 0.6s; }
+
+        #cursor-dot { position:fixed;top:0;left:0;width:8px;height:8px;background:var(--fg);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%); }
+        #cursor-ring { position:fixed;top:0;left:0;width:40px;height:40px;border:1.5px solid var(--fg);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:width 0.35s cubic-bezier(0.25,1,0.5,1),height 0.35s,background 0.3s,font-size 0.3s;display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-size:0;font-weight:700;color:var(--bg);overflow:hidden;text-transform:uppercase;letter-spacing:0.1em; }
+        #cursor-ring.expanded { width:72px;height:72px;background:var(--fg);font-size:8px; }
+
+        #preloader { position:fixed;inset:0;background:#0a0a0a;z-index:10000;display:flex;flex-direction:column;align-items:center;justify-content:center;transition:opacity 0.8s,visibility 0.8s; }
+        #preloader.hidden{opacity:0;visibility:hidden;}
+        #preloader-logo{font-family:'Syne',sans-serif;font-size:clamp(2rem,6vw,4rem);font-weight:800;color:#f5f4f0;letter-spacing:-0.04em;margin-bottom:3rem;}
+        #preloader-bar-bg{width:220px;height:1px;background:rgba(255,255,255,0.15);}
+        #preloader-bar{height:100%;width:0%;background:#f5f4f0;transition:width 0.1s linear;}
+        #preloader-percent{font-family:'Syne',sans-serif;font-size:0.7rem;font-weight:600;color:#f5f4f0;letter-spacing:0.2em;margin-top:1.5rem;opacity:0.5;}
+
+        .glass-nav{background:var(--nav-bg);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid var(--card-border);transition:background 0.6s;}
+        .nav-logo{font-family:'Syne',sans-serif;font-weight:800;letter-spacing:-0.04em;}
+        .nav-link{font-family:'Syne',sans-serif;font-size:0.72rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--fg2);transition:color 0.2s;text-decoration:none;}
+        .nav-link:hover,.nav-link.active{color:var(--fg);}
+
+        .page-title{font-family:'Syne',sans-serif;font-size:clamp(3rem,8vw,6rem);font-weight:800;line-height:1;letter-spacing:-0.04em;}
+
+        .project-card { display:block;text-decoration:none;color:inherit; }
+        .project-card:hover .project-img-inner { transform:scale(1.05); }
+        .project-img-inner { transition:transform 0.6s cubic-bezier(0.25,0.46,0.45,0.94);height:100%;width:100%;object-fit:cover; }
+        .project-img-wrap { width:100%;aspect-ratio:4/3;border-radius:1.5rem;overflow:hidden;position:relative;background:var(--card);border:1px solid var(--card-border); }
+
+        .tag { display:inline-block;padding:0.25rem 0.75rem;border:1px solid var(--card-border);border-radius:3rem;font-size:0.7rem;font-weight:500;font-family:'Syne',sans-serif;color:var(--fg2);margin:0.15rem; }
+
+        .gsap-fade { opacity:0;transform:translateY(40px); }
+
+        /* CASE STUDY MODAL */
+        #case-modal { position:fixed;inset:0;z-index:9000;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity 0.4s; }
+        #case-modal.open { opacity:1;pointer-events:auto; }
+        #case-overlay { position:absolute;inset:0;background:rgba(0,0,0,0.5);backdrop-filter:blur(6px); }
+        #case-panel { position:relative;z-index:1;background:var(--bg);border-radius:2rem;width:90%;max-width:780px;max-height:85vh;overflow-y:auto;padding:3rem;box-shadow:0 40px 80px rgba(0,0,0,0.2); }
+        #case-close { position:sticky;top:0;float:right;background:var(--fg);color:var(--bg);border:none;border-radius:50%;width:36px;height:36px;cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center;margin-bottom:1rem;margin-left:auto; }
+
+        #sound-toggle,#theme-toggle{position:fixed;z-index:200;width:44px;height:44px;border-radius:50%;background:var(--card);border:1px solid var(--card-border);backdrop-filter:blur(10px);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:1rem;transition:all 0.3s;}
+        #sound-toggle{bottom:2rem;right:2rem;}#theme-toggle{bottom:2rem;right:5.5rem;}
+        #sound-toggle:hover,#theme-toggle:hover{background:var(--fg);color:var(--bg);}
+    </style>
+</head>
+<body>
+
+    <div id="cursor-dot"></div>
+    <div id="cursor-ring">VIEW</div>
+
+    <div id="preloader">
+        <div id="preloader-logo">WHITECODER.</div>
+        <div id="preloader-bar-bg"><div id="preloader-bar"></div></div>
+        <div id="preloader-percent">0%</div>
+    </div>
+
+    <!-- CASE STUDY MODAL -->
+    <div id="case-modal">
+        <div id="case-overlay" onclick="closeCase()"></div>
+        <div id="case-panel">
+            <button id="case-close" onclick="closeCase()">✕</button>
+            <div id="case-content"></div>
+        </div>
+    </div>
+
+    <nav class="fixed top-4 left-1/2 -translate-x-1/2 z-50 pointer-events-auto">
+        <div class="glass-nav px-4 md:px-6 h-14 rounded-full flex items-center justify-between gap-4"
+            style="min-width: fit-content; border:1px solid var(--card-border); box-shadow:0 10px 30px rgba(0,0,0,0.06);">
+
+            <a href="index.html" class="nav-logo text-sm md:text-base" style="color:var(--fg); text-decoration:none;">
+                Oshanda.
+            </a>
+
+            <div class="hidden md:flex items-center gap-5">
+                <a href="#hero" class="nav-link">Home</a>
+                <a href="#about" class="nav-link">About</a>
+                <a href="#work" class="nav-link active">Work</a>
+                <a href="education.html" class="nav-link">Education</a>
+                <a href="#contact" class="nav-link">Contact</a>
+                <a href="https://oshandageethanjana.github.io/assets/oshanda.pdf" download
+                    class="mag-btn"
+                    style="display:inline-flex;align-items:center;justify-content:center;background:var(--fg);color:var(--bg);border:none;border-radius:999px;padding:0.55rem 1rem;font-family:'Syne',sans-serif;font-size:0.68rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;cursor:pointer;text-decoration:none;">
+                        CV
+                </a>
+            </div>
+
+            <button id="menu-btn"
+                    class="md:hidden nav-logo text-xs z-50"
+                    style="background:none;border:none;color:var(--fg);cursor:pointer;">
+                MENU
+            </button>
+        </div>
+    </nav>
+
+    <main class="pt-32 px-6 md:px-12 pb-24">
+
+        <header class="max-w-7xl mx-auto mt-10 mb-16">
+            <div style="font-family:'Syne',sans-serif;font-size:0.65rem;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:var(--fg2);margin-bottom:1rem;" class="gsap-fade">50+ Projects Built · 6K+ Users Reached</div>
+                <h1 class="page-title gsap-fade mb-6">Selected<br>Work.</h1>
+                <p class="gsap-fade" style="color:var(--fg2);font-size:1rem;max-width:550px;line-height:1.7;">Systems, platforms, and digital products I've engineered — from founding startups to building communities.</p>
+        </header>
+
+        <section class="max-w-7xl mx-auto grid md:grid-cols-2 gap-x-12 gap-y-20">
+
+            <!-- Project 1 -->
+            <div class="project-card gsap-fade" onclick="openCase('copilot')" style="cursor:none;">
+                <div class="project-img-wrap mb-6" style="background:linear-gradient(135deg,#0a0a0a 0%,#1a1a2e 100%);">
+                    <div class="project-img-inner" style="display:flex;align-items:center;justify-content:center;color:white;">
+                        <div style="text-align:center;font-family:'Syne',sans-serif;">
+                            <div style="font-size:2.5rem;font-weight:800;margin-bottom:0.5rem;">WC</div>
+                            <div style="font-size:0.7rem;letter-spacing:0.2em;opacity:0.5;text-transform:uppercase;">Copilot</div>
+                        </div>
+                    </div>
+                </div>
+                <div style="display:flex;justify-content:space-between;align-items:start;">
+                    <div>
+                        <h3 style="font-family:'Syne',sans-serif;font-size:1.3rem;font-weight:800;margin-bottom:0.5rem;">WhiteCoder Copilot</h3>
+                        <div><span class="tag">AI</span><span class="tag">Copilot</span><span class="tag">Flagship</span></div>
+                    </div>
+                    <span style="font-family:'Syne',sans-serif;font-size:0.75rem;font-weight:700;color:var(--fg2);">2026</span>
+                </div>
+            </div>
+
+            <!-- Project 2 -->
+            <div class="project-card gsap-fade md:mt-24" onclick="openCase('folio')" style="cursor:none;">
+                <div class="project-img-wrap mb-6" style="background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);">
+                    <div class="project-img-inner" style="display:flex;align-items:center;justify-content:center;color:white;">
+                        <div style="text-align:center;font-family:'Syne',sans-serif;">
+                            <div style="font-size:2.5rem;font-weight:800;margin-bottom:0.5rem;">FOLIO</div>
+                            <div style="font-size:0.7rem;letter-spacing:0.2em;opacity:0.5;text-transform:uppercase;">SaaS Platform</div>
+                        </div>
+                    </div>
+                </div>
+                <div style="display:flex;justify-content:space-between;align-items:start;">
+                    <div>
+                        <h3 style="font-family:'Syne',sans-serif;font-size:1.3rem;font-weight:800;margin-bottom:0.5rem;">FOLIO by WhiteCoder</h3>
+                        <div><span class="tag">PHP</span><span class="tag">SaaS</span><span class="tag">Dashboard</span></div>
+                    </div>
+                    <span style="font-family:'Syne',sans-serif;font-size:0.75rem;font-weight:700;color:var(--fg2);">2025</span>
+                </div>
+            </div>
+
+            <!-- Project 3 -->
+            <div class="project-card gsap-fade" onclick="openCase('wcprobe')" style="cursor:none;">
+                <div class="project-img-wrap mb-6" style="background:linear-gradient(135deg,#0f2027 0%,#203a43 50%,#2c5364 100%);">
+                    <div class="project-img-inner" style="display:flex;align-items:center;justify-content:center;color:white;">
+                        <div style="text-align:center;font-family:'Syne',sans-serif;">
+                            <div style="font-size:2rem;font-weight:800;margin-bottom:0.5rem;">WCP</div>
+                            <div style="font-size:0.7rem;letter-spacing:0.2em;opacity:0.7;text-transform:uppercase;">Network Tool</div>
+                        </div>
+                    </div>
+                </div>
+                <div style="display:flex;justify-content:space-between;align-items:start;">
+                    <div>
+                        <h3 style="font-family:'Syne',sans-serif;font-size:1.3rem;font-weight:800;margin-bottom:0.5rem;">WCProbe by WhiteCoder</h3>
+                        <div><span class="tag">PHP</span><span class="tag">DNS API</span><span class="tag">Cyber Tool</span></div>
+                    </div>
+                    <span style="font-family:'Syne',sans-serif;font-size:0.75rem;font-weight:700;color:var(--fg2);">2026</span>
+                </div>
+            </div>
+
+            <!-- Project 4 -->
+            <div class="project-card gsap-fade md:mt-24" onclick="openCase('cinehub')" style="cursor:none;">
+                <div class="project-img-wrap mb-6" style="background:linear-gradient(135deg,#141e30 0%,#243b55 100%);">
+                    <div class="project-img-inner" style="display:flex;align-items:center;justify-content:center;color:white;">
+                        <div style="text-align:center;font-family:'Syne',sans-serif;">
+                            <div style="font-size:1.8rem;font-weight:800;margin-bottom:0.5rem;">CINE</div>
+                            <div style="font-size:0.7rem;letter-spacing:0.2em;opacity:0.7;text-transform:uppercase;">Streaming</div>
+                        </div>
+                    </div>
+                </div>
+                <div style="display:flex;justify-content:space-between;align-items:start;">
+                    <div>
+                        <h3 style="font-family:'Syne',sans-serif;font-size:1.3rem;font-weight:800;margin-bottom:0.5rem;">CineHub Pro</h3>
+                        <div><span class="tag">PHP</span><span class="tag">TMDB API</span><span class="tag">PWA</span></div>
+                    </div>
+                    <span style="font-family:'Syne',sans-serif;font-size:0.75rem;font-weight:700;color:var(--fg2);">2026</span>
+                </div>
+            </div>
+
+            <div class="project-card gsap-fade" onclick="openCase('hndhub')" style="cursor:none;">
+                <div class="project-img-wrap mb-6" style="background:linear-gradient(135deg,#11998e 0%,#38ef7d 100%);">
+                    <div class="project-img-inner" style="display:flex;align-items:center;justify-content:center;color:white;">
+                        <div style="text-align:center;font-family:'Syne',sans-serif;">
+                            <div style="font-size:2rem;font-weight:800;margin-bottom:0.5rem;">HND</div>
+                            <div style="font-size:0.7rem;letter-spacing:0.2em;opacity:0.7;text-transform:uppercase;">EdTech</div>
+                        </div>
+                    </div>
+                </div>
+                <div style="display:flex;justify-content:space-between;align-items:start;">
+                    <div>
+                        <h3 style="font-family:'Syne',sans-serif;font-size:1.3rem;font-weight:800;margin-bottom:0.5rem;">HND Study Hub</h3>
+                        <div><span class="tag">Education</span><span class="tag">Community</span><span class="tag">PHP</span></div>
+                    </div>
+                    <span style="font-family:'Syne',sans-serif;font-size:0.75rem;font-weight:700;color:var(--fg2);">2025</span>
+                </div>
+            </div>
+
+            <div class="project-card gsap-fade md:mt-24" onclick="openCase('resumeiq')" style="cursor:none;">
+                <div class="project-img-wrap mb-6" style="background:linear-gradient(135deg,#ff512f 0%,#dd2476 100%);">
+                    <div class="project-img-inner" style="display:flex;align-items:center;justify-content:center;color:white;">
+                        <div style="text-align:center;font-family:'Syne',sans-serif;">
+                            <div style="font-size:1.8rem;font-weight:800;margin-bottom:0.5rem;">IQ</div>
+                            <div style="font-size:0.7rem;letter-spacing:0.2em;opacity:0.7;text-transform:uppercase;">Resume AI</div>
+                        </div>
+                    </div>
+                </div>
+                <div style="display:flex;justify-content:space-between;align-items:start;">
+                    <div>
+                        <h3 style="font-family:'Syne',sans-serif;font-size:1.3rem;font-weight:800;margin-bottom:0.5rem;">ResumeIQ</h3>
+                        <div><span class="tag">AI</span><span class="tag">Resume</span><span class="tag">ATS</span></div>
+                    </div>
+                    <span style="font-family:'Syne',sans-serif;font-size:0.75rem;font-weight:700;color:var(--fg2);">2026</span>
+                </div>
+            </div>
+
+
+
+        </section>
+
+        <div class="gsap-fade max-w-7xl mx-auto mt-20 text-center">
+            <p style="color:var(--fg2);font-size:0.95rem;line-height:1.7;max-width:620px;margin:0 auto 1rem;">
+                Explore open-source experiments, smaller projects, and code on GitHub. Always building something new.
+            </p>
+            <a href="https://github.com/oshandageethanjana" target="_blank" style="font-family:'Syne',sans-serif;font-size:0.8rem;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:var(--fg2);text-decoration:none;border-bottom:1px solid var(--card-border);padding-bottom:0.25rem;transition:color 0.2s;" onmouseover="this.style.color='var(--fg)'" onmouseout="this.style.color='var(--fg2)'">Visit GitHub →</a>
+        </div>
+    </main>
+
+    <footer style="border-top:1px solid var(--card-border);padding:3rem 2rem;text-align:center;background:var(--bg);transition:background 0.6s;">
+        <div style="font-family:'Syne',sans-serif;font-size:1.5rem;font-weight:800;margin-bottom:0.5rem;color:var(--fg);">WHITECODER.</div>
+        <a href="mailto:hello@whitecoder.com" style="color:var(--fg2);font-size:0.85rem;text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='var(--fg)'" onmouseout="this.style.color='var(--fg2)'">hello@whitecoder.com</a>
+    </footer>
+
+    <button id="sound-toggle" style="color:var(--fg);">🔇</button>
+    <button id="theme-toggle" style="color:var(--fg);" onclick="toggleTheme()">◐</button>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.19/bundled/lenis.min.js"></script>
+    <script>
+    // Case Study Data
+    const cases = {
+        copilot: {
+            title: 'WhiteCoder Copilot',
+            year: '2026', type: 'Flagship AI Product',
+            stack: ['AI', 'LLM Integration', 'PHP', 'JavaScript', 'REST API'],
+            description: 'The most powerful AI project by WhiteCoder — an all-in-one intelligent assistant helping users code, create content, generate ideas, and automate tasks. The foundation of the future WhiteCoder ecosystem.',
+            problem: 'Developers and creators needed a unified AI tool that understood context across coding, content, and productivity — without switching between multiple services.',
+            solution: 'Built a multi-model AI assistant with a clean, responsive interface. Integrated multiple LLM backends via REST APIs. Implemented session management, prompt history, and export functionality.',
+            outcome: 'Live platform serving active users at copilot.whitecoder.online. Became the flagship product of the WhiteCoder suite.',
+            link: 'https://copilot.whitecoder.online/'
+        },
+        folio: {
+            title: 'FOLIO by WhiteCoder',
+            year: '2025', type: 'SaaS Platform',
+            stack: ['PHP', 'MySQL', 'Tailwind CSS', 'JavaScript', 'CRUD'],
+            description: 'A modern SaaS-based portfolio builder allowing users to create stunning personal websites with ease. Features customizable themes, user dashboards, and a responsive glass-style UI.',
+            problem: 'Non-technical users needed a way to build professional portfolio websites without writing a single line of code.',
+            solution: 'Designed a full admin dashboard with drag-and-drop sections, theme switcher, and live preview. Built with PHP+MySQL backend following MVC structure. Implemented user authentication with PDO and prepared statements.',
+            outcome: 'Deployed on folio.whitecoder.online with multiple active users. Demonstrated full SaaS product lifecycle from concept to deployment.',
+            link: 'https://folio.whitecoder.online/'
+        },
+        wcprobe: {
+            title: 'WCProbe by WhiteCoder',
+            year: '2026', type: 'Network Tool',
+            stack: ['PHP', 'DNS API', 'SSL Checks', 'MX Records', 'Geo Data'],
+            description: 'An advanced IP and domain analysis tool that provides real-time insights including DNS resolution, SSL certificate checks, MX records, reverse DNS, and geo-location data.',
+            problem: 'Developers and administrators needed a fast web-based tool to inspect domains and IP infrastructure without juggling multiple utilities.',
+            solution: 'Built a clean diagnostic interface with dual DNS lookup support, SSL checks, reverse DNS, MX records, and geo-location output in one streamlined workflow.',
+            outcome: 'Deployed live as a reliable WhiteCoder network utility with fast results and a focused, developer-friendly UI.',
+            link: 'https://wcprobe.whitecoder.online'
+        },
+        cinehub: {
+            title: 'CineHub Pro',
+            year: '2026', type: 'Streaming Platform',
+            stack: ['PHP', 'TMDB API', 'PWA', 'Dark UI', 'Self-Hosted'],
+            description: 'A self-hosted movie and TV streaming platform. Browse trending films, manage downloads, and explore top-rated shows — all on your own server with a polished dark-mode UI.',
+            problem: 'Users wanted a private streaming dashboard with a cleaner interface, better content discovery, and self-hosted flexibility.',
+            solution: 'Built a polished streaming experience with TMDB-powered discovery, trending content sections, dark-mode presentation, and a responsive app-like interface.',
+            outcome: 'Delivered a sleek entertainment product that shows WhiteCoder can build not just business tools, but polished consumer-facing interfaces too.',
+            link: 'https://cinehub.whitecoder.online'
+        },
+
+        hndhub: {
+            title: 'HND Study Hub',
+            year: '2025', type: 'EdTech',
+            stack: ['Education', 'Community', 'PHP', 'Resources'],
+            description: 'A free educational portal for higher education students across Sri Lanka. Now serving over 6,000 active students with curated study materials, notes, and resources.',
+            problem: 'Students needed a centralized and practical place to access quality educational materials without friction.',
+            solution: 'Built a dedicated education platform focused on accessibility, simple navigation, curated resources, and community usefulness.',
+            outcome: 'Reached 6K+ users and became one of the most meaningful student-focused products in the WhiteCoder ecosystem.',
+            link: 'https://www.hndstudy.online'
+        },
+
+        resumeiq: {
+            title: 'ResumeIQ',
+            year: '2026', type: 'AI Tool',
+            stack: ['AI', 'Resume', 'ATS', 'Web App'],
+            description: 'AI-powered resume analyzer that evaluates your CV line by line, provides personalized improvements, ATS-friendly suggestions, and creates optimized cover letters instantly.',
+            problem: 'Job seekers often struggle to understand why their resumes underperform and how to improve them for ATS systems.',
+            solution: 'Built an AI web tool that reviews CV content, suggests improvements, optimizes structure, and helps generate stronger supporting material.',
+            outcome: 'A focused AI productivity tool that expands WhiteCoder into practical career-tech products.',
+            link: 'https://resumeiq.whitecoder.online'
+        },
+
+    };
+
+    function openCase(id) {
+        const c = cases[id];
+        document.getElementById('case-content').innerHTML = `
+            <div style="font-family:'Syne',sans-serif;font-size:0.65rem;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:var(--fg2);margin-bottom:0.5rem;">${c.type} · ${c.year}</div>
+            <h2 style="font-family:'Syne',sans-serif;font-size:2rem;font-weight:800;letter-spacing:-0.03em;margin-bottom:1.5rem;">${c.title}</h2>
+            <div style="display:flex;flex-wrap:wrap;gap:0.25rem;margin-bottom:2rem;">${c.stack.map(s=>`<span style="padding:0.25rem 0.75rem;border:1px solid var(--card-border);border-radius:3rem;font-size:0.7rem;font-family:'Syne',sans-serif;font-weight:600;color:var(--fg2);">${s}</span>`).join('')}</div>
+            <p style="color:var(--fg2);line-height:1.7;margin-bottom:2rem;">${c.description}</p>
+            <div style="margin-bottom:1.5rem;padding:1.5rem;background:var(--card);border-radius:1rem;border:1px solid var(--card-border);">
+                <div style="font-family:'Syne',sans-serif;font-size:0.65rem;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:var(--fg2);margin-bottom:0.5rem;">The Problem</div>
+                <p style="font-size:0.9rem;line-height:1.6;">${c.problem}</p>
+            </div>
+            <div style="margin-bottom:1.5rem;padding:1.5rem;background:var(--card);border-radius:1rem;border:1px solid var(--card-border);">
+                <div style="font-family:'Syne',sans-serif;font-size:0.65rem;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:var(--fg2);margin-bottom:0.5rem;">The Solution</div>
+                <p style="font-size:0.9rem;line-height:1.6;">${c.solution}</p>
+            </div>
+            <div style="margin-bottom:2rem;padding:1.5rem;background:var(--fg);border-radius:1rem;">
+                <div style="font-family:'Syne',sans-serif;font-size:0.65rem;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:rgba(255,255,255,0.5);margin-bottom:0.5rem;">Outcome</div>
+                <p style="font-size:0.9rem;line-height:1.6;color:var(--bg);">${c.outcome}</p>
+            </div>
+            ${c.link !== '#' ? `<a href="${c.link}" target="_blank" style="display:inline-block;padding:0.75rem 2rem;background:var(--fg);color:var(--bg);border-radius:3rem;font-family:'Syne',sans-serif;font-size:0.75rem;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;text-decoration:none;">Live Site →</a>` : '<span style="font-size:0.8rem;color:var(--fg2);">Private / Internal Deployment</span>'}
+        `;
+        document.getElementById('case-modal').classList.add('open');
+        document.body.style.overflow = 'hidden';
+    }
+    function closeCase() {
+        document.getElementById('case-modal').classList.remove('open');
+        document.body.style.overflow = '';
+    }
+
+    // Theme
+    function applyTheme(t){document.documentElement.setAttribute('data-theme',t);localStorage.setItem('wc-theme',t);}
+    function toggleTheme(){applyTheme(document.documentElement.getAttribute('data-theme')==='dark'?'light':'dark');}
+    const saved=localStorage.getItem('wc-theme');
+    if(saved)applyTheme(saved);else{const h=new Date().getHours();applyTheme((h>=19||h<6)?'dark':'light');}
+
+    // Preloader
+    const preloader=document.getElementById('preloader'),bar=document.getElementById('preloader-bar'),pct=document.getElementById('preloader-percent');
+    let p=0;const iv=setInterval(()=>{p+=Math.random()*18;if(p>=100){p=100;clearInterval(iv);}bar.style.width=p+'%';pct.textContent=Math.floor(p)+'%';if(p>=100)setTimeout(()=>preloader.classList.add('hidden'),400);},120);
+
+    // Cursor
+    const dot=document.getElementById('cursor-dot'),ring=document.getElementById('cursor-ring');
+    let mx=0,my=0,rx=0,ry=0;
+    document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;});
+    (function anim(){rx+=(mx-rx)*0.15;ry+=(my-ry)*0.15;dot.style.left=mx+'px';dot.style.top=my+'px';ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(anim);})();
+    document.querySelectorAll('.project-card,a,button').forEach(el=>{
+        el.addEventListener('mouseenter',()=>{ring.classList.add('expanded');ring.textContent=el.classList.contains('project-card')?'OPEN':'VIEW';});
+        el.addEventListener('mouseleave',()=>{ring.classList.remove('expanded');ring.textContent='VIEW';});
+    });
+
+    // Sound
+    let soundOn=false;let actx=null;
+    function playClick(){if(!soundOn)return;if(!actx)actx=new(window.AudioContext||window.webkitAudioContext)();const o=actx.createOscillator(),g=actx.createGain();o.connect(g);g.connect(actx.destination);o.type='sine';o.frequency.value=700;g.gain.setValueAtTime(0.06,actx.currentTime);g.gain.exponentialRampToValueAtTime(0.001,actx.currentTime+0.12);o.start();o.stop(actx.currentTime+0.12);}
+    document.getElementById('sound-toggle').addEventListener('click',()=>{soundOn=!soundOn;document.getElementById('sound-toggle').textContent=soundOn?'🔊':'🔇';});
+    document.querySelectorAll('a,button').forEach(el=>el.addEventListener('mouseenter',playClick));
+
+    // Lenis
+    const lenis=new Lenis({duration:1.2,easing:t=>Math.min(1,1.001-Math.pow(2,-10*t)),smooth:true});
+    function raf(t){lenis.raf(t);requestAnimationFrame(raf);}requestAnimationFrame(raf);
+
+    gsap.registerPlugin(ScrollTrigger);
+    document.querySelectorAll('.gsap-fade').forEach(el=>{
+        gsap.fromTo(el,{opacity:0,y:40},{opacity:1,y:0,duration:1,ease:"power3.out",scrollTrigger:{trigger:el,start:"top 85%",toggleActions:"play none none none"}});
+    });
+    </script>
+</body>
+</html>

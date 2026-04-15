@@ -542,6 +542,14 @@
         }
     }
 
+        @media (max-width: 768px) {
+        #cursor-dot, #cursor-ring {
+            display: none !important;
+            opacity: 0 !important;
+            visibility: hidden !important;
+        }
+    }
+
         
     </style>
 </head>
@@ -678,9 +686,14 @@
 
             <div class="content-box hero-content max-w-4xl mx-6 mt-20" style="background:transparent;border:none;box-shadow:none;backdrop-filter:none;">
                 <div class="anim-text label-text mb-5">Colombo, LK · Available for Tech & AI Projects</div>
-                    <h1 class="flex flex-col items-center justify-center text-center w-full mb-6">
-                        <span class="hero-name-fill text-[12vw] md:text-[8vw] font-bold leading-none">Oshanda</span>
-                        <span class="hero-name-stroke text-[12vw] md:text-[8vw] font-bold leading-none" style="transform: translateX(0);">Geethanjana</span>
+                    <h1 class="flex flex-col items-center justify-center text-center w-full mb-6" style="font-family: 'Syne', sans-serif;">
+                        <span class="hero-name-fill text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold leading-tight tracking-tight">
+                            Oshanda
+                        </span>
+                        
+                        <span class="hero-name-stroke text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold leading-tight tracking-tight" style="transform: translateX(0);">
+                            Geethanjana
+                        </span>
                     </h1>
                     <p class="anim-text mb-8" style="color:var(--fg2);font-size:1rem;font-weight:400;max-width:720px;margin-inline:auto;">
                         I engineer digital experiences and build robust AI architectures. Founder of WhiteCoder and HND Study Hub.
@@ -747,7 +760,7 @@
 
             <div class="content-box max-w-xl">
                 <p class="label-text anim-text mb-4">Academic Journey</p>
-                <h2 class="section-title anim-text mb-6">Continuous<br>Learning.</h2>
+                <h2 class="section-title anim-text mb-6">Lifelong<br>Learning.</h2>
                 <p class="anim-text mb-8" style="color:var(--fg2);font-size:1rem;line-height:1.7;">
                     Pursuing HNDIT at SLIATE while continuously learning through real-world building. Technovation '25 Design Contest Winner, with verified learning across GitHub, Microsoft Learn, and LinkedIn Learning.
                 </p>
@@ -838,21 +851,24 @@
                         <span>Instagram</span>
                     </a>
                 </div>
+                <div style="width: 100%; text-align: center; padding: 30px 15px 20px 15px; font-size: 14px; color: #777; font-weight: 500; box-sizing: border-box; font-family: 'DM Sans', sans-serif;">
+        &copy; 2026 Oshanda Geethanjana. All rights reserved.
+    </div>
             </div>
         </section>
 
     </main>
-
     <!-- TESTIMONIALS MARQUEE -->
     <div id="testimonials-section">
         <div class="marquee-track">
-            <!-- Items doubled for seamless loop -->
             <div class="marquee-item">WhiteCoder Copilot · FOLIO · WCProbe · CineHub Pro <span class="dot"></span></div>
             <div class="marquee-item">Technovation '25 · Design Contest Winner <span class="dot"></span></div>
             <div class="marquee-item">HND Study Hub · 6K+ Students Reached <span class="dot"></span></div>
             <div class="marquee-item">50+ Projects Built · 3+ Years Building <span class="dot"></span></div>
         </div>
     </div>
+
+    
 
     <!-- FOOTER -->
     <!--<div id="sticky-footer-wrapper">
@@ -876,6 +892,7 @@
     // CONSOLE EASTER EGG
     // ============================================================
     // ASCII Art with 3D shadow effect
+    // ASCII Art with Neon Glow
     console.log(
         '%c\n' +
         '██╗    ██╗██╗  ██╗██╗████████╗███████╗ ██████╗ ██████╗ ██████╗ ███████╗██████╗ \n' +
@@ -884,18 +901,13 @@
         '██║███╗██║██╔══██║██║   ██║   ██╔══╝  ██║     ██║   ██║██║  ██║██╔══╝  ██╔══██╗\n' +
         '╚███╔███╔╝██║  ██║██║   ██║   ███████╗╚██████╗╚██████╔╝██████╔╝███████╗██║  ██║\n' +
         ' ╚══╝╚══╝ ╚═╝  ╚═╝╚═╝   ╚═╝   ╚══════╝ ╚═════╝ ╚═════╝ ╚═════╝ ╚══════╝╚═╝  ╚═╝\n',
-        'color: #0a0a0a; font-family: monospace; font-weight: 900; text-shadow: 2px 2px 0px #d1d1d1;'
+        'color: #00ffcc; font-family: monospace; font-weight: bold; text-shadow: 0px 0px 5px rgba(0,255,204,0.5);'
     );
 
-    // Main Greeting
-    console.log('%c👋 Hey there, fellow developer!', 'font-size: 18px; font-weight: bold; color: #0a0a0a; margin: 10px 0px;');
-
-    // Link with dual styling
-    console.log('%c🚀 GitHub: %chttps://github.com/oshandageethanjana', 'font-size: 14px; font-weight: 700; color: #333;', 'font-size: 14px; color: #0056b3; text-decoration: underline;');
-
-    // Premium Footer Badge
-    console.log('%c✨ Built with ❤️ by Oshanda Geethanjana | whitecoder.online', 'background: #0a0a0a; color: #f5f4f0; font-size: 12px; font-weight: bold; padding: 8px 16px; border-radius: 8px; margin-top: 15px;');
-
+    // Cyberpunk styled messages
+    console.log('%c[!] ACCESS GRANTED: Welcome Developer ⚡', 'color: #00ffcc; background: #0a0a0a; font-size: 14px; font-weight: bold; padding: 6px 12px; border-radius: 4px;');
+    console.log('%c[>] Source Code: https://github.com/oshandageethanjana', 'color: #aaa; font-size: 13px; margin: 8px 0px; font-family: monospace;');
+    console.log('%c[✓] System Crafted by Oshanda Geethanjana', 'color: #fff; background: #111; border-left: 4px solid #00ffcc; padding: 6px 12px; font-size: 12px; margin-top: 5px; font-family: monospace;');
     // ============================================================
     // KEYBOARD EASTER EGG — type "WHITE"
     // ============================================================

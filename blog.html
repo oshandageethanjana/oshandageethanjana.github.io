@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog | WhiteCoder — Knowledge Hub</title>
+    <meta name="description" content="HNDIT study notes, coding tips, exam hints, and tech insights by Oshanda Geethanjana — WhiteCoder Knowledge Hub.">
+    <meta property="og:title" content="Blog | WhiteCoder Knowledge Hub">
+    <meta property="og:image" content="https://oshandageethanjana.github.io/assets/Oshanda_Geethanjana.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap');
+
+        :root{--bg:#f5f4f0;--fg:#0a0a0a;--fg2:#555;--card:rgba(255,255,255,0.7);--card-border:rgba(0,0,0,0.08);--nav-bg:rgba(245,244,240,0.9);}
+        [data-theme="dark"]{--bg:#0a0a0a;--fg:#f5f4f0;--fg2:#aaa;--card:rgba(20,20,20,0.8);--card-border:rgba(255,255,255,0.08);--nav-bg:rgba(10,10,10,0.9);}
+
+        *,*::before,*::after{box-sizing:border-box;}
+        ::-webkit-scrollbar{display:none;}
+        html,body{background:var(--bg);color:var(--fg);font-family:'DM Sans',sans-serif;margin:0;padding:0;overflow-x:hidden;transition:background 0.6s,color 0.6s;}
+
+        #cursor-dot{position:fixed;top:0;left:0;width:8px;height:8px;background:var(--fg);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);}
+        #cursor-ring{position:fixed;top:0;left:0;width:40px;height:40px;border:1.5px solid var(--fg);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:width 0.35s cubic-bezier(0.25,1,0.5,1),height 0.35s,background 0.3s,font-size 0.3s;display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-size:0;font-weight:700;color:var(--bg);overflow:hidden;text-transform:uppercase;letter-spacing:0.1em;}
+        #cursor-ring.expanded{width:72px;height:72px;background:var(--fg);font-size:8px;}
+
+        #preloader{position:fixed;inset:0;background:#0a0a0a;z-index:10000;display:flex;flex-direction:column;align-items:center;justify-content:center;transition:opacity 0.8s,visibility 0.8s;}
+        #preloader.hidden{opacity:0;visibility:hidden;}
+        #preloader-logo{font-family:'Syne',sans-serif;font-size:clamp(2rem,6vw,4rem);font-weight:800;color:#f5f4f0;letter-spacing:-0.04em;margin-bottom:3rem;}
+        #preloader-bar-bg{width:220px;height:1px;background:rgba(255,255,255,0.15);}
+        #preloader-bar{height:100%;width:0%;background:#f5f4f0;transition:width 0.1s linear;}
+        #preloader-percent{font-family:'Syne',sans-serif;font-size:0.7rem;font-weight:600;color:#f5f4f0;letter-spacing:0.2em;margin-top:1.5rem;opacity:0.5;}
+
+        .glass-nav{background:var(--nav-bg);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid var(--card-border);transition:background 0.6s;}
+        .nav-logo{font-family:'Syne',sans-serif;font-weight:800;letter-spacing:-0.04em;}
+        .nav-link{font-family:'Syne',sans-serif;font-size:0.72rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--fg2);transition:color 0.2s;text-decoration:none;}
+        .nav-link:hover,.nav-link.active{color:var(--fg);}
+
+        .page-title{font-family:'Syne',sans-serif;font-size:clamp(3rem,8vw,6rem);font-weight:800;line-height:1;letter-spacing:-0.04em;}
+
+        /* BLOG CARD */
+        .blog-card{background:var(--card);border:1px solid var(--card-border);border-radius:1.5rem;padding:2rem;text-decoration:none;color:inherit;display:block;transition:transform 0.3s,box-shadow 0.3s;}
+        .blog-card:hover{transform:translateY(-4px);box-shadow:0 20px 40px rgba(0,0,0,0.08);}
+        .blog-tag{display:inline-block;padding:0.2rem 0.7rem;border-radius:3rem;font-size:0.65rem;font-weight:700;font-family:'Syne',sans-serif;letter-spacing:0.08em;text-transform:uppercase;margin:0.15rem;}
+        .tag-study{background:#e8f5e9;color:#2e7d32;}
+        .tag-coding{background:#e3f2fd;color:#1565c0;}
+        .tag-tips{background:#fff3e0;color:#e65100;}
+        .tag-tech{background:#f3e5f5;color:#6a1b9a;}
+        [data-theme="dark"] .tag-study{background:rgba(46,125,50,0.2);color:#81c784;}
+        [data-theme="dark"] .tag-coding{background:rgba(21,101,192,0.2);color:#64b5f6;}
+        [data-theme="dark"] .tag-tips{background:rgba(230,81,0,0.2);color:#ffb74d;}
+        [data-theme="dark"] .tag-tech{background:rgba(106,27,154,0.2);color:#ce93d8;}
+
+        .filter-btn{font-family:'Syne',sans-serif;font-size:0.7rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;padding:0.4rem 1rem;border-radius:3rem;border:1px solid var(--card-border);background:transparent;color:var(--fg2);cursor:pointer;transition:all 0.2s;}
+        .filter-btn.active,.filter-btn:hover{background:var(--fg);color:var(--bg);border-color:var(--fg);}
+
+        .gsap-fade{opacity:0;transform:translateY(30px);}
+
+        #sound-toggle,#theme-toggle{position:fixed;z-index:200;width:44px;height:44px;border-radius:50%;background:var(--card);border:1px solid var(--card-border);backdrop-filter:blur(10px);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:1rem;transition:all 0.3s;}
+        #sound-toggle{bottom:2rem;right:2rem;}#theme-toggle{bottom:2rem;right:5.5rem;}
+        #sound-toggle:hover,#theme-toggle:hover{background:var(--fg);color:var(--bg);}
+
+        /* ARTICLE MODAL */
+        #article-modal{position:fixed;inset:0;z-index:9000;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity 0.4s;}
+        #article-modal.open{opacity:1;pointer-events:auto;}
+        #article-overlay{position:absolute;inset:0;background:rgba(0,0,0,0.5);backdrop-filter:blur(6px);}
+        #article-panel{position:relative;z-index:1;background:var(--bg);border-radius:2rem;width:90%;max-width:720px;max-height:85vh;overflow-y:auto;padding:3rem;box-shadow:0 40px 80px rgba(0,0,0,0.2);}
+        #article-close{position:sticky;top:0;float:right;background:var(--fg);color:var(--bg);border:none;border-radius:50%;width:36px;height:36px;cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center;margin-bottom:1rem;margin-left:auto;}
+    </style>
+</head>
+<body>
+
+    <div id="cursor-dot"></div>
+    <div id="cursor-ring">READ</div>
+
+    <div id="preloader">
+        <div id="preloader-logo">WHITECODER.</div>
+        <div id="preloader-bar-bg"><div id="preloader-bar"></div></div>
+        <div id="preloader-percent">0%</div>
+    </div>
+
+    <!-- ARTICLE MODAL -->
+    <div id="article-modal">
+        <div id="article-overlay" onclick="closeArticle()"></div>
+        <div id="article-panel">
+            <button id="article-close" onclick="closeArticle()">✕</button>
+            <div id="article-content"></div>
+        </div>
+    </div>
+
+    <nav class="fixed top-4 left-1/2 -translate-x-1/2 z-50 pointer-events-auto">
+        <div class="glass-nav px-4 md:px-6 h-14 rounded-full flex items-center justify-between gap-4"
+            style="min-width: fit-content; border:1px solid var(--card-border); box-shadow:0 10px 30px rgba(0,0,0,0.06);">
+
+            <a href="index.html" class="nav-logo text-sm md:text-base" style="color:var(--fg); text-decoration:none;">
+                Oshanda.
+            </a>
+
+            <div class="hidden md:flex items-center gap-5">
+                <a href="#hero" class="nav-link">Home</a>
+                <a href="#about" class="nav-link">About</a>
+                <a href="#work" class="nav-link">Work</a>
+                <a href="education.html" class="nav-link">Education</a>
+                <a href="#contact" class="nav-link">Contact</a>
+                <button onclick="openCVPanel()"
+                        class="mag-btn"
+                        style="background:var(--fg);color:var(--bg);border:none;border-radius:999px;padding:0.55rem 1rem;font-family:'Syne',sans-serif;font-size:0.68rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;cursor:pointer;">
+                    CV
+                </button>
+            </div>
+
+            <button id="menu-btn"
+                    class="md:hidden nav-logo text-xs z-50"
+                    style="background:none;border:none;color:var(--fg);cursor:pointer;">
+                MENU
+            </button>
+        </div>
+    </nav>
+
+    <main class="pt-32 px-6 md:px-12 pb-24">
+
+        <header class="max-w-7xl mx-auto mt-10 mb-12">
+            <div style="font-family:'Syne',sans-serif;font-size:0.65rem;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:var(--fg2);margin-bottom:1rem;" class="gsap-fade">Knowledge Hub</div>
+            <h1 class="page-title gsap-fade mb-6">Insights &<br>Resources.</h1>
+            <p class="gsap-fade" style="color:var(--fg2);font-size:1rem;max-width:520px;line-height:1.7;">HNDIT study notes, coding tips, exam hints, and tech insights. Built for students and developers who love to learn.</p>
+        </header>
+
+        <!-- FILTERS -->
+        <div class="max-w-7xl mx-auto mb-10 gsap-fade flex flex-wrap gap-2">
+            <button class="filter-btn active" data-filter="all">All</button>
+            <button class="filter-btn" data-filter="study">HNDIT Study</button>
+            <button class="filter-btn" data-filter="coding">Coding</button>
+            <button class="filter-btn" data-filter="tips">Tips & Tricks</button>
+            <button class="filter-btn" data-filter="tech">Tech Insights</button>
+        </div>
+
+        <!-- BLOG GRID -->
+        <section class="max-w-7xl mx-auto grid md:grid-cols-3 gap-6" id="blog-grid">
+
+            <div class="blog-card gsap-fade" data-category="study" onclick="openArticle('hndit-networking')">
+                <span class="blog-tag tag-study">HNDIT Study</span>
+                <h3 style="font-family:'Syne',sans-serif;font-size:1.15rem;font-weight:800;margin:0.75rem 0 0.5rem;line-height:1.2;">Computer Networking Fundamentals — OSI Model Simplified</h3>
+                <p style="color:var(--fg2);font-size:0.85rem;line-height:1.6;">Break down the 7 layers of the OSI model with real-world examples. Perfect for HNDIT Semester 1 exam preparation.</p>
+                <div style="margin-top:1rem;font-family:'Syne',sans-serif;font-size:0.65rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--fg2);">5 min read · Jan 2026</div>
+            </div>
+
+            <div class="blog-card gsap-fade" data-category="coding" onclick="openArticle('php-pdo')">
+                <span class="blog-tag tag-coding">Coding</span>
+                <h3 style="font-family:'Syne',sans-serif;font-size:1.15rem;font-weight:800;margin:0.75rem 0 0.5rem;line-height:1.2;">Why You Should Use PDO Instead of mysqli in PHP</h3>
+                <p style="color:var(--fg2);font-size:0.85rem;line-height:1.6;">SQL Injection, prepared statements, and why PDO makes your PHP apps significantly safer. With code examples.</p>
+                <div style="margin-top:1rem;font-family:'Syne',sans-serif;font-size:0.65rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--fg2);">7 min read · Feb 2026</div>
+            </div>
+
+            <div class="blog-card gsap-fade" data-category="tips" onclick="openArticle('gsap-tips')">
+                <span class="blog-tag tag-tips">Tips & Tricks</span>
+                <h3 style="font-family:'Syne',sans-serif;font-size:1.15rem;font-weight:800;margin:0.75rem 0 0.5rem;line-height:1.2;">5 GSAP Tricks That Make Your Website Look Premium</h3>
+                <p style="color:var(--fg2);font-size:0.85rem;line-height:1.6;">ScrollTrigger, staggered reveals, magnetic buttons — the exact animations used on Awwwards-winning sites.</p>
+                <div style="margin-top:1rem;font-family:'Syne',sans-serif;font-size:0.65rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--fg2);">6 min read · Mar 2026</div>
+            </div>
+
+            <div class="blog-card gsap-fade" data-category="study" onclick="openArticle('hndit-database')">
+                <span class="blog-tag tag-study">HNDIT Study</span>
+                <h3 style="font-family:'Syne',sans-serif;font-size:1.15rem;font-weight:800;margin:0.75rem 0 0.5rem;line-height:1.2;">Database Normalization — 1NF to 3NF with Examples</h3>
+                <p style="color:var(--fg2);font-size:0.85rem;line-height:1.6;">Master database normalization with practical examples from real student management systems. Frequently appears in exams.</p>
+                <div style="margin-top:1rem;font-family:'Syne',sans-serif;font-size:0.65rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--fg2);">8 min read · Feb 2026</div>
+            </div>
+
+            <div class="blog-card gsap-fade" data-category="tech" onclick="openArticle('ai-web')">
+                <span class="blog-tag tag-tech">Tech Insights</span>
+                <h3 style="font-family:'Syne',sans-serif;font-size:1.15rem;font-weight:800;margin:0.75rem 0 0.5rem;line-height:1.2;">How I Built an AI Copilot Using REST APIs</h3>
+                <p style="color:var(--fg2);font-size:0.85rem;line-height:1.6;">Behind the scenes of WhiteCoder Copilot — LLM integration, session management, and building AI-powered web apps.</p>
+                <div style="margin-top:1rem;font-family:'Syne',sans-serif;font-size:0.65rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--fg2);">10 min read · Mar 2026</div>
+            </div>
+
+            <div class="blog-card gsap-fade" data-category="tips" onclick="openArticle('css-glassmorphism')">
+                <span class="blog-tag tag-tips">Tips & Tricks</span>
+                <h3 style="font-family:'Syne',sans-serif;font-size:1.15rem;font-weight:800;margin:0.75rem 0 0.5rem;line-height:1.2;">Glassmorphism UI — The Complete CSS Guide</h3>
+                <p style="color:var(--fg2);font-size:0.85rem;line-height:1.6;">backdrop-filter, border tricks, layered transparency — build the Apple-style glass UI that everyone's copying.</p>
+                <div style="margin-top:1rem;font-family:'Syne',sans-serif;font-size:0.65rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--fg2);">4 min read · Jan 2026</div>
+            </div>
+
+        </section>
+
+        <div class="gsap-fade max-w-7xl mx-auto mt-16 text-center">
+            <div style="font-family:'Syne',sans-serif;font-size:0.75rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--fg2);">More articles coming soon · Subscribe at <a href="https://www.hndstudy.online" target="_blank" style="color:var(--fg);text-decoration:underline;">hndstudy.online</a></div>
+        </div>
+    </main>
+
+    <footer style="border-top:1px solid var(--card-border);padding:3rem 2rem;text-align:center;background:var(--bg);transition:background 0.6s;">
+        <div style="font-family:'Syne',sans-serif;font-size:1.5rem;font-weight:800;margin-bottom:0.5rem;color:var(--fg);">WHITECODER.</div>
+        <a href="mailto:hello@whitecoder.com" style="color:var(--fg2);font-size:0.85rem;text-decoration:none;">hello@whitecoder.com</a>
+    </footer>
+
+    <button id="sound-toggle" style="color:var(--fg);">🔇</button>
+    <button id="theme-toggle" style="color:var(--fg);" onclick="toggleTheme()">◐</button>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.19/bundled/lenis.min.js"></script>
+    <script>
+    const articles = {
+        'hndit-networking': { title:'Computer Networking Fundamentals — OSI Model Simplified', tag:'HNDIT Study', tagClass:'tag-study', time:'5 min read · Jan 2026', content:`<p style="color:var(--fg2);line-height:1.8;margin-bottom:1.5rem;">The OSI (Open Systems Interconnection) model is a conceptual framework that describes how different network protocols interact. It has 7 layers, each with a specific function.</p><div style="background:var(--card);border:1px solid var(--card-border);border-radius:1rem;padding:1.5rem;margin-bottom:1.5rem;"><b style="font-family:'Syne',sans-serif;">Layer 7 — Application</b><p style="color:var(--fg2);font-size:0.9rem;margin-top:0.25rem;">What the user sees. HTTP, FTP, SMTP. Example: Your web browser.</p></div><div style="background:var(--card);border:1px solid var(--card-border);border-radius:1rem;padding:1.5rem;margin-bottom:1.5rem;"><b style="font-family:'Syne',sans-serif;">Layer 4 — Transport</b><p style="color:var(--fg2);font-size:0.9rem;margin-top:0.25rem;">TCP (reliable) vs UDP (fast). TCP ensures packets arrive in order.</p></div><div style="background:var(--card);border:1px solid var(--card-border);border-radius:1rem;padding:1.5rem;margin-bottom:1.5rem;"><b style="font-family:'Syne',sans-serif;">Layer 3 — Network</b><p style="color:var(--fg2);font-size:0.9rem;margin-top:0.25rem;">IP addresses and routing. Routers operate at this layer.</p></div><p style="color:var(--fg2);font-size:0.85rem;margin-top:1.5rem;padding-top:1rem;border-top:1px solid var(--card-border);">For full notes and past papers → <a href="https://www.hndstudy.online" target="_blank" style="color:var(--fg);">hndstudy.online</a></p>` },
+        'php-pdo': { title:'Why You Should Use PDO Instead of mysqli in PHP', tag:'Coding', tagClass:'tag-coding', time:'7 min read · Feb 2026', content:`<p style="color:var(--fg2);line-height:1.8;margin-bottom:1.5rem;">PDO (PHP Data Objects) provides a consistent interface for accessing databases. Unlike mysqli, PDO supports multiple database types and makes SQL injection prevention much easier.</p><div style="background:#0a0a0a;border-radius:1rem;padding:1.5rem;margin-bottom:1.5rem;color:#f5f4f0;font-family:monospace;font-size:0.85rem;line-height:1.6;"><span style="color:#aaa;">// Bad — vulnerable to SQL injection</span><br>$q = "SELECT * FROM users WHERE id = $_GET[id]";<br><br><span style="color:#aaa;">// Good — PDO prepared statement</span><br>$stmt = $pdo->prepare("SELECT * FROM users WHERE id = ?");<br>$stmt->execute([$_GET['id']]);  </div><p style="color:var(--fg2);line-height:1.8;">Prepared statements send SQL and data separately to the database — so user input can never be interpreted as SQL commands. Always use this in production code.</p>` },
+        'gsap-tips': { title:'5 GSAP Tricks That Make Your Website Look Premium', tag:'Tips & Tricks', tagClass:'tag-tips', time:'6 min read · Mar 2026', content:`<p style="color:var(--fg2);line-height:1.8;margin-bottom:1.5rem;">These are the exact techniques used in this portfolio. Copy them freely.</p><ol style="color:var(--fg2);line-height:2;padding-left:1.2rem;"><li><b style="color:var(--fg);">ScrollTrigger stagger</b> — reveal elements in sequence as user scrolls. Use <code>stagger: 0.15</code> for natural feel.</li><li><b style="color:var(--fg);">Magnetic buttons</b> — track mouse position relative to button center, apply 30-40% of offset as transform.</li><li><b style="color:var(--fg);">Scrub animations</b> — tie animations to scroll position with <code>scrub: 1</code> for smooth parallax.</li><li><b style="color:var(--fg);">Lenis smooth scroll</b> — combine with GSAP ticker for buttery smooth scrolling.</li><li><b style="color:var(--fg);">Page snap</b> — use <code>ScrollTrigger.create({ snap: 1/N })</code> for full-page section snapping.</li></ol>` },
+        'hndit-database': { title:'Database Normalization — 1NF to 3NF with Examples', tag:'HNDIT Study', tagClass:'tag-study', time:'8 min read · Feb 2026', content:`<p style="color:var(--fg2);line-height:1.8;margin-bottom:1.5rem;">Normalization is the process of organizing a database to reduce redundancy and improve data integrity.</p><div style="background:var(--card);border:1px solid var(--card-border);border-radius:1rem;padding:1.5rem;margin-bottom:1rem;"><b style="font-family:'Syne',sans-serif;">1NF — First Normal Form</b><p style="color:var(--fg2);font-size:0.9rem;margin-top:0.25rem;">Each column must contain atomic (indivisible) values. No repeating groups. Each row must be unique.</p></div><div style="background:var(--card);border:1px solid var(--card-border);border-radius:1rem;padding:1.5rem;margin-bottom:1rem;"><b style="font-family:'Syne',sans-serif;">2NF — Second Normal Form</b><p style="color:var(--fg2);font-size:0.9rem;margin-top:0.25rem;">Must be in 1NF + every non-key attribute must be fully dependent on the entire primary key (no partial dependencies).</p></div><div style="background:var(--card);border:1px solid var(--card-border);border-radius:1rem;padding:1.5rem;margin-bottom:1rem;"><b style="font-family:'Syne',sans-serif;">3NF — Third Normal Form</b><p style="color:var(--fg2);font-size:0.9rem;margin-top:0.25rem;">Must be in 2NF + no transitive dependencies. Non-key attributes must not depend on other non-key attributes.</p></div><p style="color:var(--fg2);font-size:0.85rem;margin-top:1.5rem;">📚 Full HNDIT database notes at <a href="https://www.hndstudy.online" target="_blank" style="color:var(--fg);">hndstudy.online</a></p>` },
+        'ai-web': { title:'How I Built an AI Copilot Using REST APIs', tag:'Tech Insights', tagClass:'tag-tech', time:'10 min read · Mar 2026', content:`<p style="color:var(--fg2);line-height:1.8;margin-bottom:1.5rem;">WhiteCoder Copilot is built by connecting a PHP backend to LLM APIs. Here's the architecture:</p><div style="background:#0a0a0a;border-radius:1rem;padding:1.5rem;margin-bottom:1.5rem;color:#f5f4f0;font-family:monospace;font-size:0.82rem;line-height:1.8;"><span style="color:#aaa;">// PHP backend calling AI API</span><br>$response = $http->post($api_endpoint, [<br>&nbsp;&nbsp;'model' => 'claude-sonnet',<br>&nbsp;&nbsp;'messages' => $conversation_history,<br>&nbsp;&nbsp;'max_tokens' => 1000<br>]);</div><p style="color:var(--fg2);line-height:1.8;margin-bottom:1rem;">Key learnings: maintain conversation history as an array, stream responses for better UX, handle rate limits gracefully, and always sanitize user input before sending to any API.</p><p style="color:var(--fg2);line-height:1.8;">The full copilot is live at <a href="https://copilot.whitecoder.online" target="_blank" style="color:var(--fg);">copilot.whitecoder.online</a></p>` },
+        'css-glassmorphism': { title:'Glassmorphism UI — The Complete CSS Guide', tag:'Tips & Tricks', tagClass:'tag-tips', time:'4 min read · Jan 2026', content:`<p style="color:var(--fg2);line-height:1.8;margin-bottom:1.5rem;">Glassmorphism creates a frosted-glass look using CSS. Here's the complete recipe:</p><div style="background:#0a0a0a;border-radius:1rem;padding:1.5rem;margin-bottom:1.5rem;color:#f5f4f0;font-family:monospace;font-size:0.85rem;line-height:2;">.glass {<br>&nbsp;&nbsp;background: rgba(255, 255, 255, 0.1);<br>&nbsp;&nbsp;backdrop-filter: blur(20px);<br>&nbsp;&nbsp;-webkit-backdrop-filter: blur(20px);<br>&nbsp;&nbsp;border: 1px solid rgba(255, 255, 255, 0.2);<br>&nbsp;&nbsp;border-radius: 1rem;<br>&nbsp;&nbsp;box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);<br>}</div><p style="color:var(--fg2);line-height:1.8;">Tips: backdrop-filter only works if the element has a semi-transparent background. For dark themes, use rgba(0,0,0,0.2) as the background. Safari requires -webkit- prefix.</p>` }
+    };
+
+    function openArticle(id) {
+        const a = articles[id];
+        document.getElementById('article-content').innerHTML = `
+            <span class="blog-tag ${a.tagClass}" style="display:inline-block;padding:0.2rem 0.7rem;border-radius:3rem;font-size:0.65rem;font-weight:700;font-family:'Syne',sans-serif;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:1rem;">${a.tag}</span>
+            <h2 style="font-family:'Syne',sans-serif;font-size:1.6rem;font-weight:800;letter-spacing:-0.03em;margin:0.5rem 0 0.5rem;line-height:1.2;">${a.title}</h2>
+            <div style="font-family:'Syne',sans-serif;font-size:0.65rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--fg2);margin-bottom:2rem;">${a.time}</div>
+            ${a.content}
+        `;
+        document.getElementById('article-modal').classList.add('open');
+        document.body.style.overflow = 'hidden';
+    }
+    function closeArticle() {
+        document.getElementById('article-modal').classList.remove('open');
+        document.body.style.overflow = '';
+    }
+
+    // Filter
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            const f = btn.getAttribute('data-filter');
+            document.querySelectorAll('.blog-card').forEach(card => {
+                card.style.display = (f === 'all' || card.getAttribute('data-category') === f) ? 'block' : 'none';
+            });
+        });
+    });
+
+    // Theme
+    function applyTheme(t){document.documentElement.setAttribute('data-theme',t);localStorage.setItem('wc-theme',t);}
+    function toggleTheme(){applyTheme(document.documentElement.getAttribute('data-theme')==='dark'?'light':'dark');}
+    const saved=localStorage.getItem('wc-theme');
+    if(saved)applyTheme(saved);else{const h=new Date().getHours();applyTheme((h>=19||h<6)?'dark':'light');}
+
+    // Preloader
+    const preloader=document.getElementById('preloader'),bar=document.getElementById('preloader-bar'),pct=document.getElementById('preloader-percent');
+    let p=0;const iv=setInterval(()=>{p+=Math.random()*20;if(p>=100){p=100;clearInterval(iv);}bar.style.width=p+'%';pct.textContent=Math.floor(p)+'%';if(p>=100)setTimeout(()=>preloader.classList.add('hidden'),400);},100);
+
+    // Cursor
+    const dot=document.getElementById('cursor-dot'),ring=document.getElementById('cursor-ring');
+    let mx=0,my=0,rx=0,ry=0;
+    document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;});
+    (function anim(){rx+=(mx-rx)*0.15;ry+=(my-ry)*0.15;dot.style.left=mx+'px';dot.style.top=my+'px';ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(anim);})();
+    document.querySelectorAll('a,button,.blog-card').forEach(el=>{
+        el.addEventListener('mouseenter',()=>{ring.classList.add('expanded');ring.textContent='READ';});
+        el.addEventListener('mouseleave',()=>{ring.classList.remove('expanded');ring.textContent='READ';});
+    });
+
+    // Sound
+    let soundOn=false;let actx=null;
+    document.getElementById('sound-toggle').addEventListener('click',()=>{soundOn=!soundOn;document.getElementById('sound-toggle').textContent=soundOn?'🔊':'🔇';});
+
+    // Lenis
+    const lenis=new Lenis({duration:1.2,easing:t=>Math.min(1,1.001-Math.pow(2,-10*t)),smooth:true});
+    function raf(t){lenis.raf(t);requestAnimationFrame(raf);}requestAnimationFrame(raf);
+
+    gsap.registerPlugin(ScrollTrigger);
+    document.querySelectorAll('.gsap-fade').forEach(el=>{
+        gsap.fromTo(el,{opacity:0,y:30},{opacity:1,y:0,duration:0.8,ease:"power3.out",scrollTrigger:{trigger:el,start:"top 88%",toggleActions:"play none none none"}});
+    });
+    </script>
+</body>
+</html>

@@ -1,0 +1,1116 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Education | WhiteCoder — Oshanda Geethanjana</title>
+  <meta name="description" content="Academic journey, awards, and certifications of Oshanda Geethanjana — crafted in the premium WhiteCoder visual system." />
+  <meta property="og:title" content="Education | WhiteCoder — Oshanda Geethanjana" />
+  <meta property="og:description" content="HNDIT at SLIATE · Technovation '25 Winner · GitHub · Microsoft · LinkedIn certifications." />
+  <meta property="og:image" content="https://oshandageethanjana.github.io/assets/Oshanda_Geethanjana.png" />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;700&display=swap');
+
+    :root {
+      --bg: #f5f4f0;
+      --bg-soft: #ecebe7;
+      --fg: #0a0a0a;
+      --fg2: #5b5b5f;
+      --fg3: #9b9ba1;
+      --card: rgba(255,255,255,0.58);
+      --card-strong: rgba(255,255,255,0.74);
+      --card-border: rgba(0,0,0,0.08);
+      --nav-bg: rgba(245,244,240,0.86);
+      --shadow: 0 20px 60px rgba(0,0,0,0.08);
+    }
+
+    [data-theme="dark"] {
+      --bg: #0a0a0a;
+      --bg-soft: #121214;
+      --fg: #f5f4f0;
+      --fg2: #b3b3b8;
+      --fg3: #6d6d73;
+      --card: rgba(22,22,24,0.72);
+      --card-strong: rgba(24,24,26,0.82);
+      --card-border: rgba(255,255,255,0.08);
+      --nav-bg: rgba(10,10,10,0.86);
+      --shadow: 0 20px 60px rgba(0,0,0,0.35);
+    }
+
+    * { box-sizing: border-box; }
+    *::before, *::after { box-sizing: border-box; }
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: var(--bg);
+      color: var(--fg);
+      font-family: 'DM Sans', sans-serif;
+      overflow-x: hidden;
+      transition: background-color .5s ease, color .5s ease;
+      scroll-behavior: auto;
+    }
+    ::-webkit-scrollbar { display: none; }
+
+    a { color: inherit; }
+
+    #cursor-dot {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 8px;
+      height: 8px;
+      background: var(--fg);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%, -50%);
+    }
+
+    #cursor-ring {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 40px;
+      height: 40px;
+      border: 1.5px solid var(--fg);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9998;
+      transform: translate(-50%, -50%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Syne', sans-serif;
+      font-size: 0;
+      font-weight: 700;
+      color: var(--bg);
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      overflow: hidden;
+      transition: width .35s cubic-bezier(.25,1,.5,1), height .35s cubic-bezier(.25,1,.5,1), background .3s, font-size .3s, border-color .3s;
+    }
+
+    #cursor-ring.big {
+      width: 78px;
+      height: 78px;
+      background: var(--fg);
+      font-size: 9px;
+    }
+
+    #preloader {
+      position: fixed;
+      inset: 0;
+      z-index: 10000;
+      background: #0a0a0a;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      transition: opacity .8s ease, visibility .8s ease;
+    }
+
+    #preloader.hidden {
+      opacity: 0;
+      visibility: hidden;
+    }
+
+    #preloader-logo {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(2rem, 6vw, 4rem);
+      font-weight: 800;
+      color: #f5f4f0;
+      letter-spacing: -.04em;
+      margin-bottom: 2.8rem;
+    }
+
+    #preloader-track {
+      width: 220px;
+      height: 1px;
+      background: rgba(255,255,255,.15);
+    }
+
+    #preloader-bar {
+      width: 0;
+      height: 100%;
+      background: #f5f4f0;
+      transition: width .08s linear;
+    }
+
+    #preloader-percent {
+      margin-top: 1.4rem;
+      color: rgba(255,255,255,.5);
+      font-family: 'Syne', sans-serif;
+      font-size: .68rem;
+      font-weight: 700;
+      letter-spacing: .2em;
+    }
+
+    .glass-nav {
+      background: var(--nav-bg);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid var(--card-border);
+      transition: background .5s ease, border-color .5s ease;
+    }
+
+    .nav-logo {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      letter-spacing: -.04em;
+      text-decoration: none;
+      color: var(--fg);
+    }
+
+    .nav-link {
+      font-family: 'Syne', sans-serif;
+      font-size: .72rem;
+      font-weight: 700;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--fg2);
+      text-decoration: none;
+      transition: color .2s ease;
+    }
+
+    .nav-link:hover,
+    .nav-link.active { color: var(--fg); }
+
+    #media-stage {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform .9s ease, opacity .35s ease;
+      will-change: transform;
+    }
+
+    #media-card {
+      width: min(36vw, 450px);
+      min-width: 280px;
+      aspect-ratio: 3 / 4;
+      border-radius: 2rem;
+      overflow: hidden;
+      border: 1px solid var(--card-border);
+      background: var(--card-strong);
+      box-shadow: 0 30px 80px rgba(0,0,0,.12);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      transform: perspective(1400px) rotateY(-8deg) rotateX(3deg);
+      transition: transform .8s ease, border-color .5s ease, box-shadow .4s ease;
+    }
+
+    #media-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      opacity: .96;
+      transition: opacity .35s ease, transform .8s ease, filter .5s ease;
+      filter: saturate(1.02) contrast(1.02);
+    }
+
+    .page-shell {
+      position: relative;
+      z-index: 5;
+      padding: 8.5rem 1.5rem 0;
+    }
+
+    @media (min-width: 768px) {
+      .page-shell { padding: 9rem 3rem 0; }
+    }
+
+    .page-title {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(3rem, 8vw, 6rem);
+      font-weight: 800;
+      line-height: 1;
+      letter-spacing: -.04em;
+    }
+
+    .label {
+      font-family: 'Syne', sans-serif;
+      font-size: .65rem;
+      font-weight: 700;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: var(--fg2);
+    }
+
+    .story-section {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      position: relative;
+      padding: 5rem 0;
+    }
+
+    .story-section.left { justify-content: flex-start; }
+    .story-section.right { justify-content: flex-end; }
+    .story-section.center { justify-content: center; }
+
+    .content-card {
+      width: min(100%, 540px);
+      background: var(--card);
+      border: 1px solid var(--card-border);
+      border-radius: 1.8rem;
+      backdrop-filter: blur(22px);
+      -webkit-backdrop-filter: blur(22px);
+      box-shadow: var(--shadow);
+      padding: 2rem;
+      pointer-events: auto;
+      transition: transform .35s ease, background .5s ease, border-color .5s ease, box-shadow .35s ease;
+      transform-style: preserve-3d;
+    }
+
+    .content-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 24px 70px rgba(0,0,0,.12);
+    }
+
+    @media (min-width: 768px) {
+      .content-card { padding: 2.2rem; }
+    }
+
+    .hero-card {
+      width: min(100%, 760px);
+      text-align: center;
+      background: rgba(255,255,255,.18);
+      border: 1px solid rgba(255,255,255,.18);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      box-shadow: none;
+    }
+
+    [data-theme="dark"] .hero-card {
+      background: rgba(18,18,20,.18);
+      border-color: rgba(255,255,255,.08);
+    }
+
+    .mini-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: .9rem;
+      margin-top: 1.5rem;
+    }
+
+    .mini-card {
+      background: rgba(255,255,255,.5);
+      border: 1px solid var(--card-border);
+      border-radius: 1.2rem;
+      padding: 1rem;
+      transition: transform .25s ease, background .4s ease;
+    }
+
+    [data-theme="dark"] .mini-card { background: rgba(255,255,255,.03); }
+    .mini-card:hover { transform: translateY(-2px); }
+
+    .award-list,
+    .cert-list,
+    .skill-list,
+    .timeline-list {
+      display: grid;
+      gap: 1rem;
+    }
+
+    .award-item,
+    .cert-item,
+    .skill-item,
+    .timeline-item {
+      background: rgba(255,255,255,.42);
+      border: 1px solid var(--card-border);
+      border-radius: 1.25rem;
+      padding: 1rem;
+      transition: transform .28s ease, background .4s ease, box-shadow .28s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    [data-theme="dark"] .award-item,
+    [data-theme="dark"] .cert-item,
+    [data-theme="dark"] .skill-item,
+    [data-theme="dark"] .timeline-item {
+      background: rgba(255,255,255,.03);
+    }
+
+    .award-item:hover,
+    .cert-item:hover,
+    .skill-item:hover,
+    .timeline-item:hover {
+      transform: translateY(-3px) rotateX(1deg);
+      box-shadow: 0 18px 36px rgba(0,0,0,.08);
+    }
+
+    .award-image,
+    .cert-image {
+    width: 100%;
+    height: 160px;
+    object-fit: cover;
+    border-radius: 1rem;
+    display: block;
+    border: 1px solid var(--card-border);
+    background: var(--bg-soft);
+    }
+
+    .cert-slider {
+    position: relative;
+    width: 100%;
+    height: 160px;
+    margin-bottom: .9rem;
+    border-radius: 1rem;
+    overflow: hidden;
+    }
+
+    .cert-slider .cert-image {
+    position: absolute;
+    inset: 0;
+    margin-bottom: 0;
+    opacity: 0;
+    transform: scale(1.03);
+    transition: opacity .7s ease, transform 1.2s ease;
+    }
+
+    .cert-slider .cert-image.active {
+    opacity: 1;
+    transform: scale(1);
+    }
+
+    .cert-item {
+      transform-style: preserve-3d;
+      perspective: 1200px;
+      cursor: none;
+    }
+
+    .cert-item:hover {
+      transform: translateY(-4px) rotateX(3deg) rotateY(-3deg);
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: .45rem;
+      padding: .35rem .75rem;
+      border-radius: 999px;
+      border: 1px solid var(--card-border);
+      font-family: 'Syne', sans-serif;
+      font-size: .6rem;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--fg2);
+    }
+
+    .soft-link {
+      display: inline-flex;
+      align-items: center;
+      gap: .55rem;
+      padding: .7rem 1rem;
+      background: var(--fg);
+      color: var(--bg);
+      border-radius: 999px;
+      text-decoration: none;
+      font-family: 'Syne', sans-serif;
+      font-size: .68rem;
+      font-weight: 700;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      transition: opacity .2s ease, transform .2s ease;
+      white-space: nowrap;
+    }
+
+    .soft-link:hover {
+      opacity: .82;
+      transform: translateY(-1px);
+    }
+
+    .skill-track {
+      width: 100%;
+      height: 4px;
+      border-radius: 999px;
+      background: var(--card-border);
+      overflow: hidden;
+      margin-top: .55rem;
+    }
+
+    .skill-fill {
+      width: 0;
+      height: 100%;
+      border-radius: inherit;
+      background: var(--fg);
+      transition: width 1.2s cubic-bezier(.22,1,.36,1);
+    }
+
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: 1rem;
+      top: 1rem;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--fg);
+      box-shadow: 0 0 0 5px rgba(0,0,0,.06);
+    }
+
+    [data-theme="dark"] .timeline-item::before {
+      box-shadow: 0 0 0 5px rgba(255,255,255,.05);
+    }
+
+    .timeline-item { padding-left: 2.2rem; }
+
+    .fab {
+      position: fixed;
+      z-index: 300;
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      background: var(--card);
+      border: 1px solid var(--card-border);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--fg);
+      font-size: 1rem;
+      transition: transform .2s ease, background .3s ease, color .3s ease;
+      box-shadow: 0 8px 24px rgba(0,0,0,.08);
+    }
+
+    .fab:hover {
+      transform: scale(1.07);
+      background: var(--fg);
+      color: var(--bg);
+    }
+
+    #sound-toggle { bottom: 2rem; right: 2rem; }
+    #theme-toggle { bottom: 2rem; right: 5.5rem; }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(44px);
+      filter: blur(8px);
+    }
+
+    footer {
+      position: relative;
+      z-index: 6;
+      margin-top: 2rem;
+      padding: 5rem 2rem 4rem;
+      text-align: center;
+      background: var(--fg);
+      color: var(--bg);
+      border-radius: 2.5rem 2.5rem 0 0;
+    }
+
+    .footer-title {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(2.4rem, 6vw, 5rem);
+      font-weight: 800;
+      line-height: 1;
+      letter-spacing: -.04em;
+      margin-bottom: 1.8rem;
+    }
+
+    .footer-link {
+      color: var(--bg);
+      text-decoration: none;
+      font-size: 1.05rem;
+      font-weight: 300;
+      border-bottom: 1px solid rgba(255,255,255,.25);
+      padding-bottom: .15rem;
+      transition: border-color .2s ease;
+    }
+
+    .footer-link:hover { border-color: rgba(255,255,255,.85); }
+
+    @media (max-width: 1024px) {
+      #media-stage { opacity: .55; }
+      #media-card {
+        width: min(44vw, 360px);
+        min-width: 220px;
+      }
+    }
+
+    @media (max-width: 767px) {
+      #media-stage {
+        justify-content: center;
+        align-items: flex-end;
+        padding-bottom: 6rem;
+        opacity: .18;
+      }
+      #media-card {
+        width: min(72vw, 320px);
+        min-width: 220px;
+        transform: none !important;
+      }
+      .story-section {
+        min-height: auto;
+        padding: 4rem 0;
+        justify-content: center !important;
+      }
+      .content-card,
+      .hero-card {
+        width: 100%;
+        max-width: 100%;
+      }
+      .mini-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div id="cursor-dot"></div>
+  <div id="cursor-ring">VIEW</div>
+
+  <div id="preloader">
+    <div id="preloader-logo">WHITECODER.</div>
+    <div id="preloader-track"><div id="preloader-bar"></div></div>
+    <div id="preloader-percent">0%</div>
+  </div>
+
+  <button id="sound-toggle" class="fab" title="Toggle Sound">🔇</button>
+  <button id="theme-toggle" class="fab" title="Toggle Theme">◐</button>
+
+  <nav class="fixed top-4 left-1/2 -translate-x-1/2 z-50 pointer-events-auto">
+    <div class="glass-nav px-4 md:px-6 h-14 rounded-full flex items-center justify-between gap-4" style="min-width: fit-content; box-shadow: 0 10px 30px rgba(0,0,0,0.06);">
+      <a href="index.html" class="nav-logo text-sm md:text-base">Oshanda.</a>
+      <div class="hidden md:flex items-center gap-5">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="about.html" class="nav-link">About</a>
+        <a href="work.html" class="nav-link">Work</a>
+        <a href="#education" class="nav-link active">Education</a>
+        <a href="index.html#contact" class="nav-link">Contact</a>
+        <a href="https://oshandageethanjana.github.io/assets/oshanda.pdf" download class="soft-link" style="padding:.55rem 1rem; font-size:.64rem;">CV</a>
+      </div>
+      <a href="index.html" class="md:hidden nav-logo text-xs">← Back</a>
+    </div>
+  </nav>
+
+  <div id="media-stage">
+    <div id="media-card">
+      <img id="media-image" src="https://oshandageethanjana.github.io/assets/Oshanda_Geethanjana.png" alt="Education visual" />
+    </div>
+  </div>
+
+  <main class="page-shell">
+    <div class="max-w-7xl mx-auto">
+      <section id="hero" class="story-section center"
+        data-media="https://oshandageethanjana.github.io/assets/Oshanda_Geethanjana.png"
+        data-x="0vw"
+        data-scale="1"
+        data-rotate="0"
+        data-tilt="0">
+        <div class="">
+          <p class="label mb-4">The Journey</p>
+          <h2 class="page-title mb-5">Knowledge &<br>Credentials.</h2>
+          <p class="mx-auto" style="max-width:560px;color:var(--fg2);font-size:1rem;line-height:1.75;">
+            Smaller cards, cleaner sections, certificate visuals, and smooth premium motion — rebuilt to match the WhiteCoder style from the home and about pages.
+          </p>
+          <div class="mini-grid max-w-2xl mx-auto">
+            <div class="mini-card text-left">
+              <p class="label mb-2" style="font-size:.58rem;">Current Study</p>
+              <p style="font-family:'Syne',sans-serif;font-size:1rem;font-weight:800;">HNDIT @ SLIATE</p>
+            </div>
+            <div class="mini-card text-left">
+              <p class="label mb-2" style="font-size:.58rem;">Recognition</p>
+              <p style="font-family:'Syne',sans-serif;font-size:1rem;font-weight:800;">Technovation '25 Winner</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="story-section left"
+        data-media="https://oshandageethanjana.github.io/assets/Oshanda_Geethanjana.png"
+        data-x="20vw"
+        data-scale="1"
+        data-rotate="0"
+        data-tilt="-8">
+        <div class="content-card reveal">
+          <p class="label mb-3">Current Studies</p>
+          <h2 style="font-family:'Syne',sans-serif;font-size:clamp(2rem,4vw,3rem);font-weight:800;line-height:1.05;letter-spacing:-.04em;margin-bottom:.8rem;">Higher National Diploma in Information Technology</h2>
+          <p style="color:var(--fg2);font-size:1rem;line-height:1.75;margin-bottom:1.4rem;">Hardy Advanced Technological Institute, SLIATE. Focused on building practical full-stack systems while strengthening software, database, and frontend foundations.</p>
+          <div class="mini-grid">
+            <div class="mini-card">
+              <p class="label mb-2" style="font-size:.58rem;">Batch</p>
+              <p style="font-family:'Syne',sans-serif;font-size:.95rem;font-weight:800;">2023 / 2024</p>
+            </div>
+            <div class="mini-card">
+              <p class="label mb-2" style="font-size:.58rem;">Status</p>
+              <p style="font-family:'Syne',sans-serif;font-size:.95rem;font-weight:800;">2nd Year · 1st Sem</p>
+            </div>
+            <div class="mini-card">
+              <p class="label mb-2" style="font-size:.58rem;">Track</p>
+              <p style="font-family:'Syne',sans-serif;font-size:.95rem;font-weight:800;">Software & Web</p>
+            </div>
+            <div class="mini-card">
+              <p class="label mb-2" style="font-size:.58rem;">Focus</p>
+              <p style="font-family:'Syne',sans-serif;font-size:.95rem;font-weight:800;">Project Building</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="story-section right"
+        data-media="https://oshandageethanjana.github.io/assets/cert2.png"
+        data-x="-20vw"
+        data-scale=".98"
+        data-rotate="-3"
+        data-tilt="9">
+        <div class="content-card reveal">
+          <p class="label mb-3">Awards</p>
+          <h2 style="font-family:'Syne',sans-serif;font-size:clamp(2rem,4vw,3rem);font-weight:800;line-height:1.05;letter-spacing:-.04em;margin-bottom:1rem;">Recognition through execution.</h2>
+          <div class="award-list">
+            <article class="award-item tilt-card">
+              <img class="award-image" src="https://oshandageethanjana.github.io/assets/cert2.png" alt="Technovation winner certificate" />
+              <div style="display:flex;justify-content:space-between;gap:1rem;align-items:flex-start;flex-wrap:wrap;">
+                <div>
+                  <span class="pill" style="margin-bottom:.7rem;">🏆 1st Place</span>
+                  <h3 style="font-family:'Syne',sans-serif;font-size:1.05rem;font-weight:800;margin-bottom:.3rem;">Design Contest Winner</h3>
+                  <p style="font-size:.86rem;color:var(--fg2);line-height:1.6;">TECHNOVATION '25 · Hardy ATI, SLIATE</p>
+                </div>
+                <a href="https://hardy.ati.ac.lk/" target="_blank" class="soft-link">Official</a>
+              </div>
+            </article>
+
+            <article class="award-item tilt-card">
+              <img class="award-image" src="https://oshandageethanjana.github.io/assets/cert1.png" alt="Technovation appreciation certificate" />
+              <div style="display:flex;justify-content:space-between;gap:1rem;align-items:flex-start;flex-wrap:wrap;">
+                <div>
+                  <span class="pill" style="margin-bottom:.7rem;">⭐ Appreciation</span>
+                  <h3 style="font-family:'Syne',sans-serif;font-size:1.05rem;font-weight:800;margin-bottom:.3rem;">Certificate of Appreciation</h3>
+                  <p style="font-size:.86rem;color:var(--fg2);line-height:1.6;">Recognized for contribution and event support during TECHNOVATION '25.</p>
+                </div>
+                <a href="https://hardy.ati.ac.lk/" target="_blank" class="soft-link">View</a>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="story-section left"
+        data-media-list="https://oshandageethanjana.github.io/assets/cert1.png,https://oshandageethanjana.github.io/assets/cert2.png,assets/certificates/github-cert.jpg"
+        data-media-interval="2200"
+        data-x="20vw"
+        data-scale=".96"
+        data-rotate="2"
+        data-tilt="-9">
+        <div class="content-card reveal">
+          <p class="label mb-3">Certificates</p>
+          <h2 style="font-family:'Syne',sans-serif;font-size:clamp(2rem,4vw,3rem);font-weight:800;line-height:1.05;letter-spacing:-.04em;margin-bottom:1rem;">Smaller cards. Clear visuals.</h2>
+          <div class="cert-list">
+            <article class="cert-item tilt-card">
+
+
+              <div class="cert-slider" data-slider="github">
+                    <img class="cert-image active" src="assets/certificates/github-cert.jpg" alt="GitHub Foundations certificate 1" onerror="this.src='https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=1200&q=80'" />
+                    <img class="cert-image" src="assets/certificates/github-cert-2.jpg" alt="GitHub Foundations certificate 2" onerror="this.src='https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=1200&q=80'" />
+                    <img class="cert-image" src="assets/certificates/github-cert-3.jpg" alt="GitHub Foundations certificate 3" onerror="this.src='https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=1200&q=80'" />
+                </div>
+
+
+
+              <div style="display:flex;justify-content:space-between;gap:1rem;align-items:flex-start;flex-wrap:wrap;">
+                <div>
+                  <span class="pill" style="margin-bottom:.65rem;">GitHub</span>
+                  <h3 style="font-family:'Syne',sans-serif;font-size:1rem;font-weight:800;margin-bottom:.25rem;">GitHub Foundations</h3>
+                  <p style="font-size:.84rem;color:var(--fg2);line-height:1.65;">Repositories, branching, commits, pull requests, and collaboration workflows.</p>
+                </div>
+                <a href="https://github.com" target="_blank" class="soft-link">Verify</a>
+              </div>
+            </article>
+
+            <article class="cert-item tilt-card">
+              <img class="cert-image" src="assets/certificates/microsoft-cert.jpg" alt="Azure Fundamentals certificate" onerror="this.src='https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=1200&q=80'" />
+              <div style="display:flex;justify-content:space-between;gap:1rem;align-items:flex-start;flex-wrap:wrap;">
+                <div>
+                  <span class="pill" style="margin-bottom:.65rem;">Microsoft</span>
+                  <h3 style="font-family:'Syne',sans-serif;font-size:1rem;font-weight:800;margin-bottom:.25rem;">Azure Fundamentals</h3>
+                  <p style="font-size:.84rem;color:var(--fg2);line-height:1.65;">Core cloud concepts, Azure services, pricing, and architecture fundamentals.</p>
+                </div>
+                <a href="https://learn.microsoft.com" target="_blank" class="soft-link">Verify</a>
+              </div>
+            </article>
+
+            <article class="cert-item tilt-card">
+              <img class="cert-image" src="assets/certificates/linkedin-cert.jpg" alt="LinkedIn Learning certificate" onerror="this.src='https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=1200&q=80'" />
+              <div style="display:flex;justify-content:space-between;gap:1rem;align-items:flex-start;flex-wrap:wrap;">
+                <div>
+                  <span class="pill" style="margin-bottom:.65rem;">LinkedIn</span>
+                  <h3 style="font-family:'Syne',sans-serif;font-size:1rem;font-weight:800;margin-bottom:.25rem;">Full-Stack Web Development</h3>
+                  <p style="font-size:.84rem;color:var(--fg2);line-height:1.65;">Frontend, backend, deployment, and project architecture basics.</p>
+                </div>
+                <a href="https://www.linkedin.com/learning" target="_blank" class="soft-link">View</a>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="story-section right"
+        data-media="https://images.unsplash.com/photo-1516321497487-e288fb19713f?auto=format&fit=crop&w=1200&q=80"
+        data-x="-20vw"
+        data-scale=".95"
+        data-rotate="-1"
+        data-tilt="8">
+        <div class="content-card reveal">
+          <p class="label mb-3">Core Skills</p>
+          <h2 style="font-family:'Syne',sans-serif;font-size:clamp(2rem,4vw,3rem);font-weight:800;line-height:1.05;letter-spacing:-.04em;margin-bottom:1rem;">Practical capability stack.</h2>
+          <div class="skill-list">
+            <div class="skill-item tilt-card">
+              <div style="display:flex;justify-content:space-between;gap:1rem;align-items:center;">
+                <span style="font-family:'Syne',sans-serif;font-weight:800;font-size:.92rem;">PHP / MySQL</span>
+                <span class="label" style="font-size:.58rem;">88%</span>
+              </div>
+              <div class="skill-track"><div class="skill-fill" data-width="88"></div></div>
+            </div>
+            <div class="skill-item tilt-card">
+              <div style="display:flex;justify-content:space-between;gap:1rem;align-items:center;">
+                <span style="font-family:'Syne',sans-serif;font-weight:800;font-size:.92rem;">HTML / CSS / Tailwind</span>
+                <span class="label" style="font-size:.58rem;">92%</span>
+              </div>
+              <div class="skill-track"><div class="skill-fill" data-width="92"></div></div>
+            </div>
+            <div class="skill-item tilt-card">
+              <div style="display:flex;justify-content:space-between;gap:1rem;align-items:center;">
+                <span style="font-family:'Syne',sans-serif;font-weight:800;font-size:.92rem;">JavaScript / GSAP / Three.js</span>
+                <span class="label" style="font-size:.58rem;">75%</span>
+              </div>
+              <div class="skill-track"><div class="skill-fill" data-width="75"></div></div>
+            </div>
+            <div class="skill-item tilt-card">
+              <div style="display:flex;justify-content:space-between;gap:1rem;align-items:center;">
+                <span style="font-family:'Syne',sans-serif;font-weight:800;font-size:.92rem;">AI Integration / APIs</span>
+                <span class="label" style="font-size:.58rem;">78%</span>
+              </div>
+              <div class="skill-track"><div class="skill-fill" data-width="78"></div></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="story-section left"
+        data-media="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=1200&q=80"
+        data-x="20vw"
+        data-scale=".92"
+        data-rotate="2"
+        data-tilt="-7">
+        <div class="content-card reveal">
+          <p class="label mb-3">Timeline</p>
+          <h2 style="font-family:'Syne',sans-serif;font-size:clamp(2rem,4vw,3rem);font-weight:800;line-height:1.05;letter-spacing:-.04em;margin-bottom:1rem;">Milestones that shaped the work.</h2>
+          <div class="timeline-list">
+            <article class="timeline-item tilt-card">
+              <h3 style="font-family:'Syne',sans-serif;font-size:1rem;font-weight:800;margin-bottom:.2rem;">Founded HND Study Hub</h3>
+              <p class="label mb-2" style="font-size:.58rem;">2025 — Present</p>
+              <p style="font-size:.84rem;color:var(--fg2);line-height:1.65;">Built a free educational platform now serving thousands of students across Sri Lanka.</p>
+            </article>
+            <article class="timeline-item tilt-card">
+              <h3 style="font-family:'Syne',sans-serif;font-size:1rem;font-weight:800;margin-bottom:.2rem;">Technovation '25 Winner</h3>
+              <p class="label mb-2" style="font-size:.58rem;">2025</p>
+              <p style="font-size:.84rem;color:var(--fg2);line-height:1.65;">Won first place in the design contest and earned additional recognition for contribution.</p>
+            </article>
+            <article class="timeline-item tilt-card">
+              <h3 style="font-family:'Syne',sans-serif;font-size:1rem;font-weight:800;margin-bottom:.2rem;">Founded WhiteCoder</h3>
+              <p class="label mb-2" style="font-size:.58rem;">2024 — Present</p>
+              <p style="font-size:.84rem;color:var(--fg2);line-height:1.65;">Started a digital studio focused on premium web experiences and practical systems.</p>
+            </article>
+            <article class="timeline-item tilt-card">
+              <h3 style="font-family:'Syne',sans-serif;font-size:1rem;font-weight:800;margin-bottom:.2rem;">Started HNDIT</h3>
+              <p class="label mb-2" style="font-size:.58rem;">2023</p>
+              <p style="font-size:.84rem;color:var(--fg2);line-height:1.65;">Entered the HNDIT program and began blending academic learning with shipped real-world projects.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer style="border-top:1px solid var(--card-border);padding:3rem 2rem;text-align:center;background:var(--bg);transition:background 0.6s;">
+        <div style="font-family:'Syne',sans-serif;font-size:1.5rem;font-weight:800;margin-bottom:0.5rem;color:var(--fg);">WHITECODER.</div>
+        <a href="mailto:hello@whitecoder.com" style="color:var(--fg2);font-size:0.85rem;text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='var(--fg)'" onmouseout="this.style.color='var(--fg2)'">hello@whitecoder.com</a>
+    </footer>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.19/bundled/lenis.min.js"></script>
+
+  <script>
+    const dot = document.getElementById('cursor-dot');
+    const ring = document.getElementById('cursor-ring');
+    const preloader = document.getElementById('preloader');
+    const preloaderBar = document.getElementById('preloader-bar');
+    const preloaderPercent = document.getElementById('preloader-percent');
+    const soundToggle = document.getElementById('sound-toggle');
+    const themeToggle = document.getElementById('theme-toggle');
+    const mediaStage = document.getElementById('media-stage');
+    const mediaCard = document.getElementById('media-card');
+    const mediaImage = document.getElementById('media-image');
+    const storySections = document.querySelectorAll('.story-section');
+
+    function applyTheme(theme) {
+      document.documentElement.setAttribute('data-theme', theme);
+      localStorage.setItem('wc-theme', theme);
+    }
+
+    function toggleTheme() {
+      const current = document.documentElement.getAttribute('data-theme');
+      applyTheme(current === 'dark' ? 'light' : 'dark');
+    }
+
+    themeToggle.addEventListener('click', toggleTheme);
+
+    const savedTheme = localStorage.getItem('wc-theme');
+    if (savedTheme) {
+      applyTheme(savedTheme);
+    } else {
+      const hour = new Date().getHours();
+      applyTheme((hour >= 19 || hour < 6) ? 'dark' : 'light');
+    }
+
+    let p = 0;
+    const iv = setInterval(() => {
+      p += Math.random() * 18;
+      if (p >= 100) {
+        p = 100;
+        clearInterval(iv);
+      }
+      preloaderBar.style.width = p + '%';
+      preloaderPercent.textContent = Math.floor(p) + '%';
+      if (p >= 100) {
+        setTimeout(() => preloader.classList.add('hidden'), 420);
+      }
+    }, 110);
+
+    let mx = 0, my = 0, rx = 0, ry = 0;
+    document.addEventListener('mousemove', (e) => {
+      mx = e.clientX;
+      my = e.clientY;
+    });
+
+    (function animateCursor() {
+      rx += (mx - rx) * 0.15;
+      ry += (my - ry) * 0.15;
+      dot.style.left = mx + 'px';
+      dot.style.top = my + 'px';
+      ring.style.left = rx + 'px';
+      ring.style.top = ry + 'px';
+      requestAnimationFrame(animateCursor);
+    })();
+
+    document.querySelectorAll('a, button, .tilt-card').forEach((el) => {
+      el.addEventListener('mouseenter', () => {
+        ring.classList.add('big');
+        ring.textContent = el.classList.contains('tilt-card') ? 'MOVE' : 'VIEW';
+      });
+      el.addEventListener('mouseleave', () => {
+        ring.classList.remove('big');
+        ring.textContent = 'VIEW';
+      });
+    });
+
+    let soundOn = false;
+    let audioCtx = null;
+    function beep(freq = 700, duration = 0.12, gainValue = 0.05) {
+      if (!soundOn) return;
+      if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      osc.connect(gain);
+      gain.connect(audioCtx.destination);
+      osc.type = 'sine';
+      osc.frequency.value = freq;
+      gain.gain.setValueAtTime(gainValue, audioCtx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + duration);
+      osc.start();
+      osc.stop(audioCtx.currentTime + duration);
+    }
+
+    soundToggle.addEventListener('click', () => {
+      soundOn = !soundOn;
+      soundToggle.textContent = soundOn ? '🔊' : '🔇';
+      if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    });
+
+    document.querySelectorAll('a, button').forEach((el) => {
+      el.addEventListener('mouseenter', () => beep(760, 0.12, 0.04));
+    });
+
+    document.querySelectorAll('.tilt-card').forEach((card) => {
+      card.addEventListener('mousemove', (e) => {
+        if (window.innerWidth < 768) return;
+        const r = card.getBoundingClientRect();
+        const x = e.clientX - (r.left + r.width / 2);
+        const y = e.clientY - (r.top + r.height / 2);
+        gsap.to(card, {
+          rotateY: x * 0.025,
+          rotateX: y * -0.03,
+          transformPerspective: 1200,
+          duration: 0.35,
+          ease: 'power2.out'
+        });
+      });
+      card.addEventListener('mouseleave', () => {
+        gsap.to(card, {
+          rotateY: 0,
+          rotateX: 0,
+          duration: 0.5,
+          ease: 'power3.out'
+        });
+      });
+    });
+
+    const lenis = new Lenis({
+      duration: 1.2,
+      easing: t => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      smooth: true,
+    });
+
+    gsap.registerPlugin(ScrollTrigger);
+    lenis.on('scroll', ScrollTrigger.update);
+    gsap.ticker.add((time) => lenis.raf(time * 1000));
+    gsap.ticker.lagSmoothing(0);
+
+    document.querySelectorAll('.reveal').forEach((el) => {
+      gsap.fromTo(
+        el,
+        { opacity: 0, y: 44, filter: 'blur(8px)' },
+        {
+          opacity: 1,
+          y: 0,
+          filter: 'blur(0px)',
+          duration: 1.05,
+          ease: 'power3.out',
+          scrollTrigger: {
+            trigger: el,
+            start: 'top 82%',
+            toggleActions: 'play none none reverse'
+          }
+        }
+      );
+    });
+
+    document.querySelectorAll('.skill-fill').forEach((bar) => {
+      ScrollTrigger.create({
+        trigger: bar,
+        start: 'top 90%',
+        onEnter: () => {
+          bar.style.width = bar.dataset.width + '%';
+        }
+      });
+    });
+
+    let mediaSliderInterval = null;
+
+    function switchMedia(section) {
+    const mediaListRaw = section.dataset.mediaList || '';
+    const mediaItems = mediaListRaw
+        .split(',')
+        .map(item => item.trim())
+        .filter(Boolean);
+
+    const fallbackSrc = section.dataset.media || mediaItems[0] || '';
+    const x = window.innerWidth > 767 ? (section.dataset.x || '0vw') : '0vw';
+    const scale = parseFloat(section.dataset.scale || '1');
+    const rotate = parseFloat(section.dataset.rotate || '0');
+    const tilt = parseFloat(section.dataset.tilt || '0');
+    const intervalTime = parseInt(section.dataset.mediaInterval || '2200', 10);
+
+    if (mediaSliderInterval) {
+        clearInterval(mediaSliderInterval);
+        mediaSliderInterval = null;
+    }
+
+    let currentIndex = 0;
+    const activeList = mediaItems.length ? mediaItems : [fallbackSrc];
+    const firstSrc = activeList[0];
+
+    gsap.to(mediaImage, {
+        opacity: 0,
+        duration: 0.18,
+        onComplete: () => {
+        if (mediaImage.getAttribute('src') !== firstSrc) {
+            mediaImage.setAttribute('src', firstSrc);
+        }
+
+        gsap.to(mediaStage, {
+            x,
+            duration: 0.9,
+            ease: 'power3.out'
+        });
+
+        gsap.to(mediaCard, {
+            rotateY: tilt,
+            rotateX: 2,
+            scale,
+            duration: 0.85,
+            ease: 'power3.out'
+        });
+
+        gsap.to(mediaImage, {
+            opacity: 1,
+            rotate,
+            scale: 1.02,
+            duration: 0.55,
+            ease: 'power2.out'
+        });
+
+        if (activeList.length > 1) {
+            mediaSliderInterval = setInterval(() => {
+            currentIndex = (currentIndex + 1) % activeList.length;
+
+            gsap.to(mediaImage, {
+                opacity: 0,
+                duration: 0.22,
+                onComplete: () => {
+                mediaImage.setAttribute('src', activeList[currentIndex]);
+
+                gsap.to(mediaImage, {
+                    opacity: 1,
+                    duration: 0.35,
+                    ease: 'power2.out'
+                });
+                }
+            });
+            }, intervalTime);
+        }
+        }
+    });
+    }
+
+    storySections.forEach((section) => {
+      ScrollTrigger.create({
+        trigger: section,
+        start: 'top 58%',
+        end: 'bottom 42%',
+        onEnter: () => switchMedia(section),
+        onEnterBack: () => switchMedia(section)
+      });
+    });
+
+    console.log('%c WHITECODER. ', 'background:#0a0a0a;color:#f5f4f0;padding:4px 8px;border-radius:4px;font-size:18px;font-weight:900;');
+    console.log('%cEducation page rebuilt with compact premium cards and section-based media switching.', 'font-size:12px;color:#666;');
+
+
+    document.querySelectorAll('.cert-slider').forEach((slider) => {
+    const slides = slider.querySelectorAll('.cert-image');
+    let index = 0;
+
+    if (slides.length > 0) {
+        slides[0].classList.add('active');
+    }
+
+    setInterval(() => {
+        slides[index].classList.remove('active');
+        index = (index + 1) % slides.length;
+        slides[index].classList.add('active');
+    }, 2500);
+    });
+
+  </script>
+</body>
+</html>

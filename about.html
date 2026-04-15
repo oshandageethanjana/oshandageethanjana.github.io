@@ -118,6 +118,17 @@
 
         .mag-btn { position:relative;cursor:none; }
 
+        /* ========== MOBILE MENU ========== */
+        #mobile-menu {
+            transform: translateY(-100%);
+            transition: transform 0.6s cubic-bezier(0.77, 0, 0.175, 1);
+            background: var(--bg);
+        }
+
+        #mobile-menu.open {
+            transform: translateY(0);
+        }
+
         @media (max-width: 768px) {
         #cursor-dot,
         #cursor-ring {
@@ -249,6 +260,16 @@
             </button>
         </div>
     </nav>
+
+    <!-- MOBILE MENU -->
+    <div id="mobile-menu" class="fixed inset-0 z-40 flex flex-col justify-center items-center gap-8 pointer-events-auto">
+        <a href="index.html" class="mobile-link" style="font-family:'Syne',sans-serif;font-size:2.5rem;font-weight:800;color:var(--fg);text-decoration:none;">Home</a>
+        <a href="#about" class="mobile-link" style="font-family:'Syne',sans-serif;font-size:2.5rem;font-weight:800;color:var(--fg);text-decoration:none;">About</a>
+        <a href="work.html" class="mobile-link" style="font-family:'Syne',sans-serif;font-size:2.5rem;font-weight:800;color:var(--fg);text-decoration:none;">Work</a>
+        <a href="education.html" class="mobile-link" style="font-family:'Syne',sans-serif;font-size:2.5rem;font-weight:800;color:var(--fg);text-decoration:none;">Education</a>
+        <a href="index.html#contact" class="mobile-link" style="font-family:'Syne',sans-serif;font-size:2.5rem;font-weight:800;color:var(--fg);text-decoration:none;">Contact</a>
+        
+    </div>
 
     <div id="image-wrapper">
         <img
@@ -440,6 +461,26 @@
     function playClick(){if(!soundOn)return;if(!actx)actx=new(window.AudioContext||window.webkitAudioContext)();const o=actx.createOscillator(),g=actx.createGain();o.connect(g);g.connect(actx.destination);o.type='sine';o.frequency.value=700;g.gain.setValueAtTime(0.06,actx.currentTime);g.gain.exponentialRampToValueAtTime(0.001,actx.currentTime+0.12);o.start();o.stop(actx.currentTime+0.12);}
     document.getElementById('sound-toggle').addEventListener('click',()=>{soundOn=!soundOn;document.getElementById('sound-toggle').textContent=soundOn?'🔊':'🔇';if(!actx)actx=new(window.AudioContext||window.webkitAudioContext)();});
     document.querySelectorAll('a,button').forEach(el=>el.addEventListener('mouseenter',playClick));
+
+
+    // MOBILE MENU
+    const menuBtn = document.getElementById('menu-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+    let menuOpen = false;
+
+    menuBtn.addEventListener('click', () => {
+        menuOpen = !menuOpen;
+        mobileMenu.classList.toggle('open');
+        menuBtn.textContent = menuOpen ? 'CLOSE' : 'MENU';
+    });
+
+    document.querySelectorAll('.mobile-link').forEach(link => {
+        link.addEventListener('click', () => {
+            mobileMenu.classList.remove('open');
+            menuBtn.textContent = 'MENU';
+            menuOpen = false;
+        });
+    });
 
     // Lenis
     const lenis=new Lenis({duration:1.2,easing:t=>Math.min(1,1.001-Math.pow(2,-10*t)),smooth:true});

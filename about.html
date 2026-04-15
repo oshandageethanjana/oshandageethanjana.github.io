@@ -60,18 +60,40 @@
         }
 
         #profile-img {
+            display: block;
             width: min(34vw, 420px);
+            max-width: 420px;
             min-width: 280px;
             aspect-ratio: 3 / 4;
             object-fit: cover;
+            object-position: center;
             border-radius: 2rem;
             filter: grayscale(10%) drop-shadow(0 25px 35px rgb(0 0 0 / 0.14));
             transition: opacity 0.35s ease, transform 0.7s ease, filter 0.5s ease;
             will-change: transform, opacity;
         }
-        .section { position:relative;z-index:10;width:100vw;height:100vh;display:flex;align-items:center;pointer-events:none; }
-        .content-box { pointer-events:auto;background:var(--card);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid var(--card-border);border-radius:2rem;padding:2.5rem 3rem;box-shadow:0 20px 60px rgba(0,0,0,0.06);transition:background 0.6s,border-color 0.6s; }
+        .section {
+            position: relative;
+            z-index: 10;
+            width: 100vw;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            pointer-events: none;
+        }
 
+        .content-box {
+            pointer-events: auto;
+            width: 100%;
+            background: var(--card);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--card-border);
+            border-radius: 2rem;
+            padding: 2.5rem 3rem;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.06);
+            transition: background 0.6s, border-color 0.6s;
+        }
         .section-title { font-family:'Syne',sans-serif;font-size:clamp(2.2rem,5vw,4rem);font-weight:800;line-height:1;letter-spacing:-0.04em; }
         .label-text { font-family:'Syne',sans-serif;font-size:0.65rem;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:var(--fg2); }
         .anim-text { opacity:0;transform:translateY(40px); }
@@ -92,6 +114,96 @@
         #sound-toggle:hover, #theme-toggle:hover { background:var(--fg);color:var(--bg); }
 
         .mag-btn { position:relative;cursor:none; }
+
+        @media (max-width: 768px) {
+        #cursor-dot,
+        #cursor-ring {
+            display: none;
+        }
+
+        nav .glass-nav {
+            width: calc(100vw - 32px);
+            min-width: 0 !important;
+            padding-left: 18px !important;
+            padding-right: 18px !important;
+            justify-content: space-between;
+        }
+
+        .section {
+            min-height: auto;
+            height: auto;
+            padding-top: 110px;
+            padding-bottom: 72px;
+            align-items: flex-start;
+            justify-content: center !important;
+        }
+
+        .content-box {
+            width: calc(100vw - 32px);
+            max-width: 100% !important;
+            margin-inline: auto;
+            padding: 1.5rem 1.25rem;
+            border-radius: 1.5rem;
+        }
+
+        .section-title {
+            font-size: clamp(2rem, 10vw, 3rem);
+            line-height: 0.96;
+        }
+
+        .label-text {
+            font-size: 0.58rem;
+            letter-spacing: 0.15em;
+        }
+
+        #image-wrapper {
+            align-items: flex-end;
+            justify-content: center;
+            padding-bottom: 72px;
+            opacity: 0.18;
+            transform: none !important;
+        }
+
+        #profile-img {
+            width: min(62vw, 300px);
+            max-width: 300px;
+            min-width: 0;
+            border-radius: 1.4rem;
+        }
+
+        .impact-grid {
+            grid-template-columns: 1fr !important;
+        }
+
+        .cta-actions {
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .cta-actions .mag-btn {
+            width: min(320px, 88vw);
+            justify-content: center;
+        }
+
+        #sound-toggle,
+        #theme-toggle {
+            width: 48px;
+            height: 48px;
+            bottom: 1rem;
+        }
+
+        #sound-toggle {
+            right: 1rem;
+        }
+
+        #theme-toggle {
+            right: 4.6rem;
+        }
+
+        .timeline-item {
+            padding-left: 1.2rem;
+        }
+    }
     </style>
 </head>
 <body>
@@ -147,7 +259,7 @@
         <!-- INTRO -->
         <section
             class="section story-section justify-start px-6 md:px-24"
-            data-image="assets/about/intro.jpg"
+            data-image="assets/about/oshanda1.png"
             data-x="20vw"
             data-scale="1"
             data-rotate="0">
@@ -238,7 +350,7 @@
             data-rotate="0">
             <div class="content-box w-full max-w-2xl">
                 <p class="label-text anim-text mb-6 text-center">Impact & Stats</p>
-                <div class="anim-text" style="display:grid;grid-template-columns:repeat(2,1fr);gap:1.5px;background:var(--card-border);border-radius:1.5rem;overflow:hidden;">
+                <div class="anim-text impact-grid" style="display:grid;grid-template-columns:repeat(2,1fr);gap:1.5px;background:var(--card-border);border-radius:1.5rem;overflow:hidden;">
                     <div style="background:var(--bg);padding:2rem;text-align:center;transition:background 0.3s;" onmouseover="this.style.background='var(--fg)';this.querySelectorAll('*').forEach(e=>e.style.color='var(--bg)')" onmouseout="this.style.background='var(--bg)';this.querySelectorAll('*').forEach(e=>e.style.color='')">
                         <div style="font-family:'Syne',sans-serif;font-size:2.5rem;font-weight:800;letter-spacing:-0.03em;" class="counter-num" data-target="6">0</div>
                         <div style="font-size:0.75rem;color:var(--fg2);margin-top:0.25rem;">K+ Students on Study Hub</div>
@@ -271,7 +383,7 @@
                     <p class="anim-text mb-8" style="color:var(--fg2);font-size:1rem;line-height:1.7;">
                         I'm always open to new ideas, collaborations, and meaningful digital products.
                     </p>
-                <div class="anim-text flex gap-4 justify-center flex-wrap">
+                <div class="anim-text cta-actions flex gap-4 justify-center flex-wrap">
                     <a href="mailto:hello@whitecoder.com" class="mag-btn px-8 py-4 rounded-full text-sm font-bold tracking-widest uppercase" style="background:var(--fg);color:var(--bg);font-family:'Syne',sans-serif;text-decoration:none;">Get in Touch</a>
                     <a href="https://oshandageethanjana.github.io/assets/oshanda.pdf" download class="mag-btn px-8 py-4 rounded-full text-sm font-bold tracking-widest uppercase" style="border:1.5px solid var(--fg);color:var(--fg);font-family:'Syne',sans-serif;text-decoration:none;">Download CV</a>
                 </div>
@@ -340,8 +452,17 @@
     const profileImg = document.getElementById('profile-img');
     const storySections = document.querySelectorAll('.story-section');
 
+    function setAboutImage(src) {
+    profileImg.onerror = () => {
+        profileImg.onerror = null;
+        profileImg.src = 'assets/about/oshanda1.png';
+    };
+    profileImg.src = src;
+}
+
     function switchAboutImage(section) {
-        const nextImage = section.dataset.image || 'assets/about/intro.jpg';
+        const fallbackImage = 'assets/about/oshanda1.png';
+        const nextImage = section.dataset.image || fallbackImage;
         const targetX = window.innerWidth > 768 ? (section.dataset.x || '0vw') : '0vw';
         const targetScale = parseFloat(section.dataset.scale || '1');
         const targetRotate = parseFloat(section.dataset.rotate || '0');
@@ -352,7 +473,7 @@
             ease: 'power2.out',
             onComplete: () => {
                 if (profileImg.getAttribute('src') !== nextImage) {
-                    profileImg.setAttribute('src', nextImage);
+                    setAboutImage(nextImage);
                 }
 
                 gsap.to(imgWrap, {

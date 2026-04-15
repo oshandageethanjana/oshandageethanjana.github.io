@@ -245,11 +245,17 @@
         .hero-name-stroke {
             color: transparent;
             -webkit-text-stroke: 1.5px var(--fg);
+            position: relative;
+            /* transform: translateX(-0.045em); අයින් කර ඇත */
         }
 
         @media (max-width: 768px) {
             .hero-name-line {
                 width: 100%;
+            }
+
+            .hero-name-stroke {
+                left: 0;
             }
         }
 
@@ -672,9 +678,9 @@
 
             <div class="content-box hero-content max-w-4xl mx-6 mt-20" style="background:transparent;border:none;box-shadow:none;backdrop-filter:none;">
                 <div class="anim-text label-text mb-5">Colombo, LK · Available for Tech & AI Projects</div>
-                    <h1 class="hero-title hero-name anim-text mb-6">
-                        <span class="hero-name-line hero-name-fill">Oshanda</span>
-                        <span class="hero-name-line hero-name-stroke">Geethanjana.</span>
+                    <h1 class="flex flex-col items-center justify-center text-center w-full mb-6">
+                        <span class="hero-name-fill text-[12vw] md:text-[8vw] font-bold leading-none">Oshanda</span>
+                        <span class="hero-name-stroke text-[12vw] md:text-[8vw] font-bold leading-none" style="transform: translateX(0);">Geethanjana</span>
                     </h1>
                     <p class="anim-text mb-8" style="color:var(--fg2);font-size:1rem;font-weight:400;max-width:720px;margin-inline:auto;">
                         I engineer digital experiences and build robust AI architectures. Founder of WhiteCoder and HND Study Hub.
@@ -849,13 +855,13 @@
     </div>
 
     <!-- FOOTER -->
-    <div id="sticky-footer-wrapper">
+    <!--<div id="sticky-footer-wrapper">
         <footer>
             <div style="font-family:'Syne',sans-serif;font-size:1.8rem;font-weight:800;letter-spacing:-0.03em;margin-bottom:1rem;color:var(--fg);">WHITECODER.</div>
             <p style="color:var(--fg2);font-size:0.8rem;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.5rem;">Oshanda Geethanjana · Colombo, LK</p>
             <p style="color:var(--fg2);font-size:0.75rem;">© 2026 WhiteCoder. All rights reserved.</p>
         </footer>
-    </div>
+    </div>-->
 
     <!-- SOUND TOGGLE & THEME TOGGLE -->
     <button id="sound-toggle" title="Toggle Sound" style="color:var(--fg);">🔇</button>
@@ -869,10 +875,26 @@
     // ============================================================
     // CONSOLE EASTER EGG
     // ============================================================
-    console.log('%c\n██╗    ██╗██╗  ██╗██╗████████╗███████╗ ██████╗ ██████╗ ██████╗ ███████╗██████╗ \n██║    ██║██║  ██║██║╚══██╔══╝██╔════╝██╔════╝██╔═══██╗██╔══██╗██╔════╝██╔══██╗\n██║ █╗ ██║███████║██║   ██║   █████╗  ██║     ██║   ██║██║  ██║█████╗  ██████╔╝\n██║███╗██║██╔══██║██║   ██║   ██╔══╝  ██║     ██║   ██║██║  ██║██╔══╝  ██╔══██╗\n╚███╔███╔╝██║  ██║██║   ██║   ███████╗╚██████╗╚██████╔╝██████╔╝███████╗██║  ██║\n ╚══╝╚══╝ ╚═╝  ╚═╝╚═╝   ╚═╝   ╚══════╝ ╚═════╝ ╚═════╝ ╚═════╝ ╚══════╝╚═╝  ╚═╝\n', 'color: #0a0a0a; font-family: monospace;');
-    console.log('%cHey there, fellow developer! 👋', 'font-size:16px;font-weight:bold;color:#0a0a0a;');
-    console.log('%cLooking for the source code? → https://github.com/oshandageethanjana', 'font-size:13px;color:#555;');
-    console.log('%cBuilt with ❤️ by Oshanda Geethanjana | whitecoder.online', 'font-size:11px;color:#aaa;');
+    // ASCII Art with 3D shadow effect
+    console.log(
+        '%c\n' +
+        '██╗    ██╗██╗  ██╗██╗████████╗███████╗ ██████╗ ██████╗ ██████╗ ███████╗██████╗ \n' +
+        '██║    ██║██║  ██║██║╚══██╔══╝██╔════╝██╔════╝██╔═══██╗██╔══██╗██╔════╝██╔══██╗\n' +
+        '██║ █╗ ██║███████║██║   ██║   █████╗  ██║     ██║   ██║██║  ██║█████╗  ██████╔╝\n' +
+        '██║███╗██║██╔══██║██║   ██║   ██╔══╝  ██║     ██║   ██║██║  ██║██╔══╝  ██╔══██╗\n' +
+        '╚███╔███╔╝██║  ██║██║   ██║   ███████╗╚██████╗╚██████╔╝██████╔╝███████╗██║  ██║\n' +
+        ' ╚══╝╚══╝ ╚═╝  ╚═╝╚═╝   ╚═╝   ╚══════╝ ╚═════╝ ╚═════╝ ╚═════╝ ╚══════╝╚═╝  ╚═╝\n',
+        'color: #0a0a0a; font-family: monospace; font-weight: 900; text-shadow: 2px 2px 0px #d1d1d1;'
+    );
+
+    // Main Greeting
+    console.log('%c👋 Hey there, fellow developer!', 'font-size: 18px; font-weight: bold; color: #0a0a0a; margin: 10px 0px;');
+
+    // Link with dual styling
+    console.log('%c🚀 GitHub: %chttps://github.com/oshandageethanjana', 'font-size: 14px; font-weight: 700; color: #333;', 'font-size: 14px; color: #0056b3; text-decoration: underline;');
+
+    // Premium Footer Badge
+    console.log('%c✨ Built with ❤️ by Oshanda Geethanjana | whitecoder.online', 'background: #0a0a0a; color: #f5f4f0; font-size: 12px; font-weight: bold; padding: 8px 16px; border-radius: 8px; margin-top: 15px;');
 
     // ============================================================
     // KEYBOARD EASTER EGG — type "WHITE"

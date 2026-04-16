@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Education | WhiteCoder — Oshanda Geethanjana</title>
+  <title>Education | Oshanda Geethanjana</title>
   <meta name="description" content="Academic journey, awards, and certifications of Oshanda Geethanjana — crafted in the premium WhiteCoder visual system." />
-  <meta property="og:title" content="Education | WhiteCoder — Oshanda Geethanjana" />
+  <meta property="og:title" content="Education | Oshanda Geethanjana" />
   <meta property="og:description" content="HNDIT at SLIATE · Technovation '25 Winner · GitHub · Microsoft · LinkedIn certifications." />
   <meta property="og:image" content="https://oshandageethanjana.github.io/assets/Oshanda_Geethanjana.png" />
 
@@ -256,15 +256,15 @@
 
     .content-card {
       width: min(100%, 540px);
-      background: var(--card);
+      background: transparent;
       border: 1px solid var(--card-border);
       border-radius: 1.8rem;
-      backdrop-filter: blur(22px);
-      -webkit-backdrop-filter: blur(22px);
-      box-shadow: var(--shadow);
+      backdrop-filter: none;
+      -webkit-backdrop-filter: none;
+      box-shadow: none;
       padding: 2rem;
       pointer-events: auto;
-      transition: transform .35s ease, background .5s ease, border-color .5s ease, box-shadow .35s ease;
+      transition: transform .35s ease, border-color .5s ease, box-shadow .35s ease;
       transform-style: preserve-3d;
     }
 
@@ -280,16 +280,16 @@
     .hero-card {
       width: min(100%, 760px);
       text-align: center;
-      background: rgba(255,255,255,.18);
-      border: 1px solid rgba(255,255,255,.18);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
+      background: transparent;
+      border: 1px solid var(--card-border);
+      backdrop-filter: none;
+      -webkit-backdrop-filter: none;
       box-shadow: none;
     }
 
     [data-theme="dark"] .hero-card {
-      background: rgba(18,18,20,.18);
-      border-color: rgba(255,255,255,.08);
+      background: transparent;
+      border-color: var(--card-border);
     }
 
     .mini-grid {
@@ -300,15 +300,14 @@
     }
 
     .mini-card {
-      background: rgba(255,255,255,.5);
+      background: transparent;
       border: 1px solid var(--card-border);
       border-radius: 1.2rem;
       padding: 1rem;
-      transition: transform .25s ease, background .4s ease;
+      transition: transform .25s ease, border-color .4s ease;
     }
 
-    [data-theme="dark"] .mini-card { background: rgba(255,255,255,.03); }
-    .mini-card:hover { transform: translateY(-2px); }
+    [data-theme="dark"] .mini-card { background: transparent; }
 
     .award-list,
     .cert-list,
@@ -322,11 +321,11 @@
     .cert-item,
     .skill-item,
     .timeline-item {
-      background: rgba(255,255,255,.42);
+      background: transparent;
       border: 1px solid var(--card-border);
       border-radius: 1.25rem;
       padding: 1rem;
-      transition: transform .28s ease, background .4s ease, box-shadow .28s ease;
+      transition: transform .28s ease, border-color .4s ease, box-shadow .28s ease;
       position: relative;
       overflow: hidden;
     }
@@ -335,7 +334,7 @@
     [data-theme="dark"] .cert-item,
     [data-theme="dark"] .skill-item,
     [data-theme="dark"] .timeline-item {
-      background: rgba(255,255,255,.03);
+      background: transparent;
     }
 
     .award-item:hover,
@@ -554,7 +553,7 @@
         justify-content: center;
         align-items: flex-end;
         padding-bottom: 6rem;
-        opacity: .18;
+        opacity: .28;
       }
       #media-card {
         width: min(72vw, 320px);
@@ -580,7 +579,7 @@
   <div id="cursor-ring">VIEW</div>
 
   <div id="preloader">
-    <div id="preloader-logo">WHITECODER.</div>
+    <div id="preloader-logo">Oshanda.</div>
     <div id="preloader-track"><div id="preloader-bar"></div></div>
     <div id="preloader-percent">0%</div>
   </div>
@@ -631,7 +630,7 @@
         data-scale="1"
         data-rotate="0"
         data-tilt="0">
-        <div class="">
+        <div class="content-card hero-card reveal mx-auto">
           <p class="label mb-4">The Journey</p>
           <h2 class="page-title mb-5">Qualified &<br>Authority</h2>
           <p class="mx-auto" style="max-width:560px;color:var(--fg2);font-size:1rem;line-height:1.75;">
@@ -855,9 +854,9 @@
     </div>
   </main>
 
-  <footer style="border-top:1px solid var(--card-border);padding:3rem 2rem;text-align:center;background:var(--bg);transition:background 0.6s;">
-        <div style="font-family:'Syne',sans-serif;font-size:1.5rem;font-weight:800;margin-bottom:0.5rem;color:var(--fg);">WHITECODER.</div>
-        <a href="mailto:hello@whitecoder.com" style="color:var(--fg2);font-size:0.85rem;text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='var(--fg)'" onmouseout="this.style.color='var(--fg2)'">hello@whitecoder.com</a>
+    <footer style="border-top:1px solid var(--card-border);padding:3rem 2rem;text-align:center;background:var(--bg);transition:background 0.6s;">
+        <div style="font-family:'Syne',sans-serif;font-size:1.5rem;font-weight:800;margin-bottom:0.5rem;color:var(--fg);">Oshanda Geethanjana.</div>
+        <p style="color:var(--fg2);font-size:0.75rem;">© 2026 Oshanda Geethanjana · oshanda@whitecoder.online</p>
     </footer>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>

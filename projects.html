@@ -1,0 +1,1180 @@
+<!DOCTYPE html>
+
+<html class="no-js" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Projects — Oshanda Geethanjana</title>
+<meta content="Selected projects by Oshanda Geethanjana — AI products, premium web systems, education platforms, and UI/UX case studies." name="description"/>
+<meta content="#0A0A0A" name="theme-color"/>
+<link href="favicon.ico" rel="icon" type="image/x-icon"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{
+    --orange:#E8510A;
+    --orange-soft:#F26419;
+    --bg:#070707;
+    --bg2:#0D0D0D;
+    --panel:rgba(255,255,255,.045);
+    --panel-strong:rgba(255,255,255,.07);
+    --panel-border:rgba(255,255,255,.10);
+    --white:#fff;
+    --text:#f2f2f2;
+    --muted:#ababab;
+    --muted-2:#7d7d7d;
+    --font-display:'Sora',sans-serif;
+    --font-body:'Inter',sans-serif;
+    --font-script:'Caveat',cursive;
+    --radius-xl:28px;
+    --radius-lg:22px;
+    --shadow-soft:0 20px 50px rgba(0,0,0,.22);
+    }
+    html{scroll-behavior:smooth}
+    body{
+      background:
+        radial-gradient(circle at 78% 18%, rgba(232,81,10,.16) 0%, transparent 24%),
+        radial-gradient(circle at 76% 72%, rgba(232,81,10,.10) 0%, transparent 30%),
+        linear-gradient(180deg, #050505 0%, #070707 22%, #080605 52%, #0a0908 100%);
+      color:var(--text);
+      font-family:var(--font-body);
+      overflow-x:hidden;
+      min-height:100vh;
+    }
+    a{text-decoration:none;color:inherit}
+    html,body{max-width:100%;}
+    body.menu-open{overflow:hidden;}
+    img{max-width:100%;display:block}
+    canvas#scene{
+        position:fixed;
+        inset:0;
+        width:100%;
+        height:100%;
+        z-index:0;
+        pointer-events:none;
+        opacity:.96;
+        }
+    .noise{
+      position:fixed;inset:0;pointer-events:none;z-index:1;opacity:.025;
+      background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+      background-size:220px 220px;
+    }
+
+    .page{position:relative;z-index:2}
+    .container{width:min(1200px, calc(100% - 40px));margin-inline:auto}
+    nav{
+        position:fixed;
+        top:0;
+        left:0;
+        right:0;
+        z-index:1000;
+        padding:20px 40px;
+        display:flex;
+        align-items:center;
+        justify-content:space-between;
+        transition:background .4s, backdrop-filter .4s, padding .3s;
+        }
+
+        nav.scrolled{
+        background:transparent;
+        backdrop-filter:none;
+        padding:14px 40px;
+        border-bottom:none;
+        }
+
+        .nav-logo{
+        font-family:var(--font-script);
+        font-size:28px;
+        font-weight:700;
+        color:var(--white);
+        text-decoration:none;
+        letter-spacing:-0.5px;
+        }
+
+        .nav-logo span{
+        color:var(--orange);
+        }
+
+        .nav-links{
+        display:flex;
+        align-items:center;
+        gap:4px;
+        background:rgba(255,255,255,.04);
+        border:1px solid rgba(255,255,255,.08);
+        border-radius:50px;
+        padding:6px 10px;
+        backdrop-filter:blur(10px);
+        }
+
+        .nav-links a{
+        color:#A0A0A0;
+        text-decoration:none;
+        font-size:13.5px;
+        font-weight:500;
+        padding:8px 18px;
+        border-radius:40px;
+        transition:color .2s, background .2s;
+        letter-spacing:.01em;
+        font-family:var(--font-display);
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active{
+        color:var(--orange);
+        background:rgba(232,81,10,.1);
+        }
+
+        .nav-cta{
+        display:inline-flex;
+        align-items:center;
+        gap:10px;
+        background:rgba(30,10,4,.18);
+        color:var(--white);
+        text-decoration:none;
+        padding:7px 16px 7px 8px;
+        border-radius:999px;
+        border:1.4px solid rgba(232,81,10,.65);
+        transition:transform .2s ease, box-shadow .25s ease, border-color .25s ease, background .25s ease;
+        font-family:var(--font-display);
+        letter-spacing:.01em;
+        backdrop-filter:blur(6px);
+        -webkit-backdrop-filter:blur(6px);
+        }
+
+        .nav-cta:hover{
+        transform:translateY(-1px);
+        background:rgba(40,12,4,.28);
+        border-color:rgba(232,81,10,.9);
+        box-shadow:0 0 18px rgba(232,81,10,.16);
+        }
+
+        .nav-cta-icon{
+        width:40px;
+        height:30px;
+        border-radius:11px 14px 14px 11px;
+        background:#ffffff;
+        color:#111111;
+        display:inline-flex;
+        align-items:center;
+        justify-content:center;
+        flex-shrink:0;
+        box-shadow:0 2px 10px rgba(0,0,0,.12);
+        }
+
+        .nav-cta-icon svg{
+        width:19px;
+        height:19px;
+        }
+
+        .nav-cta-text{
+        display:flex;
+        flex-direction:column;
+        align-items:flex-start;
+        justify-content:center;
+        line-height:1.02;
+        }
+
+        .nav-cta-text span{
+        display:block;
+        font-size:12px;
+        font-weight:600;
+        }
+
+        .hamburger{
+        display:none;
+        flex-direction:column;
+        gap:5px;
+        padding:8px;
+        border:1px solid rgba(255,255,255,.08);
+        border-radius:10px;
+        background:rgba(255,255,255,.04);
+        }
+
+        .hamburger span{
+        display:block;
+        width:22px;
+        height:2px;
+        background:var(--white);
+        border-radius:2px;
+        transition:transform .3s, opacity .3s;
+        }
+
+        .hamburger.open span:nth-child(1){
+        transform:translateY(7px) rotate(45deg);
+        }
+
+        .hamburger.open span:nth-child(2){
+        opacity:0;
+        }
+
+        .hamburger.open span:nth-child(3){
+        transform:translateY(-7px) rotate(-45deg);
+        }
+
+        .mobile-menu{
+        position:fixed;
+        top:0;
+        right:-100%;
+        width:min(340px,100vw);
+        height:100vh;
+        background:rgba(12,12,12,.97);
+        backdrop-filter:blur(30px);
+        border-left:1px solid rgba(255,255,255,.08);
+        z-index:999;
+        transition:right .4s cubic-bezier(.4,0,.2,1);
+        padding:100px 40px 40px;
+        display:flex;
+        flex-direction:column;
+        gap:8px;
+        }
+
+        .mobile-menu.open{
+        right:0;
+        }
+
+        .mobile-menu a{
+        color:#CCCCCC;
+        text-decoration:none;
+        font-family:var(--font-display);
+        font-size:22px;
+        font-weight:600;
+        padding:16px 0;
+        border-bottom:1px solid rgba(255,255,255,.08);
+        transition:color .2s;
+        letter-spacing:-.02em;
+        }
+
+        .mobile-menu a:hover,
+        .mobile-menu a.active{
+        color:var(--orange);
+        }
+
+        .mobile-menu .mobile-cta{
+        margin-top:30px;
+        background:var(--orange);
+        color:var(--white);
+        text-align:center;
+        padding:16px;
+        border-radius:14px;
+        font-size:15px;
+        border-bottom:none;
+        }
+
+        .mobile-overlay{
+        position:fixed;
+        inset:0;
+        background:rgba(0,0,0,.6);
+        z-index:998;
+        opacity:0;
+        pointer-events:none;
+        transition:opacity .4s;
+        }
+
+        .mobile-overlay.open{
+        opacity:1;
+        pointer-events:auto;
+        }
+
+    .eyebrow{
+      display:inline-flex;align-items:center;gap:10px;
+      color:var(--orange);text-transform:uppercase;font-size:11px;font-weight:700;
+      letter-spacing:.16em;font-family:var(--font-display);
+    }
+    .eyebrow::before{content:"";width:28px;height:1px;background:var(--orange)}
+
+    .hero{
+      min-height:100vh;display:flex;align-items:center;padding:120px 0 60px;
+    }
+    .hero-grid{
+      display:grid;grid-template-columns:1.1fr .9fr;gap:42px;align-items:center;
+    }
+    .hero-copy{position:relative}
+    .hero-copy .eyebrow{margin-bottom:20px}
+    .hero-title{
+      font-family:var(--font-display);
+      font-size:clamp(46px,7vw,92px);
+      line-height:.95;letter-spacing:-.07em;
+      max-width:750px;
+    }
+    .hero-title .accent{color:var(--orange)}
+    .hero-desc{
+      margin-top:24px;max-width:640px;color:var(--muted);line-height:1.8;font-size:16px;
+    }
+    .hero-actions{display:flex;gap:14px;flex-wrap:wrap;margin-top:34px}
+    .btn{
+      display:inline-flex;align-items:center;justify-content:center;gap:10px;
+      padding:15px 28px;border-radius:999px;font-family:var(--font-display);font-weight:600;
+      transition:.25s ease;border:1px solid transparent
+    }
+    .btn-primary{background:linear-gradient(180deg,#ff6b13 0%, #ff4d05 100%);color:#fff;box-shadow:0 14px 34px rgba(255,94,10,.24)}
+    .btn-primary:hover{transform:translateY(-2px)}
+    .btn-ghost{background:rgba(255,255,255,.03);border-color:rgba(255,255,255,.10);color:#fff}
+    .btn-ghost:hover{background:rgba(255,255,255,.05);transform:translateY(-2px)}
+
+     .hero-panel{
+        position:relative;
+        min-height:530px;
+        border-radius:34px;
+        background:transparent;
+        border:none;
+        box-shadow:none;
+        backdrop-filter:none;
+        overflow:hidden;
+        padding:24px 12px 24px 0;
+        display:flex;
+        align-items:flex-end;
+        justify-content:flex-start;
+      }
+
+      .hero-panel::before{content:none}
+
+      .hero-panel-content{position:relative;z-index:2;max-width:270px;padding:26px;border-radius:28px;background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.025));border:1px solid rgba(255,255,255,.08);box-shadow:0 18px 50px rgba(0,0,0,.16)}
+      .hero-panel-kicker{display:inline-block;margin-bottom:14px;color:var(--orange);font-family:var(--font-display);font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase}
+      .hero-panel-title{font-family:var(--font-display);font-size:32px;line-height:1.02;letter-spacing:-.05em;color:#fff}
+      .hero-panel-copy{margin-top:14px;color:var(--muted);font-size:14px;line-height:1.8}
+      .hero-panel-tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+      .hero-panel-tag{padding:8px 12px;border-radius:999px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);color:#fff;font-family:var(--font-display);font-size:11px}
+
+    .section{padding:100px 0}
+    .section-header{display:flex;justify-content:space-between;gap:30px;align-items:end;margin-bottom:34px}
+    .section-heading{
+      font-family:var(--font-display);font-size:clamp(38px,5vw,76px);letter-spacing:-.06em;line-height:.96
+    }
+    .section-heading .accent{color:var(--orange)}
+    .section-desc{max-width:420px;color:var(--muted);line-height:1.75}
+
+    .split-showcase{
+      display:grid;grid-template-columns:1fr .95fr;gap:28px;align-items:start;
+    }
+    .stack{
+      display:grid;gap:18px;
+    }
+    .stack-card{
+      position:relative;
+      border-radius:26px;padding:26px;
+      background:linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.03));
+      border:1px solid rgba(255,255,255,.10);
+      overflow:hidden;
+      transition:.35s ease;
+    }
+    .stack-card:hover{transform:translateY(-5px);border-color:rgba(232,81,10,.25);box-shadow:0 20px 46px rgba(0,0,0,.18)}
+    .stack-card::before{
+      content:"";position:absolute;inset:0;background:linear-gradient(135deg, rgba(232,81,10,.08), transparent 55%);
+      opacity:0;transition:.3s ease;pointer-events:none
+    }
+    .stack-card:hover::before{opacity:1}
+    .stack-top{display:flex;align-items:flex-start;justify-content:space-between;gap:14px;margin-bottom:16px}
+    .stack-num{font-family:var(--font-display);font-size:11px;letter-spacing:.16em;color:var(--orange)}
+    .arrow{
+      width:40px;height:40px;border-radius:50%;display:grid;place-items:center;
+      border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.03);flex-shrink:0;transition:.25s ease
+    }
+    .stack-card:hover .arrow{transform:rotate(45deg);background:rgba(232,81,10,.16);border-color:rgba(232,81,10,.24)}
+    .stack-title{font-family:var(--font-display);font-size:24px;line-height:1.08;letter-spacing:-.03em}
+    .stack-copy{margin-top:10px;color:var(--muted);line-height:1.75;font-size:14px}
+    .tag-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+    .tag{
+      padding:7px 12px;border-radius:999px;font-size:11px;font-family:var(--font-display);
+      background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);color:var(--muted)
+    }
+    .tag.active{background:rgba(232,81,10,.13);border-color:rgba(232,81,10,.18);color:#ffd7c3}
+
+    .device-panel{
+      position:sticky;top:110px;
+      min-height:620px;border-radius:34px;
+      background:linear-gradient(180deg, rgba(255,255,255,.12), rgba(255,255,255,.05));
+      border:1px solid rgba(255,255,255,.12);
+      box-shadow:inset 0 1px 0 rgba(255,255,255,.08),0 30px 70px rgba(0,0,0,.22);
+      backdrop-filter:blur(24px);
+      padding:24px;
+    }
+    .device-stage{
+      position:relative;height:100%;min-height:570px;border-radius:28px;overflow:hidden;
+      background:linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.015));
+      border:1px solid rgba(255,255,255,.06);
+    }
+    .device-stage::before{
+      content:"Interactive Preview";position:absolute;left:18px;top:16px;z-index:3;
+      font-family:var(--font-display);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--orange)
+    }
+    .device-preview{
+      position:absolute;inset:0;padding:70px 24px 26px;
+      display:grid;place-items:center;
+    }
+    .mock-phones{
+      display:flex;gap:18px;align-items:end;justify-content:center;flex-wrap:wrap
+    }
+    .phone{
+      width:170px;max-width:30vw;aspect-ratio:9/18;
+      background:linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.03));
+      border:1px solid rgba(255,255,255,.1);border-radius:28px;
+      box-shadow:0 20px 36px rgba(0,0,0,.18);padding:12px;position:relative;overflow:hidden
+    }
+    .phone::before{
+      content:"";position:absolute;top:8px;left:50%;transform:translateX(-50%);
+      width:74px;height:8px;border-radius:0 0 10px 10px;background:rgba(0,0,0,.45)
+    }
+    .screen{
+      height:100%;border-radius:22px;padding:16px;
+      background:linear-gradient(180deg, rgba(10,10,10,.96), rgba(20,12,8,.85));
+      display:flex;flex-direction:column;justify-content:space-between
+    }
+    .screen-top{display:flex;justify-content:space-between;align-items:center;color:#fff;font-size:11px;font-family:var(--font-display)}
+    .screen-hero{
+      height:110px;border-radius:18px;
+      background:linear-gradient(135deg, rgba(232,81,10,.22), rgba(255,255,255,.04));
+      border:1px solid rgba(255,255,255,.08)
+    }
+    .screen-cards{display:grid;gap:10px}
+    .screen-card{height:42px;border-radius:14px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08)}
+    .screen-footer{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+    .screen-footer span{height:10px;border-radius:99px;background:rgba(255,255,255,.08)}
+
+    .filters{
+      display:flex;gap:10px;flex-wrap:wrap;margin-top:10px
+    }
+    .filter-chip{
+      padding:10px 16px;border-radius:999px;border:1px solid rgba(255,255,255,.10);
+      background:rgba(255,255,255,.03);color:var(--muted);font-family:var(--font-display);font-size:12px;cursor:pointer;transition:.25s ease
+    }
+    .filter-chip.is-active,.filter-chip:hover{background:rgba(232,81,10,.13);border-color:rgba(232,81,10,.18);color:#fff}
+
+    .gallery-grid{
+      display:grid;grid-template-columns:repeat(12,1fr);gap:18px;margin-top:26px
+    }
+    .gallery-card{
+      position:relative;
+      border-radius:28px;overflow:hidden;min-height:280px;
+      background:linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.025));
+      border:1px solid rgba(255,255,255,.10);
+    }
+    .gallery-card.span-7{grid-column:span 7}
+    .gallery-card.span-5{grid-column:span 5}
+    .gallery-card.span-4{grid-column:span 4}
+    .gallery-card.span-8{grid-column:span 8}
+    .gallery-card-inner{
+      position:absolute;inset:0;padding:24px;display:flex;flex-direction:column;justify-content:space-between
+    }
+    .gallery-label{
+      font-family:var(--font-display);font-size:11px;text-transform:uppercase;letter-spacing:.15em;color:var(--orange)
+    }
+    .gallery-title{font-family:var(--font-display);font-size:30px;line-height:1.02;letter-spacing:-.04em;max-width:360px}
+    .gallery-copy{max-width:430px;color:var(--muted);line-height:1.7;font-size:14px}
+    .panel-visual{
+      height:100%;min-height:200px;border-radius:22px;display:grid;place-items:center;
+      background:radial-gradient(circle at 50% 30%, rgba(232,81,10,.18), transparent 40%), linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,.01));
+      border:1px solid rgba(255,255,255,.06)
+    }
+    .mini-dashboard{
+      width:min(430px,100%);padding:18px;border-radius:20px;
+      background:rgba(0,0,0,.24);border:1px solid rgba(255,255,255,.08);
+      display:grid;gap:12px
+    }
+    .mini-bars{display:grid;gap:10px}
+    .mini-bars span{display:block;height:12px;border-radius:999px;background:linear-gradient(90deg, rgba(232,81,10,.6), rgba(255,255,255,.08))}
+    .mini-tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+    .mini-tiles div{height:72px;border-radius:16px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08)}
+
+    .cta-banner{
+      border-radius:34px;padding:34px;
+      background:linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.05));
+      border:1px solid rgba(255,255,255,.12);
+      display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap
+    }
+    .cta-banner h3{font-family:var(--font-display);font-size:clamp(30px,4vw,58px);line-height:.98;letter-spacing:-.05em}
+    .cta-banner p{max-width:530px;color:var(--muted);line-height:1.8}
+
+    
+    .library-filter-row{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:28px}
+    .library-filter{padding:10px 16px;border-radius:999px;border:1px solid rgba(255,255,255,.10);background:rgba(255,255,255,.03);color:var(--muted);font-family:var(--font-display);font-size:12px;cursor:pointer;transition:.25s ease}
+    .library-filter.is-active,.library-filter:hover{background:rgba(232,81,10,.13);border-color:rgba(232,81,10,.18);color:#fff}
+    .project-library-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:22px}
+    .project-library-card{display:flex;flex-direction:column;border-radius:28px;overflow:hidden;background:linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.025));border:1px solid rgba(255,255,255,.10);transition:.35s ease}
+    .project-library-card:hover{transform:translateY(-6px);box-shadow:0 24px 44px rgba(0,0,0,.18)}
+    .project-library-card.accent-purple:hover{border-color:rgba(168,85,247,.26)}
+    .project-library-card.accent-orange:hover{border-color:rgba(232,81,10,.24)}
+    .project-library-card.accent-cyan:hover{border-color:rgba(0,240,255,.24)}
+    .project-library-card.accent-sky:hover{border-color:rgba(125,211,252,.24)}
+    .library-thumb{position:relative;min-height:190px;padding:16px;display:flex;align-items:center;justify-content:center;overflow:hidden}
+    .library-thumb img{width:min(170px,72%);max-height:120px;object-fit:contain;filter:drop-shadow(0 14px 28px rgba(0,0,0,.22));position:relative;z-index:2}
+    .thumb-mark{position:relative;z-index:2;font-family:var(--font-display);font-size:44px;font-weight:800;letter-spacing:-.06em;color:#fff}
+    .thumb-orb{position:absolute;width:180px;height:180px;border-radius:50%;background:radial-gradient(circle, rgba(255,255,255,.16), transparent 62%);filter:blur(6px);opacity:.6}
+    .library-badge,.library-status{position:absolute;top:14px;font-family:var(--font-display);font-size:11px;letter-spacing:.12em;text-transform:uppercase;padding:8px 12px;border-radius:999px;z-index:3}
+    .library-badge{left:14px;background:rgba(0,0,0,.24);border:1px solid rgba(255,255,255,.10);color:#fff}
+    .library-status{right:14px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.10);color:rgba(255,255,255,.82)}
+    .library-body{padding:22px 22px 24px;display:flex;flex-direction:column;gap:12px;flex:1}
+    .library-title{font-family:var(--font-display);font-size:26px;line-height:1.04;letter-spacing:-.04em}
+    .library-copy{color:var(--muted);font-size:14px;line-height:1.75;flex:1}
+    .library-tags{display:flex;flex-wrap:wrap;gap:8px}
+    .library-tag{padding:7px 12px;border-radius:999px;font-size:11px;font-family:var(--font-display);background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);color:var(--muted)}
+    .library-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:8px}
+    .library-btn{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:11px 16px;border-radius:14px;font-family:var(--font-display);font-size:13px;font-weight:600;text-decoration:none;border:1px solid rgba(255,255,255,.10)}
+    .library-btn.primary{background:linear-gradient(180deg,#ff6b13 0%, #ff4d05 100%);color:#fff;border-color:transparent}
+    .library-btn.primary:hover{transform:translateY(-1px)}
+    .library-btn.ghost{background:rgba(255,255,255,.03);color:var(--muted)}
+    .project-library-card.is-hidden{display:none}
+.footer-minimal{
+      padding:38px 20px 50px;text-align:center
+    }
+    .footer-inner-centered{
+      max-width:900px;margin-inline:auto;display:flex;flex-direction:column;gap:10px;align-items:center
+    }
+    .footer-logo{font-family:var(--font-display);font-size:28px;font-weight:700;letter-spacing:-.04em}
+    .footer-copy{font-size:14px;color:rgba(255,255,255,.62);line-height:1.6}
+    .footer-copy span{color:#fff;font-weight:600}
+
+    .reveal,.reveal-left,.reveal-right,.reveal-scale{opacity:0}
+    .reveal{transform:translateY(36px)}
+    .reveal-left{transform:translateX(-36px)}
+    .reveal-right{transform:translateX(36px)}
+    .reveal-scale{transform:scale(.94)}
+
+    @media (max-width: 1100px){
+      .hero-grid,.split-showcase{grid-template-columns:1fr}
+      .hero-panel,.device-panel{position:relative;top:auto}
+      .gallery-card.span-7,.gallery-card.span-5,.gallery-card.span-4,.gallery-card.span-8{grid-column:span 12}
+    }
+    @media (max-width: 860px){
+      nav{padding:16px 20px}
+      nav.scrolled{padding:12px 20px}
+      .nav-links,.nav-cta{display:none}
+      .hamburger{display:flex}
+      .container{width:min(1200px, calc(100% - 24px))}
+      .hero{padding:110px 0 60px;min-height:auto}
+      .hero-grid{grid-template-columns:1fr;gap:28px}
+      .hero-title{font-size:clamp(40px,13vw,70px)}
+      .hero-panel{min-height:360px;padding:0}
+      .hero-panel-content{max-width:100%;margin-top:220px;background:linear-gradient(180deg, rgba(6,6,6,.78), rgba(6,6,6,.88));backdrop-filter:blur(10px)}
+      .device-panel{position:relative;top:auto}
+      .phone{width:145px}
+      .section{padding:82px 0}
+      .section-header{align-items:start;flex-direction:column}
+    }
+    @media (max-width: 560px){
+      .hero-actions,.filters,.library-filter-row{flex-direction:column;align-items:stretch}
+      .btn,.filter-chip,.library-filter{justify-content:center;text-align:center}
+      .device-stage{min-height:470px}
+      .phone{width:128px}
+      .gallery-title{font-size:24px}
+      .stack-title{font-size:21px}
+      .cta-banner{padding:24px}
+      .hero-panel{min-height:320px}
+      .hero-panel-content{margin-top:185px;padding:20px}
+      .hero-panel-title{font-size:26px}
+      .hero-desc{font-size:15px}
+      .section-heading{font-size:clamp(34px,10vw,56px)}
+    }
+    @media (prefers-reduced-motion:reduce){
+      *,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+    }
+  
+    @media (max-width: 1100px){.project-library-grid{grid-template-columns:repeat(2,1fr)}}
+    @media (max-width: 768px){.project-library-grid{grid-template-columns:1fr}.library-thumb{min-height:170px}.library-title{font-size:22px}.library-filter-row{gap:8px}.library-filter{font-size:11px;padding:9px 13px}}
+</style>
+</head>
+<body>
+    
+<canvas id="scene"></canvas>
+<div class="noise"></div>
+<div class="mobile-overlay" id="mobileOverlay"></div>
+
+<div class="mobile-menu" id="mobileMenu">
+  <a href="index.html#hero" class="mobile-nav-link">Home</a>
+  <a href="#featured" class="mobile-nav-link active">Projects</a>
+  <a href="index.html#about" class="mobile-nav-link">About Me</a>
+  <a href="index.html#contact" class="mobile-nav-link">Contact</a>
+  <a href="#" class="mobile-cta mobile-nav-link">Download CV</a>
+</div>
+
+<div class="page">
+<nav id="navbar">
+  <a href="index.html#hero" class="nav-logo">Oshanda<span>.</span></a>
+
+  <div class="nav-links">
+    <a href="index.html#hero" class="nav-link">Home</a>
+    <a href="#featured" class="nav-link active">Projects</a>
+    <a href="index.html#about" class="nav-link">About Me</a>
+    <a href="index.html#contact" class="nav-link">Contact</a>
+  </div>
+
+  <a href="#" class="nav-cta" id="desktopCta">
+    <span class="nav-cta-icon" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 4.5v7.5"></path>
+        <path d="M9.3 9.8 12 12.5l2.7-2.7"></path>
+        <path d="M7.5 15.5v1a2 2 0 0 0 2 2h5a2 2 0 0 0 2-2v-1"></path>
+      </svg>
+    </span>
+    <span class="nav-cta-text">
+      <span>Download</span>
+      <span>CV</span>
+    </span>
+  </a>
+
+  <button class="hamburger" id="hamburger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+<section class="hero">
+<div class="container hero-grid">
+<div class="hero-copy">
+    <div class="eyebrow reveal-left">Selected Work</div>
+        <h1 class="hero-title"><span class="accent">Projects</span> That Blend Design, Code &amp; AI.</h1>
+        <p class="hero-desc">A cinematic projects page updated with real products from Oshanda’s live portfolio — AI tools, SaaS platforms, education systems, web templates, and full-stack business apps, all styled to fit the main index perfectly.</p>
+        <div class="hero-actions">
+            <a class="btn btn-primary" href="#featured">Explore Projects</a>
+            <a class="btn btn-ghost" href="index.html">Back to Home</a>
+    </div>
+</div>
+<div class="hero-panel reveal-right">
+  <div class="hero-panel-content">
+    <span class="hero-panel-kicker">Global Motion</span>
+    <h3 class="hero-panel-title">Large Rotating Globe On The Side</h3>
+    <p class="hero-panel-copy">
+      The old circular widget is removed. A large half-visible globe now rotates from the right edge of the scene, giving the hero a stronger global-tech feel.
+    </p>
+
+    <div class="hero-panel-tags">
+      <span class="hero-panel-tag">Three.js Globe</span>
+      <span class="hero-panel-tag">Half Visible</span>
+      <span class="hero-panel-tag">Mobile Friendly</span>
+    </div>
+  </div>
+</div>
+</section>
+<section class="section" id="featured">
+<div class="container">
+<div class="section-header">
+<div>
+<div class="eyebrow reveal-left">Featured Projects</div>
+<h2 class="section-heading reveal"><span class="accent">Oshanda:</span><br/>Full‑Stack &amp; AI<br/>Project Showcase</h2>
+</div>
+<p class="section-desc reveal-right">
+            This split layout is inspired by the rhythm in your reference video: stacked project cards on one side and a premium preview panel on the other, with refined motion and glass depth throughout.
+          </p>
+</div>
+<div class="split-showcase">
+<div class="stack">
+<article class="stack-card reveal" data-category="ai">
+<div class="stack-top">
+<span class="stack-num">01 / AI PRODUCT</span>
+<span class="arrow">
+<svg fill="none" height="14" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="14"><path d="M5 12h14M12 5l7 7-7 7"></path></svg>
+</span>
+</div>
+<h3 class="stack-title">WhiteCoder Copilot</h3>
+<p class="stack-copy">The most powerful AI project by WhiteCoder — an all-in-one intelligent assistant helping you code, create content, generate ideas, and automate tasks with lightning speed. The foundation of the future WhiteCoder ecosystem.</p>
+<div class="tag-row"><span class="tag active">AI</span><span class="tag">Copilot</span><span class="tag">Productivity</span><span class="tag">Automation</span></div>
+</article>
+<article class="stack-card reveal" data-category="web">
+<div class="stack-top">
+<span class="stack-num">02 / SAAS PLATFORM</span>
+<span class="arrow">
+<svg fill="none" height="14" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="14"><path d="M5 12h14M12 5l7 7-7 7"></path></svg>
+</span>
+</div>
+<h3 class="stack-title">FOLIO by WhiteCoder</h3>
+<p class="stack-copy">A modern SaaS-based portfolio builder that allows users to create stunning personal websites with ease. 
+          Features include customizable themes, user dashboards, and responsive glass-style UI with dark/light modes.</p>
+<div class="tag-row"><span class="tag active">PHP</span><span class="tag">SaaS</span><span class="tag">Dashboard</span><span class="tag">Responsive UI</span></div>
+</article>
+<article class="stack-card reveal" data-category="education">
+<div class="stack-top">
+<span class="stack-num">03 / NETWORK TOOL</span>
+<span class="arrow">
+<svg fill="none" height="14" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="14"><path d="M5 12h14M12 5l7 7-7 7"></path></svg>
+</span>
+</div>
+<h3 class="stack-title">WCProbe by WhiteCoder</h3>
+<p class="stack-copy">An advanced IP and domain analysis tool that provides real-time insights including DNS resolution, SSL certificate checks, 
+            MX records, reverse DNS, and geo-location data. Built with dual DNS (Google &amp; Cloudflare) for reliable and fast results.</p>
+<div class="tag-row"><span class="tag active">PHP</span><span class="tag">DNS</span><span class="tag">API</span><span class="tag">Cyber Tool</span></div>
+</article>
+<article class="stack-card reveal" data-category="systems">
+<div class="stack-top">
+<span class="stack-num">04 / EDUCATION PLATFORM</span>
+<span class="arrow">
+<svg fill="none" height="14" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="14"><path d="M5 12h14M12 5l7 7-7 7"></path></svg>
+</span>
+</div>
+<h3 class="stack-title">HND Study Hub</h3>
+<p class="stack-copy">A free educational portal for higher education students across Sri Lanka. Now serving over 6,000 active students with curated study materials, notes, and resources.</p>
+<div class="tag-row"><span class="tag active">Education</span><span class="tag">Community</span><span class="tag">PHP</span><span class="tag">Founder</span></div>
+</article>
+</div>
+<div class="device-panel reveal-right">
+<div class="filters">
+<button class="filter-chip is-active" data-view="mobile">Mobile UI</button>
+<button class="filter-chip" data-view="dashboard">Dashboard</button>
+<button class="filter-chip" data-view="ai">AI Product</button>
+</div>
+<div class="device-stage">
+<div class="device-preview" id="devicePreview">
+<div class="mock-phones">
+<div class="phone">
+<div class="screen">
+<div class="screen-top"><span>08:45</span><span>Fit Layout</span></div>
+<div class="screen-hero"></div>
+<div class="screen-cards">
+<div class="screen-card"></div>
+<div class="screen-card"></div>
+<div class="screen-card"></div>
+</div>
+<div class="screen-footer"><span></span><span></span><span></span><span></span></div>
+</div>
+</div>
+<div class="phone">
+<div class="screen">
+<div class="screen-top"><span>08:45</span><span>Glass UI</span></div>
+<div class="screen-hero"></div>
+<div class="screen-cards">
+<div class="screen-card"></div>
+<div class="screen-card"></div>
+<div class="screen-card"></div>
+</div>
+<div class="screen-footer"><span></span><span></span><span></span><span></span></div>
+</div>
+</div>
+<div class="phone">
+<div class="screen">
+<div class="screen-top"><span>08:45</span><span>Product</span></div>
+<div class="screen-hero"></div>
+<div class="screen-cards">
+<div class="screen-card"></div>
+<div class="screen-card"></div>
+<div class="screen-card"></div>
+</div>
+<div class="screen-footer"><span></span><span></span><span></span><span></span></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section class="section" id="gallery">
+<div class="container">
+<div class="section-header">
+<div>
+<div class="eyebrow reveal-left">Case Study Frames</div>
+<h2 class="section-heading reveal">Project <span class="accent">Gallery</span></h2>
+</div>
+<p class="section-desc reveal-right">
+            Large-format panels inspired by the video’s cinematic transitions, with product thumbnails, dashboard views, and premium interface blocks.
+          </p>
+</div>
+<div class="gallery-grid">
+<article class="gallery-card span-7 reveal-scale">
+<div class="gallery-card-inner">
+<div>
+<div class="gallery-label">Flagship AI Product</div>
+<h3 class="gallery-title">WhiteCoder Copilot Leads The Ecosystem.</h3>
+</div>
+<div class="panel-visual">
+<div class="mini-dashboard">
+<div class="mini-bars">
+<span style="width:82%"></span>
+<span style="width:66%"></span>
+<span style="width:92%"></span>
+</div>
+<div class="mini-tiles">
+<div></div><div></div><div></div>
+</div>
+</div>
+</div>
+</div>
+</article>
+<article class="gallery-card span-5 reveal-scale">
+<div class="gallery-card-inner">
+<div>
+<div class="gallery-label">Education Platform</div>
+<h3 class="gallery-title">HND Study Hub For 6K+ Students.</h3>
+</div>
+<p class="gallery-copy">A growing education portal serving students across Sri Lanka with curated study materials, notes, and accessible learning resources.</p>
+</div>
+</article>
+<article class="gallery-card span-4 reveal-scale">
+<div class="gallery-card-inner">
+<div>
+<div class="gallery-label">SaaS Portfolio Builder</div>
+<h3 class="gallery-title">FOLIO Turns Portfolios Into Products.</h3>
+</div>
+<p class="gallery-copy">A modern SaaS builder that helps users create premium portfolio sites with dashboards, themes, and responsive presentation tools.</p>
+</div>
+</article>
+<article class="gallery-card span-8 reveal-scale">
+<div class="gallery-card-inner">
+<div>
+<div class="gallery-label">Business Systems</div>
+<h3 class="gallery-title">Smart POS And Utility Platforms.</h3>
+</div>
+<div class="panel-visual">
+<div class="mini-dashboard" style="width:min(540px,100%)">
+<div class="mini-bars">
+<span style="width:74%"></span>
+<span style="width:90%"></span>
+<span style="width:58%"></span>
+</div>
+<div class="mini-tiles">
+<div></div><div></div><div></div>
+</div>
+</div>
+</div>
+</div>
+</article>
+</div>
+</div>
+</section>
+<section class="section" id="design">
+<div class="container">
+<div class="section-header">
+<div>
+<div class="eyebrow reveal-left">UI / UX Showcase</div>
+<h2 class="section-heading reveal"><span class="accent">Design</span> That Supports Product Growth.</h2>
+</div>
+<p class="section-desc reveal-right">
+            The video alternates between development and design. This section continues that rhythm with interface-first storytelling and stronger visual presentation.
+          </p>
+</div>
+<div class="split-showcase">
+<div class="stack">
+<article class="stack-card reveal-left">
+<div class="stack-top">
+<span class="stack-num">01 / PREMIUM SAAS UI</span>
+<span class="arrow">
+<svg fill="none" height="14" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="14"><path d="M5 12h14M12 5l7 7-7 7"></path></svg>
+</span>
+</div>
+<h3 class="stack-title">FOLIO UI System &amp; Product Flow</h3>
+<p class="stack-copy">A portfolio SaaS experience built around dashboard clarity, theme flexibility, premium glass panels, and stronger product storytelling.</p>
+<div class="tag-row"><span class="tag active">Figma</span><span class="tag">SaaS UI</span><span class="tag">Brand System</span></div>
+</article>
+<article class="stack-card reveal-left">
+<div class="stack-top">
+<span class="stack-num">02 / WEB UI COMPONENTS</span>
+<span class="arrow">
+<svg fill="none" height="14" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="14"><path d="M5 12h14M12 5l7 7-7 7"></path></svg>
+</span>
+</div>
+<h3 class="stack-title">Templates, Login Systems &amp; Reusable Interfaces</h3>
+<p class="stack-copy">Projects like Restaurant Webpage and Creative Login Form show clean HTML/CSS structure, responsiveness, and ready-to-deploy UI foundations.</p>
+<div class="tag-row"><span class="tag active">Responsive</span><span class="tag">Frontend</span><span class="tag">UI Patterns</span></div>
+</article>
+</div>
+<div class="gallery-card reveal-right" style="min-height:520px">
+<div class="gallery-card-inner">
+<div>
+<div class="gallery-label">Real Portfolio Content</div>
+<h3 class="gallery-title">Now Updated With Oshanda’s Actual Projects.</h3>
+</div>
+<div class="panel-visual">
+<div class="mini-dashboard" style="width:min(480px,100%)">
+<div class="mini-tiles" style="grid-template-columns:repeat(2,1fr)">
+<div style="height:120px"></div>
+<div style="height:120px"></div>
+<div style="height:120px"></div>
+<div style="height:120px"></div>
+</div>
+</div>
+</div>
+<p class="gallery-copy">The new projects page now pulls in real products like WhiteCoder Copilot, FOLIO, WCProbe, CineHub Pro, ResumeIQ, ProfileAI, and more — while preserving the premium motion-driven style.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section class="section" id="project-library"><div class="container">
+<div class="section-header">
+<div>
+<div class="eyebrow reveal-left">Imported Project Library</div>
+<h2 class="section-heading reveal"><span class="accent">Actual</span> Projects From<br/>Oshanda’s Live Work.</h2>
+</div>
+<p class="section-desc reveal-right">This grid uses the real project entries from the uploaded projects source and drops them into the new cinematic page design — keeping the premium visual system while updating the content with live work.</p>
+</div>
+<div class="library-filter-row reveal">
+<button class="library-filter is-active" data-filter="all">All</button>
+<button class="library-filter" data-filter="ai">AI Tools</button>
+<button class="library-filter" data-filter="platform">Platforms</button>
+<button class="library-filter" data-filter="fullstack">Full Stack</button>
+<button class="library-filter" data-filter="ui">UI / Templates</button>
+</div>
+<div class="project-library-grid"><article class="project-library-card reveal-scale accent-purple" data-category="ai"><div class="library-thumb" style="background:linear-gradient(135deg, rgba(168,85,247,.24), rgba(232,81,10,.10));"><span class="library-badge">Flagship AI</span><span class="library-status">Live</span><div class="thumb-mark">AI</div><div class="thumb-orb"></div></div><div class="library-body"><h3 class="library-title">WhiteCoder Copilot</h3><p class="library-copy">The most powerful AI project by WhiteCoder — an all-in-one intelligent assistant helping you code, create content, generate ideas, and automate tasks with lightning speed. The foundation of the future WhiteCoder ecosystem.</p><div class="library-tags"><span class="library-tag">AI</span><span class="library-tag">Copilot</span><span class="library-tag">Productivity</span><span class="library-tag">Automation</span><span class="library-tag">Flagship</span></div><div class="library-actions"><a class="library-btn primary" href="https://copilot.whitecoder.online/" rel="noopener" target="_blank">Launch App</a><span class="library-btn ghost">Core Project</span></div></div></article><article class="project-library-card reveal-scale accent-orange" data-category="platform"><div class="library-thumb" style="background:linear-gradient(135deg, rgba(232,81,10,.24), rgba(255,255,255,.04));"><span class="library-badge">SaaS Platform</span><span class="library-status">Live</span><img alt="FOLIO by WhiteCoder" src="https://oshandageethanjana.github.io/assets/folio_logo.png"/></div><div class="library-body"><h3 class="library-title">FOLIO by WhiteCoder</h3><p class="library-copy">A modern SaaS-based portfolio builder that allows users to create stunning personal websites with ease. 
+          Features include customizable themes, user dashboards, and responsive glass-style UI with dark/light modes.</p><div class="library-tags"><span class="library-tag">PHP</span><span class="library-tag">SaaS</span><span class="library-tag">Dashboard</span><span class="library-tag">Responsive UI</span></div><div class="library-actions"><a class="library-btn primary" href="https://folio.whitecoder.online/" rel="noopener" target="_blank">Live Site</a><span class="library-btn ghost">Closed Source</span></div></div></article><article class="project-library-card reveal-scale accent-orange" data-category="platform"><div class="library-thumb" style="background:linear-gradient(135deg, rgba(232,81,10,.24), rgba(255,255,255,.04));"><span class="library-badge">Network Tool</span><span class="library-status">Live</span><img alt="WCProbe by WhiteCoder" src="https://wcprobe.whitecoder.online/logo.png"/></div><div class="library-body"><h3 class="library-title">WCProbe by WhiteCoder</h3><p class="library-copy">An advanced IP and domain analysis tool that provides real-time insights including DNS resolution, SSL certificate checks, 
+            MX records, reverse DNS, and geo-location data. Built with dual DNS (Google &amp; Cloudflare) for reliable and fast results.</p><div class="library-tags"><span class="library-tag">PHP</span><span class="library-tag">DNS</span><span class="library-tag">API</span><span class="library-tag">Cyber Tool</span></div><div class="library-actions"><a class="library-btn primary" href="https://wcprobe.whitecoder.online/" rel="noopener" target="_blank">Live Site</a><span class="library-btn ghost">Closed Source</span></div></div></article><article class="project-library-card reveal-scale accent-orange" data-category="platform"><div class="library-thumb" style="background:linear-gradient(135deg, rgba(232,81,10,.24), rgba(255,255,255,.04));"><span class="library-badge">Streaming</span><span class="library-status">Live</span><img alt="CineHub Pro" src="https://cinehub.whitecoder.online/cinehub_logo.png"/></div><div class="library-body"><h3 class="library-title">CineHub Pro</h3><p class="library-copy">A self-hosted movie and TV streaming platform. Browse trending films, manage downloads, and explore top-rated shows — all on your own server with a polished dark-mode UI.</p><div class="library-tags"><span class="library-tag">PHP</span><span class="library-tag">TMDB API</span><span class="library-tag">PWA</span><span class="library-tag">Open Source</span></div><div class="library-actions"><a class="library-btn primary" href="https://cinehub.whitecoder.online/" rel="noopener" target="_blank">Live Site</a><span class="library-btn ghost">Private</span></div></div></article><article class="project-library-card reveal-scale accent-orange" data-category="platform"><div class="library-thumb" style="background:linear-gradient(135deg, rgba(232,81,10,.24), rgba(255,255,255,.04));"><span class="library-badge">EdTech</span><span class="library-status">Live</span><div class="thumb-mark">EDU</div><div class="thumb-orb"></div></div><div class="library-body"><h3 class="library-title">HND Study Hub</h3><p class="library-copy">A free educational portal for higher education students across Sri Lanka. Now serving over 6,000 active students with curated study materials, notes, and resources.</p><div class="library-tags"><span class="library-tag">Education</span><span class="library-tag">Community</span><span class="library-tag">PHP</span><span class="library-tag">Founder</span></div><div class="library-actions"><a class="library-btn primary" href="https://www.hndstudy.online" rel="noopener" target="_blank">Live Site</a><span class="library-btn ghost">Private</span></div></div></article><article class="project-library-card reveal-scale accent-purple" data-category="ai"><div class="library-thumb" style="background:linear-gradient(135deg, rgba(168,85,247,.24), rgba(232,81,10,.10));"><span class="library-badge">AI Tool</span><span class="library-status">Live</span><div class="thumb-mark">CV</div><div class="thumb-orb"></div></div><div class="library-body"><h3 class="library-title">ResumeIQ</h3><p class="library-copy">AI-powered resume analyzer that evaluates your CV line by line, provides personalized improvements, ATS-friendly suggestions, and creates optimized cover letters instantly.</p><div class="library-tags"><span class="library-tag">AI</span><span class="library-tag">Resume</span><span class="library-tag">ATS</span><span class="library-tag">Web App</span></div><div class="library-actions"><a class="library-btn primary" href="https://resumeiq.whitecoder.online/" rel="noopener" target="_blank">View App</a><span class="library-btn ghost">AI Web Tool</span></div></div></article><article class="project-library-card reveal-scale accent-purple" data-category="ai"><div class="library-thumb" style="background:linear-gradient(135deg, rgba(168,85,247,.24), rgba(232,81,10,.10));"><span class="library-badge">AI Tool</span><span class="library-status">Live</span><div class="thumb-mark">PF</div><div class="thumb-orb"></div></div><div class="library-body"><h3 class="library-title">ProfileAI</h3><p class="library-copy">AI-powered tool that removes image backgrounds instantly and creates clean, professional profile pictures for social media, resumes, and online profiles.</p><div class="library-tags"><span class="library-tag">AI</span><span class="library-tag">Background Remover</span><span class="library-tag">Profile Maker</span></div><div class="library-actions"><a class="library-btn primary" href="https://profileai.click/" rel="noopener" target="_blank">Try AI</a><span class="library-btn ghost">AI Web Tool</span></div></div></article><article class="project-library-card reveal-scale accent-purple" data-category="ai"><div class="library-thumb" style="background:linear-gradient(135deg, rgba(168,85,247,.24), rgba(232,81,10,.10));"><span class="library-badge">AI Tool</span><span class="library-status">Live</span><div class="thumb-mark">RAI</div><div class="thumb-orb"></div></div><div class="library-body"><h3 class="library-title">Resume.AI</h3><p class="library-copy">Modern AI-powered resume builder that helps users create professional CVs quickly and easily. Features smart editing tools and a clean, fully responsive interface.</p><div class="library-tags"><span class="library-tag">AI</span><span class="library-tag">Resume Builder</span><span class="library-tag">Web App</span></div><div class="library-actions"><a class="library-btn primary" href="https://resume-ai-nine-phi.vercel.app/" rel="noopener" target="_blank">Live Demo</a><span class="library-btn ghost">AI Web Tool</span></div></div></article><article class="project-library-card reveal-scale accent-orange" data-category="platform"><div class="library-thumb" style="background:linear-gradient(135deg, rgba(232,81,10,.24), rgba(255,255,255,.04));"><span class="library-badge">Digital Agency</span><span class="library-status">Live</span><div class="thumb-mark">WC</div><div class="thumb-orb"></div></div><div class="library-body"><h3 class="library-title">WhiteCoder</h3><p class="library-copy">Full-service digital infrastructure agency delivering bespoke web development, UI/UX design, and custom software solutions. Founded and operated independently from concept to deployment.</p><div class="library-tags"><span class="library-tag">Web Dev</span><span class="library-tag">UI/UX</span><span class="library-tag">Client Work</span><span class="library-tag">Founder</span></div><div class="library-actions"><a class="library-btn primary" href="https://www.whitecoder.online" rel="noopener" target="_blank">Live Site</a><span class="library-btn ghost">Private</span></div></div></article><article class="project-library-card reveal-scale accent-cyan" data-category="fullstack"><div class="library-thumb" style="background:linear-gradient(135deg, rgba(0,240,255,.18), rgba(232,81,10,.10));"><span class="library-badge">Full Stack</span><span class="library-status">Demo</span><div class="thumb-mark">POS</div><div class="thumb-orb"></div></div><div class="library-body"><h3 class="library-title">Smart POS System</h3><p class="library-copy">Modern point of sale system for shops and small businesses. Includes product management, barcode support, real-time stock tracking, and a fast billing interface.</p><div class="library-tags"><span class="library-tag">PHP</span><span class="library-tag">MySQL</span><span class="library-tag">POS</span><span class="library-tag">Inventory</span></div><div class="library-actions"><a class="library-btn primary" href="https://www.whitecoder.online/demos/pos_system/" rel="noopener" target="_blank">Live Demo</a><span class="library-btn ghost">PHP / MySQL</span></div></div></article><article class="project-library-card reveal-scale accent-sky" data-category="ui"><div class="library-thumb" style="background:linear-gradient(135deg, rgba(125,211,252,.18), rgba(255,255,255,.03));"><span class="library-badge">Web Template</span><span class="library-status">Demo</span><div class="thumb-mark">FOOD</div><div class="thumb-orb"></div></div><div class="library-body"><h3 class="library-title">Restaurant Webpage</h3><p class="library-copy">Clean and responsive restaurant website template built with HTML, CSS, and JavaScript. Perfect for cafes and restaurants to showcase menus, services, and contact information.</p><div class="library-tags"><span class="library-tag">HTML</span><span class="library-tag">CSS</span><span class="library-tag">JS</span><span class="library-tag">Responsive</span></div><div class="library-actions"><a class="library-btn primary" href="https://www.whitecoder.online/demos/simple_interface_restaurant_webpage_01/" rel="noopener" target="_blank">Live Demo</a><span class="library-btn ghost">HTML / CSS / JS</span></div></div></article><article class="project-library-card reveal-scale accent-sky" data-category="ui"><div class="library-thumb" style="background:linear-gradient(135deg, rgba(125,211,252,.18), rgba(255,255,255,.03));"><span class="library-badge">UI Component</span><span class="library-status">Demo</span><div class="thumb-mark">UI</div><div class="thumb-orb"></div></div><div class="library-body"><h3 class="library-title">Creative Login Form</h3><p class="library-copy">A creative login form with clean UI design, smooth structure, and a fully responsive layout — suitable for modern websites and web applications.</p><div class="library-tags"><span class="library-tag">HTML</span><span class="library-tag">CSS</span><span class="library-tag">UI Design</span><span class="library-tag">Responsive</span></div><div class="library-actions"><a class="library-btn primary" href="https://www.whitecoder.online/demos/simple_creative_login_form_01/" rel="noopener" target="_blank">Live Demo</a><span class="library-btn ghost">HTML / CSS / JS</span></div></div></article><article class="project-library-card reveal-scale accent-orange" data-category="platform"><div class="library-thumb" style="background:linear-gradient(135deg, rgba(232,81,10,.24), rgba(255,255,255,.04));"><span class="library-badge">Startup</span><span class="library-status">In Dev</span><div class="thumb-mark">BC</div><div class="thumb-orb"></div></div><div class="library-body"><h3 class="library-title">BroCode Creations</h3><p class="library-copy">A modern digital solutions and tech hub focused on delivering scalable technological innovations and high-quality creative development services. Currently in active development.</p><div class="library-tags"><span class="library-tag">Startup</span><span class="library-tag">Tech Hub</span><span class="library-tag">In Dev</span></div><div class="library-actions"><span class="library-btn ghost">In Development</span><span class="library-btn ghost">Private</span></div></div></article></div>
+</div></section><section class="section" id="cta">
+<div class="container">
+<div class="cta-banner reveal-scale">
+<div>
+<div class="eyebrow" style="margin-bottom:18px">Ready To Build</div>
+<h3>Want this connected directly to your current index?</h3>
+</div>
+<div>
+<p>
+              This file is structured to fit your current portfolio style. You can link it from the existing navigation as <code style="color:#fff;background:rgba(255,255,255,.06);padding:4px 8px;border-radius:8px">projects.html</code> and keep the same visual system across both pages.
+            </p>
+<div class="hero-actions" style="margin-top:20px">
+<a class="btn btn-primary" href="index.html#contact">Start a Project</a>
+<a class="btn btn-ghost" href="#featured">View Highlights</a>
+</div>
+</div>
+</div>
+</div>
+</section>
+<footer class="footer-minimal">
+<div class="footer-inner-centered">
+<a class="footer-logo" href="index.html">Oshanda.</a>
+<div class="footer-copy">Designed &amp; Built by <span>Oshanda Geethanjana</span> — Sri Lanka 2026</div>
+</div>
+</footer>
+</div>
+<script>
+    document.documentElement.classList.remove('no-js');
+    document.documentElement.classList.add('js');
+
+    const navbar = document.getElementById('navbar');
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobileMenu');
+    const mobileOverlay = document.getElementById('mobileOverlay');
+
+    function closeMobileMenu() {
+      if (hamburger) hamburger.classList.remove('open');
+      if (mobileMenu) mobileMenu.classList.remove('open');
+      if (mobileOverlay) mobileOverlay.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    if (hamburger) {
+      hamburger.addEventListener('click', () => {
+        const isOpen = mobileMenu.classList.contains('open');
+        if (isOpen) {
+          closeMobileMenu();
+        } else {
+          hamburger.classList.add('open');
+          mobileMenu.classList.add('open');
+          mobileOverlay.classList.add('open');
+          document.body.style.overflow = 'hidden';
+        }
+      });
+    }
+
+    if (mobileOverlay) mobileOverlay.addEventListener('click', closeMobileMenu);
+    document.querySelectorAll('.mobile-nav-link').forEach(link => link.addEventListener('click', closeMobileMenu));
+
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 40) navbar.classList.add('scrolled');
+      else navbar.classList.remove('scrolled');
+    });
+
+    const hasGSAP = typeof window.gsap !== 'undefined' && typeof window.ScrollTrigger !== 'undefined';
+
+    if (!hasGSAP) {
+      document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale').forEach((el) => {
+        el.style.opacity = '1';
+        el.style.transform = 'none';
+      });
+    } else {
+      gsap.registerPlugin(ScrollTrigger);
+
+      const reveal = (selector) => {
+        document.querySelectorAll(selector).forEach((el) => {
+          gsap.to(el, {
+            opacity: 1,
+            x: 0,
+            y: 0,
+            scale: 1,
+            duration: 0.9,
+            ease: 'power3.out',
+            scrollTrigger: {
+              trigger: el,
+              start: 'top 86%',
+              once: true
+            }
+          });
+        });
+      };
+
+      reveal('.reveal');
+      reveal('.reveal-left');
+      reveal('.reveal-right');
+      reveal('.reveal-scale');
+
+      gsap.from('.nav-shell', { y: -24, opacity: 0, duration: 1, ease: 'power3.out' });
+      gsap.from('.hero-title', { y: 38, opacity: 0, duration: 1, delay: 0.08, ease: 'power4.out' });
+      gsap.from('.hero-desc', { y: 30, opacity: 0, duration: 1, delay: 0.18, ease: 'power3.out' });
+      gsap.from('.hero-actions', { y: 26, opacity: 0, duration: 0.9, delay: 0.28, ease: 'power3.out' });
+      gsap.from('.hero-panel-content', { x: 24, opacity: 0, duration: 0.95, delay: 0.26, ease: 'power3.out' });
+      gsap.from('.hero-panel-tag', { y: 18, opacity: 0, duration: 0.55, delay: 0.52, stagger: 0.08, ease: 'power3.out' });
+    }
+
+    const filterChips = document.querySelectorAll('.filter-chip');
+    const devicePreview = document.getElementById('devicePreview');
+
+    const deviceTemplates = {
+      mobile: `
+        <div class="mock-phones">
+          <div class="phone"><div class="screen"><div class="screen-top"><span>08:45</span><span>Mobile UI</span></div><div class="screen-hero"></div><div class="screen-cards"><div class="screen-card"></div><div class="screen-card"></div><div class="screen-card"></div></div><div class="screen-footer"><span></span><span></span><span></span><span></span></div></div></div>
+          <div class="phone"><div class="screen"><div class="screen-top"><span>08:45</span><span>Glass UI</span></div><div class="screen-hero"></div><div class="screen-cards"><div class="screen-card"></div><div class="screen-card"></div><div class="screen-card"></div></div><div class="screen-footer"><span></span><span></span><span></span><span></span></div></div></div>
+          <div class="phone"><div class="screen"><div class="screen-top"><span>08:45</span><span>Product</span></div><div class="screen-hero"></div><div class="screen-cards"><div class="screen-card"></div><div class="screen-card"></div><div class="screen-card"></div></div><div class="screen-footer"><span></span><span></span><span></span><span></span></div></div></div>
+        </div>
+      `,
+      dashboard: `
+        <div class="mini-dashboard" style="width:min(540px,100%)">
+          <div class="mini-bars"><span style="width:82%"></span><span style="width:64%"></span><span style="width:90%"></span></div>
+          <div class="mini-tiles"><div></div><div></div><div></div></div>
+          <div class="mini-tiles"><div style="height:56px"></div><div style="height:56px"></div><div style="height:56px"></div></div>
+        </div>
+      `,
+      ai: `
+        <div class="mini-dashboard" style="width:min(500px,100%)">
+          <div class="mini-bars"><span style="width:74%"></span><span style="width:94%"></span><span style="width:58%"></span></div>
+          <div class="panel-visual" style="min-height:220px;height:auto;background:transparent;border:none;padding:0">
+            <div style="width:180px;height:180px;border-radius:50%;border:1px solid rgba(255,255,255,.1);display:grid;place-items:center;background:radial-gradient(circle, rgba(232,81,10,.18), transparent 60%)">
+              <div style="width:74px;height:74px;border-radius:50%;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12)"></div>
+            </div>
+          </div>
+        </div>
+      `
+    };
+
+    filterChips.forEach((chip) => {
+      chip.addEventListener('click', () => {
+        filterChips.forEach(c => c.classList.remove('is-active'));
+        chip.classList.add('is-active');
+        const view = chip.dataset.view;
+        if (devicePreview) {
+          devicePreview.innerHTML = deviceTemplates[view];
+        }
+      });
+    });
+
+    // Three.js background
+    const sceneCanvas = document.getElementById('scene');
+    if (sceneCanvas && window.THREE) {
+      try {
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.1, 1000);
+        camera.position.z = 20;
+
+        const renderer = new THREE.WebGLRenderer({ canvas: sceneCanvas, antialias: true, alpha: true });
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.6));
+        renderer.setSize(window.innerWidth, window.innerHeight);
+
+        const globeGroup = new THREE.Group();
+        scene.add(globeGroup);
+
+        const globeRadius = 6.2;
+        const globeMesh = new THREE.Mesh(
+          new THREE.SphereGeometry(globeRadius, 40, 40),
+          new THREE.MeshBasicMaterial({ color: 0xE8510A, wireframe: true, transparent: true, opacity: 0.14 })
+        );
+        globeGroup.add(globeMesh);
+
+        const lineMaterial = new THREE.LineBasicMaterial({ color: 0xE8510A, transparent: true, opacity: 0.20 });
+
+        function addLatitude(y) {
+          const r = Math.sqrt(Math.max(globeRadius * globeRadius - y * y, 0.001));
+          const pts = [];
+          for (let i = 0; i <= 90; i++) {
+            const a = (i / 90) * Math.PI * 2;
+            pts.push(new THREE.Vector3(Math.cos(a) * r, y, Math.sin(a) * r));
+          }
+          globeGroup.add(new THREE.LineLoop(new THREE.BufferGeometry().setFromPoints(pts), lineMaterial.clone()));
+        }
+
+        function addLongitude(rotationY) {
+          const pts = [];
+          for (let i = 0; i <= 90; i++) {
+            const a = (i / 90) * Math.PI * 2;
+            const v = new THREE.Vector3(Math.cos(a) * globeRadius, Math.sin(a) * globeRadius, 0);
+            v.applyAxisAngle(new THREE.Vector3(0, 1, 0), rotationY);
+            pts.push(v);
+          }
+          globeGroup.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints(pts), lineMaterial.clone()));
+        }
+
+        [-4.6, -3.0, -1.5, 0, 1.5, 3.0, 4.6].forEach(addLatitude);
+        for (let i = 0; i < 12; i++) addLongitude((Math.PI / 12) * i);
+
+        const particlesCount = 120;
+        const pos = new Float32Array(particlesCount * 3);
+        for (let i = 0; i < particlesCount; i++) {
+          pos[i * 3] = (Math.random() - 0.5) * 46;
+          pos[i * 3 + 1] = (Math.random() - 0.5) * 34;
+          pos[i * 3 + 2] = (Math.random() - 0.5) * 18;
+        }
+        const pGeo = new THREE.BufferGeometry();
+        pGeo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+        const points = new THREE.Points(pGeo, new THREE.PointsMaterial({ color: 0xffffff, size: 0.08, transparent: true, opacity: 0.32 }));
+        scene.add(points);
+
+        let mouseX = 0;
+        let mouseY = 0;
+
+        function updateGlobePlacement() {
+          const isMobile = window.innerWidth < 768;
+          globeGroup.scale.setScalar(isMobile ? 0.95 : 1.75);
+          globeGroup.position.set(isMobile ? 5.2 : 15.4, isMobile ? 2.8 : 2.2, -8);
+          globeGroup.rotation.z = THREE.MathUtils.degToRad(16);
+          camera.position.z = isMobile ? 23 : 20;
+        }
+
+        updateGlobePlacement();
+
+        window.addEventListener('mousemove', (e) => {
+          mouseX = (e.clientX / window.innerWidth - 0.5) * 2;
+          mouseY = (e.clientY / window.innerHeight - 0.5) * 2;
+        });
+
+        function animate() {
+          requestAnimationFrame(animate);
+          globeGroup.rotation.y += 0.002;
+          globeGroup.rotation.x = THREE.MathUtils.lerp(globeGroup.rotation.x, (-mouseY * 0.12) + THREE.MathUtils.degToRad(10), 0.03);
+          const targetX = (window.innerWidth < 768 ? 5.2 : 15.4) + mouseX * 0.28;
+          const targetY = (window.innerWidth < 768 ? 2.8 : 2.2) + mouseY * 0.2;
+          globeGroup.position.x = THREE.MathUtils.lerp(globeGroup.position.x, targetX, 0.02);
+          globeGroup.position.y = THREE.MathUtils.lerp(globeGroup.position.y, targetY, 0.02);
+          points.rotation.y += 0.00035;
+          renderer.render(scene, camera);
+        }
+
+        animate();
+
+        window.addEventListener('resize', () => {
+          camera.aspect = window.innerWidth / window.innerHeight;
+          camera.updateProjectionMatrix();
+          renderer.setSize(window.innerWidth, window.innerHeight);
+          updateGlobePlacement();
+        });
+      } catch (err) {
+        sceneCanvas.style.display = 'none';
+      }
+    }
+
+    const libraryFilters = document.querySelectorAll('.library-filter');
+    const libraryCards = document.querySelectorAll('.project-library-card');
+    libraryFilters.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        libraryFilters.forEach((b) => b.classList.remove('is-active'));
+        btn.classList.add('is-active');
+        const filter = btn.dataset.filter;
+        libraryCards.forEach((card) => {
+          const show = filter === 'all' || card.dataset.category === filter;
+          if (show) {
+            card.classList.remove('is-hidden');
+            if (window.gsap) gsap.fromTo(card, {opacity:.5, y:18}, {opacity:1, y:0, duration:.45, ease:'power3.out'});
+          } else {
+            card.classList.add('is-hidden');
+          }
+        });
+      });
+    });
+</script>
+</body>
+</html>

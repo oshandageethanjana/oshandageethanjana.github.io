@@ -1,0 +1,1412 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gimshan | UI/UX Designer & Full-Stack Developer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'brand': '#e85d26',
+                        'brand-dark': '#c44a1a',
+                        'brand-light': '#ff8c5a',
+                        'surface': '#0a0a0a',
+                        'surface-light': '#1a1a1a',
+                        'surface-mid': '#141414',
+                        'glass': 'rgba(255,255,255,0.04)',
+                        'glass-border': 'rgba(255,255,255,0.08)',
+                        'glass-hover': 'rgba(255,255,255,0.08)',
+                    },
+                    fontFamily: {
+                        'display': ['Space Grotesk', 'sans-serif'],
+                        'body': ['Inter', 'sans-serif'],
+                        'signature': ['Caveat', 'cursive'],
+                    },
+                }
+            }
+        }
+    </script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            background-color: #0a0a0a;
+            color: #ffffff;
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+        ::selection {
+            background: #e85d26;
+            color: #fff;
+        }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #0a0a0a; }
+        ::-webkit-scrollbar-thumb { background: #333; border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: #e85d26; }
+
+        /* Glassmorphism Card */
+        .glass-card {
+            background: rgba(255,255,255,0.03);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 20px;
+        }
+        .glass-card-strong {
+            background: rgba(255,255,255,0.05);
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 24px;
+        }
+
+        /* Orange Glow Background */
+        .glow-bg {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+        .glow-orange {
+            position: absolute;
+            width: 600px; height: 600px;
+            background: radial-gradient(circle, rgba(232,93,38,0.15) 0%, transparent 70%);
+            top: -100px; right: -200px;
+            border-radius: 50%;
+            filter: blur(60px);
+            animation: glowPulse 8s ease-in-out infinite;
+        }
+        .glow-orange-2 {
+            position: absolute;
+            width: 400px; height: 400px;
+            background: radial-gradient(circle, rgba(232,93,38,0.08) 0%, transparent 70%);
+            bottom: 10%; left: -100px;
+            border-radius: 50%;
+            filter: blur(40px);
+            animation: glowPulse 10s ease-in-out infinite reverse;
+        }
+        @keyframes glowPulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.6; transform: scale(1.1); }
+        }
+
+        /* Floating Icons */
+        .float-icon {
+            position: absolute;
+            width: 40px; height: 40px;
+            display: flex; align-items: center; justify-content: center;
+            border-radius: 12px;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.06);
+            transition: all 0.3s ease;
+            z-index: 2;
+        }
+        .float-icon:hover {
+            background: rgba(255,255,255,0.08);
+            transform: scale(1.2);
+            border-color: rgba(232,93,38,0.3);
+        }
+        .float-icon svg, .float-icon img {
+            width: 22px; height: 22px;
+        }
+
+        /* Orbit Rings */
+        .orbit-ring {
+            position: absolute;
+            border: 1px solid rgba(255,255,255,0.04);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        /* Code Snippet Card */
+        .code-snippet {
+            background: rgba(0,0,0,0.7);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 12px;
+            font-family: 'Courier New', monospace;
+            font-size: 10px;
+            color: #a0a0a0;
+            padding: 12px;
+            line-height: 1.5;
+        }
+
+        /* Lightning decorative element */
+        .lightning-deco {
+            position: absolute;
+            opacity: 0.4;
+            filter: blur(1px);
+        }
+
+        /* Nav active state */
+        .nav-link {
+            position: relative;
+            transition: color 0.3s ease;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -4px; left: 50%;
+            width: 0; height: 2px;
+            background: #e85d26;
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+            border-radius: 1px;
+        }
+        .nav-link.active, .nav-link:hover {
+            color: #e85d26;
+        }
+        .nav-link.active::after, .nav-link:hover::after {
+            width: 100%;
+        }
+
+        /* Phone mockup styling */
+        .phone-mockup {
+            border-radius: 28px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+            transition: all 0.4s ease;
+            position: relative;
+        }
+        .phone-mockup:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 30px 80px rgba(232,93,38,0.15);
+        }
+        .phone-mockup img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Project card hover */
+        .project-card {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .project-card:hover {
+            transform: translateY(-4px);
+        }
+        .project-card:hover .project-card-inner {
+            border-color: rgba(232,93,38,0.2);
+        }
+
+        /* Tag pills */
+        .tag-pill {
+            display: inline-flex;
+            align-items: center;
+            padding: 4px 12px;
+            border-radius: 20px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.08);
+            font-size: 12px;
+            color: #a0a0a0;
+            transition: all 0.3s ease;
+        }
+        .tag-pill:hover {
+            border-color: rgba(232,93,38,0.3);
+            color: #fff;
+        }
+
+        /* Mobile menu */
+        .mobile-menu {
+            transform: translateX(100%);
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .mobile-menu.open {
+            transform: translateX(0);
+        }
+
+        /* Gradient text */
+        .gradient-text {
+            background: linear-gradient(135deg, #e85d26, #ff8c5a);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Reveal animations base */
+        .reveal-up {
+            opacity: 0;
+            transform: translateY(40px);
+        }
+        .reveal-left {
+            opacity: 0;
+            transform: translateX(-40px);
+        }
+        .reveal-right {
+            opacity: 0;
+            transform: translateX(40px);
+        }
+        .reveal-scale {
+            opacity: 0;
+            transform: scale(0.9);
+        }
+
+        /* Orbit animation for icons on design showcase */
+        @keyframes orbitFloat {
+            0% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-8px) rotate(2deg); }
+            100% { transform: translateY(0px) rotate(0deg); }
+        }
+        .orbit-item {
+            animation: orbitFloat 6s ease-in-out infinite;
+        }
+        .orbit-item:nth-child(2) { animation-delay: -1s; animation-duration: 7s; }
+        .orbit-item:nth-child(3) { animation-delay: -2s; animation-duration: 5.5s; }
+        .orbit-item:nth-child(4) { animation-delay: -3s; animation-duration: 6.5s; }
+        .orbit-item:nth-child(5) { animation-delay: -0.5s; animation-duration: 7.5s; }
+        .orbit-item:nth-child(6) { animation-delay: -1.5s; animation-duration: 6s; }
+        .orbit-item:nth-child(7) { animation-delay: -2.5s; animation-duration: 5s; }
+        .orbit-item:nth-child(8) { animation-delay: -3.5s; animation-duration: 8s; }
+
+        /* QR Code styling */
+        .qr-code-box {
+            background: #fff;
+            border-radius: 16px;
+            padding: 8px;
+            display: inline-block;
+        }
+
+        /* Smooth section transitions */
+        section {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Hamburger animation */
+        .hamburger-line {
+            transition: all 0.3s ease;
+        }
+        .hamburger.active .hamburger-line:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+        .hamburger.active .hamburger-line:nth-child(2) {
+            opacity: 0;
+        }
+        .hamburger.active .hamburger-line:nth-child(3) {
+            transform: rotate(-45deg) translate(5px, -5px);
+        }
+
+        /* Portfolio image placeholder */
+        .portfolio-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+    </style>
+</head>
+<body>
+    <!-- Background Glow -->
+    <div class="glow-bg">
+        <div class="glow-orange"></div>
+        <div class="glow-orange-2"></div>
+    </div>
+
+    <!-- Navbar -->
+    <nav id="navbar" class="fixed top-0 left-0 w-full z-50 transition-all duration-500">
+        <div class="max-w-7xl mx-auto px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <!-- Logo -->
+                <a href="#hero" class="font-signature text-3xl text-white hover:text-brand transition-colors duration-300" id="navLogo">Shan.</a>
+
+                <!-- Desktop Nav -->
+                <div class="hidden md:flex items-center gap-1">
+                    <div class="flex items-center gap-1 px-2 py-1.5 rounded-full border border-white/10 bg-white/[0.02]">
+                        <a href="#hero" class="nav-link active px-4 py-1.5 text-sm font-medium text-white/60 rounded-full transition-all duration-300" data-section="hero">Home</a>
+                        <a href="#projects-dev" class="nav-link px-4 py-1.5 text-sm font-medium text-white/60 rounded-full transition-all duration-300" data-section="projects-dev">Projects</a>
+                        <a href="#about" class="nav-link px-4 py-1.5 text-sm font-medium text-white/60 rounded-full transition-all duration-300" data-section="about">About Me</a>
+                        <a href="#contact" class="nav-link px-4 py-1.5 text-sm font-medium text-white/60 rounded-full transition-all duration-300" data-section="contact">Contact</a>
+                    </div>
+                </div>
+
+                <!-- CTA + Mobile Toggle -->
+                <div class="flex items-center gap-4">
+                    <a href="#" class="hidden md:flex items-center gap-2 px-5 py-2.5 rounded-full border border-brand/30 bg-brand/10 text-brand hover:bg-brand/20 hover:border-brand/50 transition-all duration-300 text-sm font-medium">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                        <span>Download Resume</span>
+                    </a>
+                    <button id="menuToggle" class="hamburger md:hidden flex flex-col gap-1.5 p-2" aria-label="Toggle menu">
+                        <span class="hamburger-line w-6 h-0.5 bg-white rounded-full"></span>
+                        <span class="hamburger-line w-6 h-0.5 bg-white rounded-full"></span>
+                        <span class="hamburger-line w-6 h-0.5 bg-white rounded-full"></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div id="mobileMenu" class="mobile-menu fixed inset-0 z-50 bg-surface/95 backdrop-blur-xl md:hidden">
+        <div class="flex flex-col items-center justify-center h-full gap-8">
+            <a href="#hero" class="mobile-nav-link text-3xl font-display font-semibold text-white/60 hover:text-brand transition-colors" data-section="hero">Home</a>
+            <a href="#projects-dev" class="mobile-nav-link text-3xl font-display font-semibold text-white/60 hover:text-brand transition-colors" data-section="projects-dev">Projects</a>
+            <a href="#about" class="mobile-nav-link text-3xl font-display font-semibold text-white/60 hover:text-brand transition-colors" data-section="about">About Me</a>
+            <a href="#contact" class="mobile-nav-link text-3xl font-display font-semibold text-white/60 hover:text-brand transition-colors" data-section="contact">Contact</a>
+            <a href="#" class="flex items-center gap-2 px-8 py-3 rounded-full border border-brand/30 bg-brand/10 text-brand text-lg font-medium mt-4">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                Download Resume
+            </a>
+        </div>
+    </div>
+
+    <!-- ==================== HERO SECTION ==================== -->
+    <section id="hero" class="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
+        <!-- Orbit Rings -->
+        <div class="orbit-ring" id="orbit1" style="width: 500px; height: 500px; top: 50%; left: 50%; transform: translate(-50%, -50%);"></div>
+        <div class="orbit-ring" id="orbit2" style="width: 650px; height: 650px; top: 50%; left: 50%; transform: translate(-50%, -50%);"></div>
+        <div class="orbit-ring" id="orbit3" style="width: 800px; height: 800px; top: 50%; left: 50%; transform: translate(-50%, -50%);"></div>
+
+        <!-- Floating Tech Icons - Left (Development) -->
+        <div id="devIcons" class="absolute left-0 top-0 w-full h-full pointer-events-none">
+            <!-- Development Icons -->
+            <div class="float-icon orbit-item" style="position:absolute; top:18%; left:12%; animation-delay: -0.5s;">
+                <svg viewBox="0 0 24 24" width="24" height="24"><rect x="2" y="2" width="20" height="20" rx="2" fill="#f7df1e"/><path d="M7 15l2.5-4.5M17 9l-2.5 4.5M12 9v6M9 12h6" stroke="#000" stroke-width="1.5" fill="none"/></svg>
+            </div>
+            <div class="float-icon orbit-item" style="position:absolute; top:28%; left:8%; animation-delay: -1s;">
+                <svg viewBox="0 0 24 24" width="24" height="24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z" fill="#3178c6"/><text x="12" y="16" text-anchor="middle" font-size="10" font-weight="bold" fill="#fff">TS</text></svg>
+            </div>
+            <div class="float-icon orbit-item" style="position:absolute; top:38%; left:5%; animation-delay: -1.5s;">
+                <svg viewBox="0 0 24 24" width="24" height="24"><path d="M12 2L2 7l10 5 10-5-10-5z" fill="#61dafb"/><path d="M2 17l10 5 10-5" stroke="#61dafb" stroke-width="2" fill="none"/><path d="M2 12l10 5 10-5" stroke="#61dafb" stroke-width="2" fill="none"/></svg>
+            </div>
+            <div class="float-icon orbit-item" style="position:absolute; top:50%; left:3%; animation-delay: -2s;">
+                <svg viewBox="0 0 24 24" width="24" height="24"><path d="M12 3C7 3 3 7 3 12s4 9 9 9 9-4 9-9-4-9-9-9z" fill="#68a063"/><path d="M8 12c0-2.2 1.8-4 4-4s4 1.8 4 4-1.8 4-4 4" stroke="#fff" stroke-width="1.5" fill="none"/><circle cx="12" cy="12" r="1.5" fill="#fff"/></svg>
+            </div>
+            <div class="float-icon orbit-item" style="position:absolute; top:62%; left:8%; animation-delay: -2.5s;">
+                <svg viewBox="0 0 24 24" width="24" height="24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z" fill="#336791"/><text x="12" y="15" text-anchor="middle" font-size="7" font-weight="bold" fill="#fff">SQL</text></svg>
+            </div>
+            <div class="float-icon orbit-item" style="position:absolute; top:42%; left:18%; animation-delay: -0.8s;">
+                <svg viewBox="0 0 24 24" width="24" height="24"><path d="M12 2l9 5v10l-9 5-9-5V7l9-5z" fill="#00d8ff"/><path d="M12 2v20M3 7l18 10M21 7L3 17" stroke="#fff" stroke-width="0.5" opacity="0.5"/></svg>
+            </div>
+            <div class="float-icon orbit-item" style="position:absolute; top:25%; left:22%; animation-delay: -1.2s;">
+                <svg viewBox="0 0 24 24" width="24" height="24"><path d="M12 2L2 7v10l10 5 10-5V7L12 2z" fill="#f58220"/><text x="12" y="14" text-anchor="middle" font-size="8" font-weight="bold" fill="#fff">Node</text></svg>
+            </div>
+            <div class="float-icon orbit-item" style="position:absolute; top:55%; left:15%; animation-delay: -1.8s;">
+                <svg viewBox="0 0 24 24" width="24" height="24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z" fill="#2b5797"/><path d="M7 8h4v8H7zM13 8h4v8h-4z" fill="#fff" opacity="0.8"/></svg>
+            </div>
+            <div class="float-icon orbit-item" style="position:absolute; top:70%; left:20%; animation-delay: -2.2s;">
+                <svg viewBox="0 0 24 24" width="24" height="24"><path d="M4 4h7l5 8-5 8H4V4z" fill="#ff9900"/><path d="M14 4h7l-5 8 5 8h-7l5-8-5-8z" fill="#77b255"/></svg>
+            </div>
+            <div class="float-icon orbit-item" style="position:absolute; top:32%; left:14%; animation-delay: -0.3s;">
+                <svg viewBox="0 0 24 24" width="24" height="24"><path d="M12 2L2 12h4v8h4v-6h4v6h4v-8h4L12 2z" fill="#02569b"/></svg>
+            </div>
+        </div>
+
+        <!-- Floating Design Icons - Right -->
+        <div id="designIcons" class="absolute right-0 top-0 w-full h-full pointer-events-none">
+            <div class="float-icon orbit-item" style="position:absolute; top:15%; right:15%; animation-delay: -0.5s;">
+                <svg viewBox="0 0 24 24" width="24" height="24"><circle cx="12" cy="12" r="10" fill="#e535ab"/><path d="M9 15c0-2 1.5-3 3-3s3 1 3 3" stroke="#fff" stroke-width="1.5" fill="none"/><circle cx="12" cy="9" r="1" fill="#fff"/></svg>
+            </div>
+            <div class="float-icon orbit-item" style="position:absolute; top:22%; right:10%; animation-delay: -1s;">
+                <svg viewBox="0 0 24 24" width="24" height="24"><rect width="24" height="24" rx="4" fill="#31a8ff"/><text x="12" y="16" text-anchor="middle" font-size="10" font-weight="bold" fill="#fff">Ai</text></svg>
+            </div>
+            <div class="float-icon orbit-item" style="position:absolute; top:35%; right:5%; animation-delay: -1.5s;">
+                <svg viewBox="0 0 24 24" width="24" height="24"><circle cx="12" cy="12" r="10" fill="#1e1e1e"/><circle cx="8" cy="8" r="3" fill="#ff4500"/><circle cx="16" cy="8" r="3" fill="#0984e3"/><circle cx="8" cy="16" r="3" fill="#00b894"/><circle cx="16" cy="16" r="3" fill="#fdcb6e"/></svg>
+            </div>
+            <div class="float-icon orbit-item" style="position:absolute; top:48%; right:8%; animation-delay: -2s;">
+                <svg viewBox="0 0 24 24" width="24" height="24"><circle cx="12" cy="8" r="3" fill="#f24e1e"/><circle cx="16" cy="12" r="3" fill="#ff7262"/><circle cx="8" cy="12" r="3" fill="#a259ff"/><circle cx="12" cy="16" r="3" fill="#1abcfe"/></svg>
+            </div>
+            <div class="float-icon orbit-item" style="position:absolute; top:58%; right:12%; animation-delay: -2.5s;">
+                <svg viewBox="0 0 24 24" width="24" height="24"><circle cx="12" cy="12" r="10" fill="#ff7c00"/><circle cx="12" cy="12" r="4" fill="#fff"/></svg>
+            </div>
+            <div class="float-icon orbit-item" style="position:absolute; top:68%; right:6%; animation-delay: -0.8s;">
+                <svg viewBox="0 0 24 24" width="24" height="24"><rect width="24" height="24" rx="12" fill="#6c5ce7"/><text x="12" y="15" text-anchor="middle" font-size="7" font-weight="bold" fill="#fff">Canva</text></svg>
+            </div>
+            <div class="float-icon orbit-item" style="position:absolute; top:40%; right:18%; animation-delay: -1.2s;">
+                <svg viewBox="0 0 24 24" width="24" height="24"><path d="M12 2L2 19h20L12 2z" fill="#1e1e1e"/><circle cx="12" cy="14" r="2" fill="#ff6900"/></svg>
+            </div>
+            <div class="float-icon orbit-item" style="position:absolute; top:28%; right:22%; animation-delay: -1.8s;">
+                <svg viewBox="0 0 24 24" width="24" height="24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z" fill="#6c3ce0"/><path d="M12 6v12M6 12h12" stroke="#fff" stroke-width="2" opacity="0.6"/></svg>
+            </div>
+            <div class="float-icon orbit-item" style="position:absolute; top:75%; right:18%; animation-delay: -2.2s;">
+                <svg viewBox="0 0 24 24" width="24" height="24"><path d="M2 12l4-8 4 16 4-16 4 8 4-4" stroke="#00b4d8" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <div class="float-icon orbit-item" style="position:absolute; top:52%; right:20%; animation-delay: -0.3s;">
+                <svg viewBox="0 0 24 24" width="24" height="24"><path d="M4 4h16v16H4z" fill="#1e1e1e"/><path d="M8 8h8M8 12h8M8 16h5" stroke="#a78bfa" stroke-width="1.5" stroke-linecap="round"/></svg>
+            </div>
+        </div>
+
+        <!-- Hero Content -->
+        <div class="relative z-10 flex flex-col items-center text-center px-6">
+            <!-- Portrait -->
+            <div id="portraitContainer" class="relative mb-8">
+                <div class="w-64 h-64 md:w-80 md:h-80 lg:w-96 lg:h-96 rounded-full overflow-hidden border-2 border-white/10 shadow-2xl shadow-brand/10" style="mask-image: linear-gradient(to bottom, black 70%, transparent 100%); -webkit-mask-image: linear-gradient(to bottom, black 70%, transparent 100%);">
+                    <!-- Portrait placeholder: gradient avatar -->
+                    <div id="heroPortrait" class="w-full h-full flex items-end justify-center" style="background: linear-gradient(160deg, #1a1a2e 0%, #2d1b4e 40%, #e85d26 100%);">
+                        <svg viewBox="0 0 200 220" width="200" height="220" xmlns="http://www.w3.org/2000/svg">
+                            <ellipse cx="100" cy="90" rx="45" ry="48" fill="rgba(255,255,255,0.15)"/>
+                            <ellipse cx="100" cy="200" rx="80" ry="60" fill="rgba(255,255,255,0.10)"/>
+                        </svg>
+                    </div>
+                </div>
+                <!-- Glow behind portrait -->
+                <div class="absolute inset-0 rounded-full bg-brand/20 blur-3xl -z-10 scale-110"></div>
+            </div>
+
+            <!-- Category Labels -->
+            <div class="flex items-center justify-between w-full max-w-lg mb-6">
+                <div class="flex items-center gap-2 text-white/40 text-sm">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+                    <span>Development</span>
+                </div>
+                <div class="flex items-center gap-2 text-white/40 text-sm">
+                    <span>Design</span>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>
+                </div>
+            </div>
+
+            <!-- Name & Title -->
+            <h1 class="reveal-up font-display font-bold text-5xl md:text-7xl lg:text-8xl leading-none tracking-tight mb-4">
+                <span class="gradient-text">Gimshan</span>
+            </h1>
+            <p class="reveal-up text-white/50 text-base md:text-lg max-w-sm leading-relaxed mb-8">
+                UI/UX Designer &amp; Full-Stack Developer crafting seamless digital experiences.
+            </p>
+            <div class="reveal-up flex items-center gap-4">
+                <a href="#projects-dev" class="px-6 py-3 rounded-full bg-brand hover:bg-brand-dark text-white font-semibold text-sm transition-all duration-300 hover:shadow-lg hover:shadow-brand/25">
+                    View Projects
+                </a>
+                <a href="#contact" class="px-6 py-3 rounded-full border border-white/10 hover:border-brand/40 text-white/70 hover:text-white font-medium text-sm transition-all duration-300">
+                    Get in Touch
+                </a>
+            </div>
+        </div>
+
+        <!-- Scroll Indicator -->
+        <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-40">
+            <span class="text-xs tracking-widest uppercase">Scroll</span>
+            <div class="w-px h-8 bg-gradient-to-b from-brand to-transparent animate-pulse"></div>
+        </div>
+    </section>
+
+    <!-- ==================== PROJECTS - DEVELOPMENT SHOWCASE ==================== -->
+    <section id="projects-dev" class="relative min-h-screen flex items-center py-24 px-6">
+        <div class="max-w-7xl mx-auto w-full">
+            <!-- Section Header -->
+            <div class="text-center mb-20">
+                <h2 class="reveal-up text-4xl md:text-6xl lg:text-7xl font-display font-bold leading-tight">
+                    <span class="gradient-text">Gimshan:</span><br>
+                    <span class="text-white">FULL-STACK</span><br>
+                    <span class="text-white">DEVELOPMENT</span><br>
+                    <span class="text-white">SHOWCASE</span>
+                </h2>
+                <!-- Orbit rings for this section -->
+                <div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 md:w-[500px] md:h-[500px] border border-white/[0.03] rounded-full pointer-events-none"></div>
+                <div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] md:w-[600px] md:h-[600px] border border-white/[0.03] rounded-full pointer-events-none"></div>
+            </div>
+
+            <!-- Project Cards Grid -->
+            <div class="grid md:grid-cols-2 gap-8 mb-16">
+                <!-- Project 1: Meat Track -->
+                <div class="project-card reveal-up" style="--delay: 0">
+                    <div class="project-card-inner glass-card-strong p-6 relative overflow-hidden">
+                        <!-- Phone Mockups -->
+                        <div class="flex items-end justify-center gap-4 mb-6">
+                            <div class="phone-mockup w-28 h-56 md:w-32 md:h-64 flex-shrink-0">
+                                <div class="w-full h-full flex flex-col" style="background: linear-gradient(160deg,#1a0a00 0%,#3d1200 40%,#7c2d00 100%);">
+                                    <div class="px-3 pt-4 pb-2 border-b border-white/10">
+                                        <div class="text-[9px] font-bold text-orange-400 tracking-widest">MEAT TRACK</div>
+                                        <div class="text-[7px] text-white/40 mt-0.5">Live Lorry Tracker</div>
+                                    </div>
+                                    <div class="flex-1 p-3 space-y-2">
+                                        <div class="h-2 bg-orange-500/30 rounded-full w-3/4"></div>
+                                        <div class="h-1.5 bg-white/10 rounded-full w-full"></div>
+                                        <div class="h-1.5 bg-white/10 rounded-full w-5/6"></div>
+                                        <div class="mt-3 h-16 rounded-lg bg-white/5 flex items-center justify-center">
+                                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#e85d26" stroke-width="1.5"><path d="M1 3h15v13H1z"/><path d="M16 8h4l3 3v5h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+                                        </div>
+                                        <div class="h-1.5 bg-white/10 rounded-full w-2/3"></div>
+                                        <div class="h-1.5 bg-orange-400/20 rounded-full w-4/5"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="phone-mockup w-24 h-48 md:w-28 md:h-56 flex-shrink-0">
+                                <div class="w-full h-full bg-gradient-to-b from-red-600/20 to-red-900/40 flex items-center justify-center">
+                                    <div class="text-center">
+                                        <div class="text-xs font-bold text-white/80 mb-1">MEAT TRACK</div>
+                                        <div class="text-[8px] text-white/40">Live Lorry Stack</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Code Snippet -->
+                        <div class="code-snippet mb-4">
+                            <span class="text-purple-400">class</span> <span class="text-yellow-300">MeatTrack</span> {<br>
+                            &nbsp;&nbsp;<span class="text-blue-400">final</span> <span class="text-cyan-300">FirebaseAuth</span> auth;<br>
+                            &nbsp;&nbsp;<span class="text-blue-400">final</span> <span class="text-cyan-300">Firestore</span> db;<br>
+                            &nbsp;&nbsp;<span class="text-purple-400">Future</span>&lt;<span class="text-green-300">void</span>&gt; <span class="text-yellow-300">syncData</span>() {<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;<span class="text-purple-400">await</span> db.collection(<span class="text-green-300">'trucks'</span>)<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.where(<span class="text-green-300">'status'</span>, <span class="text-green-300">'=='</span>, <span class="text-green-300">'active'</span>)<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.snapshots().listen(<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(snapshot) => updateUI(snapshot)<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;);<br>
+                            &nbsp;&nbsp;}<br>
+                            }
+                        </div>
+                        <!-- Project Info -->
+                        <h3 class="text-xl font-display font-semibold mb-2">Project 1: Meat Track</h3>
+                        <p class="text-white/50 text-sm mb-4">Flutter / Firebase</p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="tag-pill">#Flutter</span>
+                            <span class="tag-pill">#Firebase</span>
+                            <span class="tag-pill">#Dart</span>
+                            <span class="tag-pill">#Real-Time Data</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 2: Fitnexa Gym App -->
+                <div class="project-card reveal-up" style="--delay: 0.15">
+                    <div class="project-card-inner glass-card-strong p-6 relative overflow-hidden">
+                        <!-- Phone Mockups -->
+                        <div class="flex items-end justify-center gap-4 mb-6">
+                            <div class="phone-mockup w-28 h-56 md:w-32 md:h-64 flex-shrink-0">
+                                <div class="w-full h-full flex flex-col" style="background: linear-gradient(160deg,#001a0a 0%,#003d18 40%,#006b2c 100%);">
+                                    <div class="px-3 pt-4 pb-2 border-b border-white/10">
+                                        <div class="text-[9px] font-bold text-green-400 tracking-widest">FITNEXA</div>
+                                        <div class="text-[7px] text-white/40 mt-0.5">Gym Membership</div>
+                                    </div>
+                                    <div class="flex-1 p-3 space-y-2">
+                                        <div class="h-2 bg-green-500/40 rounded-full w-2/3"></div>
+                                        <div class="h-1.5 bg-white/10 rounded-full w-full"></div>
+                                        <div class="mt-2 h-16 rounded-lg bg-white/5 flex items-center justify-center">
+                                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#4ade80" stroke-width="1.5"><path d="M18 8h1a4 4 0 010 8h-1"/><path d="M2 8h16v9a4 4 0 01-4 4H6a4 4 0 01-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg>
+                                        </div>
+                                        <div class="h-1.5 bg-white/10 rounded-full w-4/5"></div>
+                                        <div class="h-1.5 bg-green-400/20 rounded-full w-3/4"></div>
+                                        <div class="h-1.5 bg-white/10 rounded-full w-1/2"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="phone-mockup w-24 h-48 md:w-28 md:h-56 flex-shrink-0">
+                                <div class="w-full h-full bg-gradient-to-b from-green-600/20 to-green-900/40 flex items-center justify-center">
+                                    <div class="text-center p-2">
+                                        <div class="w-10 h-10 rounded-lg bg-green-500/30 mx-auto mb-2 flex items-center justify-center">
+                                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#4ade80" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="1" width="10" height="10" rx="1"/><rect x="13" y="1" width="10" height="10" rx="1"/><rect x="1" y="13" width="10" height="10" rx="1"/><rect x="13" y="13" width="10" height="10" rx="1"/></svg>
+                                        </div>
+                                        <div class="text-[8px] text-white/40">Scan Gym QR code</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Code Snippet -->
+                        <div class="code-snippet mb-4">
+                            <span class="text-purple-400">class</span> <span class="text-yellow-300">WorkoutScreen</span> <span class="text-purple-400">extends</span> <span class="text-cyan-300">StatefulWidget</span> {<br>
+                            &nbsp;&nbsp;<span class="text-blue-400">final</span> <span class="text-cyan-300">String</span> workoutId;<br>
+                            &nbsp;&nbsp;<span class="text-purple-400">StreamBuilder</span>&lt;<span class="text-cyan-300">Workout</span>&gt; _buildStream() {<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;<span class="text-purple-400">return</span> <span class="text-cyan-300">StreamBuilder</span>(<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;stream: <span class="text-cyan-300">FirebaseFirestore</span>.instance<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.collection(<span class="text-green-300">'workouts'</span>)<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.doc(workoutId)<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.snapshots(),<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;);<br>
+                            &nbsp;&nbsp;}<br>
+                            }
+                        </div>
+                        <!-- Project Info -->
+                        <h3 class="text-xl font-display font-semibold mb-2">Project 2: Fitnexa Gym App</h3>
+                        <p class="text-white/50 text-sm mb-4">Flutter / Firebase</p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="tag-pill">#Flutter</span>
+                            <span class="tag-pill">#Firebase</span>
+                            <span class="tag-pill">#Dart</span>
+                            <span class="tag-pill">#Real-Time Data</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Supporting Phrase -->
+            <div class="text-center">
+                <div class="reveal-up inline-block px-8 py-3 glass-card">
+                    <span class="text-lg md:text-xl font-display font-semibold tracking-wider text-white/80">CODE WITH PURPOSE</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== PROJECTS - UI/UX DESIGN SHOWCASE ==================== -->
+    <section id="projects-design" class="relative min-h-screen flex items-center py-24 px-6 overflow-hidden">
+        <div class="max-w-7xl mx-auto w-full">
+            <!-- Section Header -->
+            <div class="text-center mb-20 relative">
+                <h2 class="reveal-up text-4xl md:text-6xl lg:text-7xl font-display font-bold leading-tight">
+                    <span class="gradient-text">Gimshan:</span><br>
+                    <span class="text-white">UI/UX DESIGN</span><br>
+                    <span class="text-white">SHOWCASE</span>
+                </h2>
+            </div>
+
+            <!-- Design Project Cards -->
+            <div class="grid md:grid-cols-3 gap-6 mb-16">
+                <!-- Card 1: Fitnexa Gym App -->
+                <div class="project-card reveal-up" style="--delay: 0">
+                    <div class="project-card-inner glass-card-strong p-5 text-center">
+                        <div class="phone-mockup w-full h-64 mb-5 mx-auto flex flex-col overflow-hidden" style="background: linear-gradient(160deg,#001a0a 0%,#003d18 50%,#006b2c 100%);">
+                            <div class="px-4 pt-4 pb-2 border-b border-white/10 flex items-center justify-between">
+                                <div>
+                                    <div class="text-[10px] font-bold text-green-400 tracking-widest">FITNEXA</div>
+                                    <div class="text-[8px] text-white/40">Gym Dashboard</div>
+                                </div>
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#4ade80" stroke-width="2"><path d="M18 8h1a4 4 0 010 8h-1"/><path d="M2 8h16v9a4 4 0 01-4 4H6a4 4 0 01-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg>
+                            </div>
+                            <div class="flex-1 p-4 space-y-3">
+                                <div class="h-2 bg-green-500/40 rounded-full w-3/4"></div>
+                                <div class="h-1.5 bg-white/10 rounded-full w-full"></div>
+                                <div class="h-20 rounded-xl bg-white/5 flex items-center justify-center mt-2">
+                                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#4ade80" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                                </div>
+                                <div class="h-1.5 bg-green-400/30 rounded-full w-2/3"></div>
+                                <div class="h-1.5 bg-white/10 rounded-full w-5/6"></div>
+                            </div>
+                        </div>
+                        <h3 class="text-lg font-display font-semibold mb-4">Fitnexa Gym App</h3>
+                        <div class="flex items-center justify-center gap-3 flex-wrap">
+                            <div class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/5 text-xs">
+                                <svg width="14" height="14" viewBox="0 0 24 24"><circle cx="8" cy="8" r="3" fill="#f24e1e"/><circle cx="16" cy="8" r="3" fill="#ff7262"/><circle cx="8" cy="16" r="3" fill="#a259ff"/><circle cx="16" cy="16" r="3" fill="#1abcfe"/></svg>
+                                <span>Figma</span>
+                            </div>
+                            <div class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/5 text-xs">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                                <span>User Research</span>
+                            </div>
+                            <div class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/5 text-xs">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+                                <span>Prototype</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 2: Movie Ticket Booking -->
+                <div class="project-card reveal-up" style="--delay: 0.1">
+                    <div class="project-card-inner glass-card-strong p-5 text-center">
+                        <div class="phone-mockup w-full h-64 mb-5 mx-auto flex flex-col overflow-hidden" style="background: linear-gradient(160deg,#0a0018 0%,#1a003d 50%,#4a007c 100%);">
+                            <div class="px-4 pt-4 pb-2 border-b border-white/10 flex items-center justify-between">
+                                <div>
+                                    <div class="text-[10px] font-bold text-purple-400 tracking-widest">CINEMIX</div>
+                                    <div class="text-[8px] text-white/40">Movie Tickets</div>
+                                </div>
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#c084fc" stroke-width="2"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/></svg>
+                            </div>
+                            <div class="flex-1 p-4 space-y-3">
+                                <div class="h-2 bg-purple-500/40 rounded-full w-2/3"></div>
+                                <div class="h-20 rounded-xl bg-white/5 flex items-center justify-center mt-2" style="background:linear-gradient(135deg,rgba(168,85,247,0.2),rgba(99,102,241,0.2));">
+                                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#c084fc" stroke-width="1.5"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>
+                                </div>
+                                <div class="h-1.5 bg-purple-400/30 rounded-full w-3/4"></div>
+                                <div class="h-1.5 bg-white/10 rounded-full w-full"></div>
+                                <div class="h-1.5 bg-white/10 rounded-full w-4/5"></div>
+                            </div>
+                        </div>
+                        <h3 class="text-lg font-display font-semibold mb-4">Movie Ticket Booking</h3>
+                        <div class="flex items-center justify-center gap-3 flex-wrap">
+                            <div class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/5 text-xs">
+                                <svg width="14" height="14" viewBox="0 0 24 24"><circle cx="8" cy="8" r="3" fill="#f24e1e"/><circle cx="16" cy="8" r="3" fill="#ff7262"/><circle cx="8" cy="16" r="3" fill="#a259ff"/><circle cx="16" cy="16" r="3" fill="#1abcfe"/></svg>
+                                <span>Figma</span>
+                            </div>
+                            <div class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/5 text-xs">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                                <span>User Research</span>
+                            </div>
+                            <div class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/5 text-xs">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+                                <span>Prototype</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 3: VR ZONE -->
+                <div class="project-card reveal-up" style="--delay: 0.2">
+                    <div class="project-card-inner glass-card-strong p-5 text-center">
+                        <div class="phone-mockup w-full h-64 mb-5 mx-auto flex flex-col overflow-hidden" style="background: linear-gradient(160deg,#000a1a 0%,#00183d 50%,#003166 100%);">
+                            <div class="px-4 pt-4 pb-2 border-b border-white/10 flex items-center justify-between">
+                                <div>
+                                    <div class="text-[10px] font-bold text-cyan-400 tracking-widest">VR ZONE</div>
+                                    <div class="text-[8px] text-white/40">Virtual Reality</div>
+                                </div>
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#22d3ee" stroke-width="2"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg>
+                            </div>
+                            <div class="flex-1 p-4 space-y-3">
+                                <div class="h-2 bg-cyan-500/40 rounded-full w-4/5"></div>
+                                <div class="h-20 rounded-xl flex items-center justify-center mt-2" style="background:linear-gradient(135deg,rgba(6,182,212,0.15),rgba(14,165,233,0.15));">
+                                    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#22d3ee" stroke-width="1.5"><path d="M2 8.5C2 7.4 2.9 6.5 4 6.5h16c1.1 0 2 .9 2 2v7c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2v-7z"/><circle cx="8" cy="12" r="2"/><circle cx="16" cy="12" r="2"/><path d="M11 12h2"/></svg>
+                                </div>
+                                <div class="h-1.5 bg-cyan-400/30 rounded-full w-3/5"></div>
+                                <div class="h-1.5 bg-white/10 rounded-full w-full"></div>
+                            </div>
+                        </div>
+                        <h3 class="text-lg font-display font-semibold mb-4">VR ZONE</h3>
+                        <div class="flex items-center justify-center gap-3 flex-wrap">
+                            <div class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/5 text-xs">
+                                <svg width="14" height="14" viewBox="0 0 24 24"><circle cx="8" cy="8" r="3" fill="#f24e1e"/><circle cx="16" cy="8" r="3" fill="#ff7262"/><circle cx="8" cy="16" r="3" fill="#a259ff"/><circle cx="16" cy="16" r="3" fill="#1abcfe"/></svg>
+                                <span>Figma</span>
+                            </div>
+                            <div class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/5 text-xs">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                                <span>User Research</span>
+                            </div>
+                            <div class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/5 text-xs">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+                                <span>Prototype</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Supporting Phrase -->
+            <div class="text-center">
+                <div class="reveal-up inline-block px-8 py-3 glass-card">
+                    <span class="text-lg md:text-xl font-display font-semibold tracking-wider text-white/80">LET'S DESIGN THE FUTURE</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Decorative Lightning Element -->
+        <div class="absolute -bottom-10 -left-10 w-40 h-40 opacity-20 pointer-events-none">
+            <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M60 5L30 50H50L40 95L70 45H55L60 5Z" fill="url(#lightningGrad)" stroke="url(#lightningGrad)" stroke-width="2"/>
+                <defs>
+                    <linearGradient id="lightningGrad" x1="30" y1="5" x2="70" y2="95" gradientUnits="userSpaceOnUse">
+                        <stop offset="0%" stop-color="#e85d26"/>
+                        <stop offset="100%" stop-color="#ff8c5a"/>
+                    </linearGradient>
+                </defs>
+            </svg>
+        </div>
+    </section>
+
+    <!-- ==================== ABOUT ME SECTION ==================== -->
+    <section id="about" class="relative py-24 px-6">
+        <div class="max-w-4xl mx-auto">
+            <!-- Section Header -->
+            <div class="mb-12">
+                <p class="reveal-up text-brand text-sm font-medium tracking-wider mb-2">Hey, I am Gimshan</p>
+                <h2 class="reveal-up text-4xl md:text-5xl lg:text-6xl font-display font-bold mb-4">UI/UX designer</h2>
+                <p class="reveal-up text-white/50 text-base max-w-xl">I design intuitive, user-focused interfaces that deliver seamless digital experiences.</p>
+            </div>
+
+            <!-- Main Glass Card -->
+            <div class="reveal-up glass-card-strong p-8 md:p-10 relative overflow-hidden">
+                <!-- Decorative lightning bolts -->
+                <div class="absolute -top-5 -right-5 w-20 h-32 opacity-30 rotate-12">
+                    <svg viewBox="0 0 100 200" fill="none">
+                        <path d="M55 10L25 80H50L35 190L75 70H50L55 10Z" fill="url(#boltGrad)" stroke="url(#boltGrad)" stroke-width="3" stroke-linejoin="round"/>
+                        <defs>
+                            <linearGradient id="boltGrad" x1="25" y1="10" x2="75" y2="190" gradientUnits="userSpaceOnUse">
+                                <stop offset="0%" stop-color="#e85d26"/>
+                                <stop offset="100%" stop-color="#ff8c5a"/>
+                            </linearGradient>
+                        </defs>
+                    </svg>
+                </div>
+                <div class="absolute -bottom-5 -left-5 w-20 h-28 opacity-20 -rotate-12">
+                    <svg viewBox="0 0 100 200" fill="none">
+                        <path d="M55 10L25 80H50L35 190L75 70H50L55 10Z" fill="url(#boltGrad2)" stroke="url(#boltGrad2)" stroke-width="3" stroke-linejoin="round"/>
+                        <defs>
+                            <linearGradient id="boltGrad2" x1="25" y1="10" x2="75" y2="190" gradientUnits="userSpaceOnUse">
+                                <stop offset="0%" stop-color="#e85d26"/>
+                                <stop offset="100%" stop-color="#ff8c5a"/>
+                            </linearGradient>
+                        </defs>
+                    </svg>
+                </div>
+
+                <!-- Quote Icon -->
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor" class="text-brand/40 mb-4">
+                    <path d="M4.583 17.321C3.553 16.227 3 15 3 13.011c0-3.5 2.457-6.637 6.03-8.188l.893 1.378c-3.335 1.804-3.987 4.145-4.247 5.621.537-.278 1.24-.375 1.929-.311 1.804.167 3.226 1.648 3.226 3.489a3.5 3.5 0 01-3.5 3.5c-1.073 0-2.099-.49-2.748-1.179zm10 0C13.553 16.227 13 15 13 13.011c0-3.5 2.457-6.637 6.03-8.188l.893 1.378c-3.335 1.804-3.987 4.145-4.247 5.621.537-.278 1.24-.375 1.929-.311 1.804.167 3.226 1.648 3.226 3.489a3.5 3.5 0 01-3.5 3.5c-1.073 0-2.099-.49-2.748-1.179z"/>
+                </svg>
+
+                <!-- Bio Text -->
+                <p class="text-white/80 leading-relaxed mb-8 relative z-10">
+                    I am Gimshan, a designer-developer hybrid passionate about the point where design meets code. With strong foundational skills in UI/UX design (using Figma) and mobile app development (using Flutter and Firebase), I specialize in translating complex ideas into seamless, high-performance digital products.
+                </p>
+
+                <!-- Divider -->
+                <div class="w-full h-px bg-gradient-to-r from-transparent via-brand/30 to-transparent mb-8"></div>
+
+                <!-- Skills List -->
+                <div class="space-y-4 mb-8 relative z-10">
+                    <div class="flex items-center gap-4">
+                        <div class="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center flex-shrink-0">
+                            <svg width="20" height="20" viewBox="0 0 24 24">
+                                <circle cx="8" cy="8" r="3" fill="#f24e1e"/>
+                                <circle cx="16" cy="8" r="3" fill="#ff7262"/>
+                                <circle cx="8" cy="16" r="3" fill="#a259ff"/>
+                                <circle cx="16" cy="16" r="3" fill="#1abcfe"/>
+                            </svg>
+                        </div>
+                        <p class="text-white/70 text-sm"><span class="text-white font-medium">UI/UX (Figma)</span> Crafting intuitive and user-centric interfaces.</p>
+                    </div>
+                    <div class="flex items-center gap-4">
+                        <div class="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center flex-shrink-0">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                                <path d="M14.5 3L10 8l-5 5 5 5 4.5-5" stroke="#54c5f8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M4 13l5-5" stroke="#01579b" stroke-width="2" stroke-linecap="round"/>
+                            </svg>
+                        </div>
+                        <p class="text-white/70 text-sm"><span class="text-white font-medium">Flutter</span> Building cross-platform mobile experiences.</p>
+                    </div>
+                    <div class="flex items-center gap-4">
+                        <div class="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center flex-shrink-0">
+                            <svg width="20" height="20" viewBox="0 0 24 24">
+                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z" fill="#ffca28"/>
+                                <path d="M12 6c-3.31 0-6 2.69-6 6s2.69 6 6 6 6-2.69 6-6-2.69-6-6-6zm0 9c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3z" fill="#ff6f00"/>
+                            </svg>
+                        </div>
+                        <p class="text-white/70 text-sm"><span class="text-white font-medium">Firebase</span> Integrating backend services and real-time data.</p>
+                    </div>
+                </div>
+
+                <!-- Divider -->
+                <div class="w-full h-px bg-gradient-to-r from-transparent via-brand/30 to-transparent mb-6"></div>
+
+                <!-- Positioning Statement -->
+                <p class="text-center text-white/60 text-sm relative z-10">
+                    Designer at HackathonHub. Spearheading design for high-energy tech events.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== CONTACT SECTION ==================== -->
+    <section id="contact" class="relative py-24 px-6">
+        <div class="max-w-6xl mx-auto">
+            <!-- Section Header -->
+            <div class="mb-16">
+                <p class="reveal-up text-brand text-sm font-medium tracking-wider mb-2">Hey, let's connect!</p>
+                <h2 class="reveal-up text-4xl md:text-5xl lg:text-6xl font-display font-bold">Get in Touch</h2>
+            </div>
+
+            <div class="grid lg:grid-cols-2 gap-12 items-start">
+                <!-- Left Side: Contact Info -->
+                <div class="reveal-left">
+                    <!-- Contact Details -->
+                    <div class="space-y-5 mb-10">
+                        <a href="mailto:shang71111@gmail.com" class="flex items-center gap-4 group">
+                            <div class="w-12 h-12 rounded-xl bg-brand/10 border border-brand/20 flex items-center justify-center group-hover:bg-brand/20 transition-colors flex-shrink-0">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#e85d26" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 4l-10 8L2 4"/></svg>
+                            </div>
+                            <div>
+                                <p class="text-white/50 text-xs mb-0.5">Email</p>
+                                <p class="text-white font-medium">shang71111@gmail.com</p>
+                            </div>
+                        </a>
+                        <a href="https://www.linkedin.com/in/gimashanmenaka" target="_blank" class="flex items-center gap-4 group">
+                            <div class="w-12 h-12 rounded-xl bg-brand/10 border border-brand/20 flex items-center justify-center group-hover:bg-brand/20 transition-colors flex-shrink-0">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#e85d26" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/></svg>
+                            </div>
+                            <div>
+                                <p class="text-white/50 text-xs mb-0.5">LinkedIn</p>
+                                <p class="text-white font-medium">linkedin.com/in/gimashanmenaka</p>
+                            </div>
+                        </a>
+                        <a href="tel:+94775712096" class="flex items-center gap-4 group">
+                            <div class="w-12 h-12 rounded-xl bg-brand/10 border border-brand/20 flex items-center justify-center group-hover:bg-brand/20 transition-colors flex-shrink-0">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#e85d26" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
+                            </div>
+                            <div>
+                                <p class="text-white/50 text-xs mb-0.5">Phone</p>
+                                <p class="text-white font-medium">+94 77 571 2096</p>
+                            </div>
+                        </a>
+                    </div>
+
+                    <!-- Availability Card -->
+                    <div class="glass-card p-6 mb-8">
+                        <p class="text-white/70 text-sm mb-1">Currently: <span class="text-white font-medium">Designer at Hackathon Hub</span></p>
+                        <p class="text-white/50 text-sm">I apply my design thinking to drive technology innovation.</p>
+                    </div>
+
+                    <!-- Hire Me CTA -->
+                    <a href="mailto:shang71111@gmail.com" class="reveal-up inline-flex items-center gap-3 px-8 py-4 rounded-full bg-brand hover:bg-brand-dark text-white font-semibold text-lg transition-all duration-300 hover:shadow-lg hover:shadow-brand/25 group">
+                        <span>Hire me</span>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="group-hover:translate-x-1 transition-transform"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                    </a>
+
+                    <!-- Footer Note -->
+                    <p class="text-white/30 text-sm mt-8">Available for freelance and collaborations. Based in Colombo, Sri Lanka.</p>
+                </div>
+
+                <!-- Right Side: Social / Contact Card -->
+                <div class="reveal-right">
+                    <div class="glass-card-strong p-8 relative">
+                        <!-- Large @ symbol decoration -->
+                        <div class="absolute top-8 left-8 text-7xl font-bold text-white/5 select-none">@</div>
+
+                        <!-- Social Links -->
+                        <div class="space-y-5 relative z-10 pt-8">
+                            <a href="mailto:shang71111@gmail.com" class="flex items-center gap-4 group p-3 rounded-xl hover:bg-white/5 transition-colors">
+                                <div class="w-10 h-10 rounded-lg bg-white/5 flex items-center justify-center group-hover:bg-brand/20 transition-colors flex-shrink-0">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 4l-10 8L2 4"/></svg>
+                                </div>
+                                <div class="flex-1 min-w-0">
+                                    <p class="text-white font-medium text-sm">Email</p>
+                                    <p class="text-white/40 text-xs truncate">shang71111@gmail.com</p>
+                                </div>
+                            </a>
+                            <a href="https://www.linkedin.com/in/gimashanmenaka" target="_blank" class="flex items-center gap-4 group p-3 rounded-xl hover:bg-white/5 transition-colors">
+                                <div class="w-10 h-10 rounded-lg bg-white/5 flex items-center justify-center group-hover:bg-brand/20 transition-colors flex-shrink-0">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="#fff"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+                                </div>
+                                <div class="flex-1 min-w-0">
+                                    <p class="text-white font-medium text-sm">LinkedIn</p>
+                                    <p class="text-white/40 text-xs truncate">linkedin.com/in/gimashanmenaka</p>
+                                </div>
+                            </a>
+                            <a href="https://github.com/GimshanMkarunarathna" target="_blank" class="flex items-center gap-4 group p-3 rounded-xl hover:bg-white/5 transition-colors">
+                                <div class="w-10 h-10 rounded-lg bg-white/5 flex items-center justify-center group-hover:bg-brand/20 transition-colors flex-shrink-0">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="#fff"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
+                                </div>
+                                <div class="flex-1 min-w-0">
+                                    <p class="text-white font-medium text-sm">GitHub</p>
+                                    <p class="text-white/40 text-xs truncate">github.com/GimshanMkarunarathna</p>
+                                </div>
+                            </a>
+                            <a href="https://github.com/GimshanMkarunarathna" target="_blank" class="flex items-center gap-4 group p-3 rounded-xl hover:bg-white/5 transition-colors">
+                                <div class="w-10 h-10 rounded-lg bg-white/5 flex items-center justify-center group-hover:bg-brand/20 transition-colors flex-shrink-0">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="#fff"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1v-3.5a6.37 6.37 0 00-.79-.05A6.34 6.34 0 003.15 15.2a6.34 6.34 0 0010.86 4.46 6.3 6.3 0 001.86-4.47V8.76a8.26 8.26 0 004.85 1.56v-3.4a4.85 4.85 0 01-1.13-.23z"/></svg>
+                                </div>
+                                <div class="flex-1 min-w-0">
+                                    <p class="text-white font-medium text-sm">Tik Tok</p>
+                                    <p class="text-white/40 text-xs truncate">tiktok.com/@gimshandev</p>
+                                </div>
+                            </a>
+                            <a href="https://wa.me/94775712096" target="_blank" class="flex items-center gap-4 group p-3 rounded-xl hover:bg-white/5 transition-colors">
+                                <div class="w-10 h-10 rounded-lg bg-white/5 flex items-center justify-center group-hover:bg-brand/20 transition-colors flex-shrink-0">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="#fff"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                                </div>
+                                <div class="flex-1 min-w-0">
+                                    <p class="text-white font-medium text-sm">WhatsApp</p>
+                                    <p class="text-white/40 text-xs truncate">wa.me/94775712096</p>
+                                </div>
+                            </a>
+                        </div>
+
+                        <!-- QR Code -->
+                        <div class="mt-8 flex justify-end">
+                            <div class="qr-code-box">
+                                <svg width="80" height="80" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                                    <rect width="100" height="100" fill="white"/>
+                                    <!-- QR Pattern -->
+                                    <rect x="5" y="5" width="25" height="25" fill="#0a0a0a" rx="3"/>
+                                    <rect x="9" y="9" width="17" height="17" fill="white" rx="1"/>
+                                    <rect x="12" y="12" width="11" height="11" fill="#0a0a0a" rx="1"/>
+
+                                    <rect x="70" y="5" width="25" height="25" fill="#0a0a0a" rx="3"/>
+                                    <rect x="74" y="9" width="17" height="17" fill="white" rx="1"/>
+                                    <rect x="77" y="12" width="11" height="11" fill="#0a0a0a" rx="1"/>
+
+                                    <rect x="5" y="70" width="25" height="25" fill="#0a0a0a" rx="3"/>
+                                    <rect x="9" y="74" width="17" height="17" fill="white" rx="1"/>
+                                    <rect x="12" y="77" width="11" height="11" fill="#0a0a0a" rx="1"/>
+
+                                    <!-- Data modules -->
+                                    <rect x="35" y="5" width="5" height="5" fill="#0a0a0a"/>
+                                    <rect x="45" y="5" width="5" height="5" fill="#0a0a0a"/>
+                                    <rect x="55" y="5" width="5" height="5" fill="#0a0a0a"/>
+                                    <rect x="35" y="15" width="5" height="5" fill="#0a0a0a"/>
+                                    <rect x="50" y="15" width="5" height="5" fill="#0a0a0a"/>
+                                    <rect x="35" y="25" width="5" height="5" fill="#0a0a0a"/>
+                                    <rect x="45" y="25" width="5" height="5" fill="#0a0a0a"/>
+                                    <rect x="55" y="25" width="5" height="5" fill="#0a0a0a"/>
+
+                                    <rect x="5" y="35" width="5" height="5" fill="#0a0a0a"/>
+                                    <rect x="15" y="35" width="5" height="5" fill="#0a0a0a"/>
+                                    <rect x="25" y="35" width="5" height="5" fill="#0a0a0a"/>
+                                    <rect x="35" y="35" width="5" height="5" fill="#0a0a0a"/>
+                                    <rect x="50" y="35" width="5" height="5" fill="#0a0a0a"/>
+                                    <rect x="60" y="35" width="5" height="5" fill="#0a0a0a"/>
+                                    <rect x="70" y="35" width="5" height="5" fill="#0a0a0a"/>
+                                    <rect x="80" y="35" width="5" height="5" fill="#0a0a0a"/>
+                                    <rect x="90" y="35" width="5" height="5" fill="#0a0a0a"/>
+
+                                    <rect x="5" y="45" width="5" height="5" fill="#0a0a0a"/>
+                                    <rect x="20" y="45" width="5" height="5" fill="#0a0a0a"/>
+                                    <rect x="35" y="45" width="5" height="5" fill="#0a0a0a"/>
+                                    <rect x="45" y="45" width="5" height="5" fill="#0a0a0a"/>
+                                    <rect x="55" y="45" width="5" height="5" fill="#0a0a0a"/>
+                                    <rect x="75" y="45" width="5" height="5" fill="#0a0a0a"/>
+                                    <rect x="90" y="45" width="5" height="5" fill="#0a0a0a"/>
+
+                                    <rect x="10" y="55" width="5" height="5" fill="#0a0a0a"/>
+                                    <rect x="25" y="55" width="5" height="5" fill="#0a0a0a"/>
+                                    <rect x="35" y="55" width="5" height="5" fill="#0a0a0a"/>
+                                    <rect x="50" y="55" width="5" height="5" fill="#0a0a0a"/>
+                                    <rect x="65" y="55" width="5" height="5" fill="#0a0a0a"/>
+                                    <rect x="80" y="55" width="5" height="5" fill="#0a0a0a"/>
+
+                                    <rect x="35" y="65" width="5" height="5" fill="#0a0a0a"/>
+                                    <rect x="45" y="65" width="5" height="5" fill="#0a0a0a"/>
+                                    <rect x="60" y="65" width="5" height="5" fill="#0a0a0a"/>
+                                    <rect x="70" y="65" width="5" height="5" fill="#0a0a0a"/>
+                                    <rect x="85" y="65" width="5" height="5" fill="#0a0a0a"/>
+                                    <rect x="95" y="65" width="5" height="5" fill="#0a0a0a"/>
+
+                                    <rect x="35" y="75" width="5" height="5" fill="#0a0a0a"/>
+                                    <rect x="50" y="75" width="5" height="5" fill="#0a0a0a"/>
+                                    <rect x="60" y="75" width="5" height="5" fill="#0a0a0a"/>
+                                    <rect x="75" y="75" width="5" height="5" fill="#0a0a0a"/>
+                                    <rect x="90" y="75" width="5" height="5" fill="#0a0a0a"/>
+
+                                    <rect x="35" y="85" width="5" height="5" fill="#0a0a0a"/>
+                                    <rect x="45" y="85" width="5" height="5" fill="#0a0a0a"/>
+                                    <rect x="55" y="85" width="5" height="5" fill="#0a0a0a"/>
+                                    <rect x="70" y="85" width="5" height="5" fill="#0a0a0a"/>
+                                    <rect x="80" y="85" width="5" height="5" fill="#0a0a0a"/>
+                                    <rect x="95" y="85" width="5" height="5" fill="#0a0a0a"/>
+
+                                    <rect x="35" y="95" width="5" height="5" fill="#0a0a0a"/>
+                                    <rect x="50" y="95" width="5" height="5" fill="#0a0a0a"/>
+                                    <rect x="65" y="95" width="5" height="5" fill="#0a0a0a"/>
+                                    <rect x="80" y="95" width="5" height="5" fill="#0a0a0a"/>
+                                    <rect x="90" y="95" width="5" height="5" fill="#0a0a0a"/>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Decorative Lightning -->
+        <div class="absolute top-0 left-0 w-32 h-48 opacity-15 pointer-events-none">
+            <svg viewBox="0 0 100 200" fill="none">
+                <path d="M55 10L25 80H50L35 190L75 70H50L55 10Z" fill="url(#contactBolt)" stroke="url(#contactBolt)" stroke-width="3" stroke-linejoin="round"/>
+                <defs>
+                    <linearGradient id="contactBolt" x1="25" y1="10" x2="75" y2="190" gradientUnits="userSpaceOnUse">
+                        <stop offset="0%" stop-color="#e85d26"/>
+                        <stop offset="100%" stop-color="#ff8c5a"/>
+                    </linearGradient>
+                </defs>
+            </svg>
+        </div>
+    </section>
+
+    <!-- ==================== FOOTER ==================== -->
+    <footer class="relative py-8 px-6 border-t border-white/5">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+            <p class="text-white/30 text-sm font-signature text-2xl">Shan.</p>
+            <p class="text-white/30 text-xs">2025 Gimshan. All rights reserved.</p>
+            <div class="flex items-center gap-4">
+                <a href="https://github.com/GimshanMkarunarathna" target="_blank" class="text-white/30 hover:text-brand transition-colors">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
+                </a>
+                <a href="https://www.linkedin.com/in/gimashanmenaka" target="_blank" class="text-white/30 hover:text-brand transition-colors">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ==================== SCRIPTS ==================== -->
+    <script>
+        // Register ScrollTrigger
+        gsap.registerPlugin(ScrollTrigger);
+
+        // ========== NAVBAR BEHAVIOR ==========
+        const navbar = document.getElementById('navbar');
+        const navLogo = document.getElementById('navLogo');
+        const navLinks = document.querySelectorAll('.nav-link');
+        const sections = document.querySelectorAll('section');
+
+        // Scroll-based navbar background
+        ScrollTrigger.create({
+            trigger: 'body',
+            start: 'top -80',
+            onEnter: () => {
+                navbar.style.background = 'rgba(10,10,10,0.85)';
+                navbar.style.backdropFilter = 'blur(20px)';
+                navbar.style.borderBottom = '1px solid rgba(255,255,255,0.05)';
+            },
+            onLeaveBack: () => {
+                navbar.style.background = 'transparent';
+                navbar.style.backdropFilter = 'none';
+                navbar.style.borderBottom = 'none';
+            }
+        });
+
+        // Active nav link based on scroll position
+        const sectionIds = ['hero', 'projects-dev', 'projects-design', 'about', 'contact'];
+        sectionIds.forEach((id) => {
+            ScrollTrigger.create({
+                trigger: `#${id}`,
+                start: 'top center',
+                end: 'bottom center',
+                onEnter: () => setActiveNav(id),
+                onEnterBack: () => setActiveNav(id)
+            });
+        });
+
+        function setActiveNav(id) {
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.dataset.section === id) {
+                    link.classList.add('active');
+                }
+            });
+        }
+
+        // ========== MOBILE MENU ==========
+        const menuToggle = document.getElementById('menuToggle');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
+        let menuOpen = false;
+
+        menuToggle.addEventListener('click', () => {
+            menuOpen = !menuOpen;
+            mobileMenu.classList.toggle('open');
+            menuToggle.classList.toggle('active');
+            document.body.style.overflow = menuOpen ? 'hidden' : '';
+        });
+
+        mobileNavLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                menuOpen = false;
+                mobileMenu.classList.remove('open');
+                menuToggle.classList.remove('active');
+                document.body.style.overflow = '';
+            });
+        });
+
+        // ========== HERO ENTRANCE ANIMATIONS ==========
+        const heroTL = gsap.timeline({ defaults: { ease: 'power3.out' } });
+
+        // Navbar entrance
+        heroTL.from(navbar, { y: -30, opacity: 0, duration: 0.8 }, 0);
+
+        // Portrait entrance
+        heroTL.from('#heroPortrait', { scale: 0.8, opacity: 0, duration: 1 }, 0.2);
+
+        // Floating icons entrance
+        heroTL.from('.float-icon', {
+            scale: 0,
+            opacity: 0,
+            duration: 0.6,
+            stagger: 0.05,
+            ease: 'back.out(1.5)'
+        }, 0.4);
+
+        // Orbit rings entrance
+        heroTL.from('.orbit-ring', {
+            scale: 0.5,
+            opacity: 0,
+            duration: 1,
+            stagger: 0.15
+        }, 0.3);
+
+        // Scroll indicator
+        heroTL.from('.bottom-8', { opacity: 0, y: 20, duration: 0.6 }, 1.2);
+
+        // ========== MOUSE PARALLAX ON FLOATING ICONS ==========
+        const heroSection = document.getElementById('hero');
+        const devIconsContainer = document.getElementById('devIcons');
+        const designIconsContainer = document.getElementById('designIcons');
+
+        heroSection.addEventListener('mousemove', (e) => {
+            const rect = heroSection.getBoundingClientRect();
+            const x = (e.clientX - rect.left - rect.width / 2) / rect.width;
+            const y = (e.clientY - rect.top - rect.height / 2) / rect.height;
+
+            gsap.to(devIconsContainer, {
+                x: x * 20,
+                y: y * 15,
+                duration: 0.8,
+                ease: 'power2.out'
+            });
+
+            gsap.to(designIconsContainer, {
+                x: x * -15,
+                y: y * -10,
+                duration: 0.8,
+                ease: 'power2.out'
+            });
+        });
+
+        // ========== SCROLL ANIMATIONS - PROJECTS DEV ==========
+        gsap.utils.toArray('#projects-dev .reveal-up').forEach((el, i) => {
+            gsap.from(el, {
+                scrollTrigger: {
+                    trigger: el,
+                    start: 'top 85%',
+                    toggleActions: 'play none none reverse'
+                },
+                y: 60,
+                opacity: 0,
+                duration: 0.8,
+                delay: i * 0.1,
+                ease: 'power3.out'
+            });
+        });
+
+        // ========== SCROLL ANIMATIONS - PROJECTS DESIGN ==========
+        gsap.utils.toArray('#projects-design .reveal-up').forEach((el, i) => {
+            gsap.from(el, {
+                scrollTrigger: {
+                    trigger: el,
+                    start: 'top 85%',
+                    toggleActions: 'play none none reverse'
+                },
+                y: 60,
+                opacity: 0,
+                duration: 0.8,
+                delay: i * 0.12,
+                ease: 'power3.out'
+            });
+        });
+
+        // ========== SCROLL ANIMATIONS - ABOUT ==========
+        gsap.utils.toArray('#about .reveal-up').forEach((el, i) => {
+            gsap.from(el, {
+                scrollTrigger: {
+                    trigger: el,
+                    start: 'top 85%',
+                    toggleActions: 'play none none reverse'
+                },
+                y: 50,
+                opacity: 0,
+                duration: 0.7,
+                delay: i * 0.08,
+                ease: 'power3.out'
+            });
+        });
+
+        // ========== SCROLL ANIMATIONS - CONTACT ==========
+        gsap.utils.toArray('#contact .reveal-left').forEach((el) => {
+            gsap.from(el, {
+                scrollTrigger: {
+                    trigger: el,
+                    start: 'top 85%',
+                    toggleActions: 'play none none reverse'
+                },
+                x: -50,
+                opacity: 0,
+                duration: 0.8,
+                ease: 'power3.out'
+            });
+        });
+
+        gsap.utils.toArray('#contact .reveal-right').forEach((el) => {
+            gsap.from(el, {
+                scrollTrigger: {
+                    trigger: el,
+                    start: 'top 85%',
+                    toggleActions: 'play none none reverse'
+                },
+                x: 50,
+                opacity: 0,
+                duration: 0.8,
+                ease: 'power3.out'
+            });
+        });
+
+        // ========== PARALLAX ON SCROLL ==========
+        gsap.to('#orbit1', {
+            scrollTrigger: {
+                trigger: '#hero',
+                start: 'top top',
+                end: 'bottom top',
+                scrub: 1
+            },
+            rotation: 30,
+            scale: 1.1,
+            ease: 'none'
+        });
+
+        gsap.to('#orbit2', {
+            scrollTrigger: {
+                trigger: '#hero',
+                start: 'top top',
+                end: 'bottom top',
+                scrub: 1
+            },
+            rotation: -20,
+            scale: 0.95,
+            ease: 'none'
+        });
+
+        gsap.to('#orbit3', {
+            scrollTrigger: {
+                trigger: '#hero',
+                start: 'top top',
+                end: 'bottom top',
+                scrub: 1
+            },
+            rotation: 15,
+            ease: 'none'
+        });
+
+        // ========== CARD HOVER EFFECTS ==========
+        document.querySelectorAll('.project-card').forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                gsap.to(card.querySelector('.project-card-inner'), {
+                    borderColor: 'rgba(232,93,38,0.15)',
+                    duration: 0.3,
+                    ease: 'power2.out'
+                });
+            });
+            card.addEventListener('mouseleave', () => {
+                gsap.to(card.querySelector('.project-card-inner'), {
+                    borderColor: 'rgba(255,255,255,0.1)',
+                    duration: 0.3,
+                    ease: 'power2.out'
+                });
+            });
+        });
+
+        // ========== SMOOTH SCROLL FOR NAV LINKS ==========
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                const href = this.getAttribute('href');
+                // Skip empty hashes (e.g. href="#") to avoid querySelector SyntaxError
+                if (!href || href === '#') return;
+                e.preventDefault();
+                try {
+                    const target = document.querySelector(href);
+                    if (target) {
+                        const offset = 80;
+                        const targetPosition = target.getBoundingClientRect().top + window.pageYOffset - offset;
+                        window.scrollTo({
+                            top: targetPosition,
+                            behavior: 'smooth'
+                        });
+                    }
+                } catch (err) {
+                    // Invalid selector, ignore
+                }
+            });
+        });
+
+        // ========== REDUCED MOTION ==========
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+            gsap.globalTimeline.clear();
+            document.querySelectorAll('.reveal-up, .reveal-left, .reveal-right, .reveal-scale').forEach(el => {
+                el.style.opacity = '1';
+                el.style.transform = 'none';
+            });
+        }
+
+        // ========== REFRESH SCROLLTRIGGER ON RESIZE ==========
+        let resizeTimer;
+        window.addEventListener('resize', () => {
+            clearTimeout(resizeTimer);
+            resizeTimer = setTimeout(() => {
+                ScrollTrigger.refresh();
+            }, 250);
+        });
+
+        console.log('Portfolio website loaded successfully.');
+    </script>
+</body>
+</html>
+
